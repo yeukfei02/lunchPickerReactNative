@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lunchPickerReactNative",
+    "name": "LunchPicker",
     "slug": "lunchPickerReactNative",
     "platforms": [
       "ios",
@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ic_launcher.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/ic_launcher_round.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
