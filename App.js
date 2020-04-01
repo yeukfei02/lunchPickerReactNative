@@ -21,19 +21,19 @@ function App() {
 
             switch (route.name) {
               case 'Home':
-                iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
+                iconName = focused ? 'ios-home' : 'ios-home';
                 break;
-              case 'RandomFood':
-                iconName = focused ? 'food' : 'food';
-                break;
-              case 'Favourites':
-                iconName = focused ? 'favorite' : 'favorite-border';
-                break;
-              case 'Settings':
+              case 'Random Food':
                 iconName = focused ? 'ios-list-box' : 'ios-list';
                 break;
-              case 'ContactUs':
-                iconName = focused ? 'questioncircle' : 'questioncircleo';
+              case 'Favourites':
+                iconName = focused ? 'ios-heart' : 'ios-heart-empty';
+                break;
+              case 'Settings':
+                iconName = focused ? 'ios-settings' : 'ios-settings';
+                break;
+              case 'Contact us':
+                iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
                 break;
               default:
 
@@ -43,15 +43,15 @@ function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#ed1f30',
           inactiveTintColor: 'gray',
         }}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="RandomFood" component={RandomFood} />
+        <Tab.Screen name="Random Food" component={RandomFood} />
         <Tab.Screen name="Favourites" component={Favourites} />
         <Tab.Screen name="Settings" component={Settings} />
-        <Tab.Screen name="ContactUs" component={ContactUs} />
+        <Tab.Screen name="Contact us" component={ContactUs} />
       </Tab.Navigator>
     </NavigationContainer>
   );

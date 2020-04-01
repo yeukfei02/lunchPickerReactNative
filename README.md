@@ -5,6 +5,7 @@ If you’re a working software engineer, you’ve probably encountered with one 
 Lunch picker is the tool you’ll turn to to answer this question.
 
 ## Requirement:
+ - install expo-cli
  - install yarn
  - install node (v12+)
 
