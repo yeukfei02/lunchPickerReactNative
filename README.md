@@ -32,8 +32,6 @@ $ yarn run test
 $ yarn run lint
 ```
 
-open localhost:5000
-
 ## Contributing
 
 Please refer to [CONTRIBUTING.md](https://github.com/yeukfei02/lunchPickerReactNative/blob/master/CONTRIBUTING.md)
