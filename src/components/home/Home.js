@@ -12,8 +12,8 @@ const style = StyleSheet.create({
     backgroundColor: '#FAFAD2',
   },
   logo: {
-    width: 350,
-    height: 150,
+    width: 380,
+    height: 180,
   },
   colorPrimary: {
     color: '#ed1f30'
