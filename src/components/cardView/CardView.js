@@ -26,7 +26,7 @@ const style = StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: '#ed1f30',
-    borderRadius: '50%'
+    borderRadius: 20
   },
   avatarStr: {
     color: 'white',
@@ -49,12 +49,14 @@ const style = StyleSheet.create({
   },
   location: {
     fontSize: 15,
+  },
+  locationClick: {
+    fontSize: 15,
     textDecorationLine: 'underline',
     color: '#ed1f30'
   },
   phone: {
     fontSize: 15,
-    color: 'gray'
   },
   rating: {
     fontSize: 15,
@@ -130,7 +132,7 @@ function CardView(props) {
           />
         </TouchableHighlight>
         <Divder margin={5} />
-        <Text>Location: <Text style={style.location} onClick={(e) => handleLocationClick(e)}>{location}</Text></Text>
+        <Text style={style.location}>Location: <Text style={style.locationClick} onClick={(e) => handleLocationClick(e)}>{location}</Text></Text>
         <Divder margin={5} />
         {
           !_.isEmpty(displayPhone) ?
