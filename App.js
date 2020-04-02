@@ -23,7 +23,7 @@ function App() {
               case 'Home':
                 iconName = focused ? 'ios-home' : 'ios-home';
                 break;
-              case 'Random Food':
+              case 'Random food':
                 iconName = focused ? 'ios-list-box' : 'ios-list';
                 break;
               case 'Favourites':
@@ -48,7 +48,7 @@ function App() {
         }}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Random Food" component={RandomFood} />
+        <Tab.Screen name="Random food" component={RandomFood} />
         <Tab.Screen name="Favourites" component={Favourites} />
         <Tab.Screen name="Settings" component={Settings} />
         <Tab.Screen name="Contact us" component={ContactUs} />
