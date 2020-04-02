@@ -14,15 +14,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FAFAD2',
   },
-  colorPrimary: {
-    color: '#ed1f30'
-  },
-  colorPrimaryDark: {
-    color: '#ffcc0000'
-  },
-  colorAccent: {
-    color: '#2b76f0'
-  }
 });
 
 function Favourites() {

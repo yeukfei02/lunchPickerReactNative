@@ -63,9 +63,7 @@ const style = StyleSheet.create({
   }
 });
 
-function CardView(props) {
-  const item = props.item;
-
+function CardView({ navigation, item }) {
   let id = '';
   let name = '';
   let avatarStr = '';
@@ -107,16 +105,28 @@ function CardView(props) {
     window.open(`https://www.google.com/maps/search/?api=1&query=${text}`);
   }
 
+  const handleAvatarClick = () => {
+    navigation.navigate('Contact us', {
+      id: id
+    });
+  }
+
+  const handleTitleClick = () => {
+    navigation.navigate('Contact us', {
+      id: id
+    });
+  }
+
   return (
     <View style={style.container}>
       <Card>
         <Divder margin={5} />
         <View style={style.avatarStrAndtitleContainer}>
           <View style={style.circle}>
-            <Text style={style.avatarStr}>{avatarStr}</Text>
+            <Text style={style.avatarStr} onPress={handleAvatarClick}>{avatarStr}</Text>
           </View>
           <View style={style.titleContainer}>
-            <Text style={style.name}>{name}</Text>
+            <Text style={style.name} onPress={handleTitleClick}>{name}</Text>
             <Divder margin={3} />
             <Text style={style.subHeader}>{subHeader}</Text>
           </View>
