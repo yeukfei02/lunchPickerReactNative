@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Picker } from 'react-native';
-import { Card } from 'react-native-material-ui';
+import { StyleSheet, ScrollView, View, Image, Picker, TextInput } from 'react-native';
+import { Card, RadioButton, Button } from 'react-native-material-ui';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
+
+import Divder from '../divider/Divider';
 
 import logo from '../../images/logo2.png';
 
 const ROOT_URL = getRootUrl();
 
 const style = StyleSheet.create({
+  scrollViewContainer: {
+    flex: 1,
+    backgroundColor: '#FAFAD2',
+  },
   container: {
     flex: 1,
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FAFAD2',
@@ -38,10 +45,25 @@ const style = StyleSheet.create({
 function Home() {
   const [selectedTermList, setSelectedTermList] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('');
+  const [radioButtonValue, setRadioButtonValue] = useState('');
+
+  const [location, setLocation] = useState('Enter location...');
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  const [resultList, setResultList] = useState([]);
+
+  const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
   useEffect(() => {
     getSelectedTermList();
+    getUserCurrentLatLong();
   }, []);
+
+  useEffect(() => {
+    if (latitude !== 0 && longitude !== 0)
+      findLocationTextByLatLong(latitude, longitude);
+  }, [latitude, longitude]);
 
   const getSelectedTermList = () => {
     axios.get(
@@ -130,6 +152,199 @@ function Home() {
       });
   }
 
+  const getUserCurrentLatLong = () => {
+    navigator.geolocation.getCurrentPosition((location) => {
+      const latitude = location.coords.latitude;
+      const longitude = location.coords.longitude;
+      log("latitude = ", latitude);
+      log("longitude = ", longitude);
+      setLatitude(latitude);
+      setLongitude(longitude);
+    });
+  }
+
+  const findLocationTextByLatLong = (latitude, longitude) => {
+    axios.get(
+      `${ROOT_URL}/restaurant/find-location-text-by-lat-long`,
+      {
+        params: {
+          latitude: latitude,
+          longitude: longitude
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          setLocation(response.data.location.display_name);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+          setSubmitButtonClicked(false);
+        }
+      });
+  }
+
+  const findRestaurantsByLocation = (selectedTerm, location) => {
+    axios.get(
+      `${ROOT_URL}/restaurant/find-restaurants-by-location`,
+      {
+        params: {
+          term: selectedTerm,
+          location: location
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          setResultList(response.data.restaurants.businesses);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+          setSubmitButtonClicked(false);
+        }
+      });
+  }
+
+  const findRestaurantsByLatLong = (selectedTerm, latitude, longitude) => {
+    axios.get(
+      `${ROOT_URL}/restaurant/find-restaurants-by-lat-long`,
+      {
+        params: {
+          term: selectedTerm,
+          latitude: latitude,
+          longitude: longitude
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          setResultList(response.data.restaurants.businesses);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+          setSubmitButtonClicked(false);
+        }
+      });
+  }
+
+  const renderSelectDropdown = () => {
+    return (
+      <Picker
+        selectedValue={selectedTerm}
+        style={style.picker}
+        onValueChange={(itemValue, itemIndex) => handleDropdownChange(itemValue)}
+      >
+        {renderDropdownItem()}
+      </Picker>
+    )
+  }
+
+  const renderRadioButton = () => {
+    return (
+      <View>
+        <RadioButton
+          label="Places"
+          checked={radioButtonValue === 'places' ? true : false}
+          value="places"
+          onSelect={() => handleRadioButton('places')}
+        />
+        {
+          latitude !== 0 && longitude !== 0 ?
+            <RadioButton
+              label="Current Location"
+              checked={radioButtonValue === 'currentLocation' ? true : false}
+              value="currentLocation"
+              onSelect={() => handleRadioButton('currentLocation')}
+            />
+            :
+            <RadioButton
+              label="Current Location"
+              checked={radioButtonValue === 'currentLocation' ? true : false}
+              value="currentLocation"
+              disabled={true}
+              onSelect={() => handleRadioButton('currentLocation')}
+            />
+        }
+      </View>
+    );
+  }
+
+  const renderLocationInput = () => {
+    let locationInput = null;
+
+    if (_.isEqual(radioButtonValue, 'places')) {
+      locationInput = (
+        <View>
+          <TextInput
+            style={{ height: 40, borderColor: 'black', borderWidth: 1 }}
+            onChangeText={(text) => handleLocationChange(text)}
+            value={location}
+          />
+        </View>
+      );
+    }
+
+    return locationInput;
+  }
+
+  const renderSubmitButton = () => {
+    let submitButton = null;
+
+    if (_.isEqual(radioButtonValue, 'places')) {
+      if (!_.isEmpty(location)) {
+        if (submitButtonClicked === true) {
+          submitButton = (
+            <Button raised accent text="Loading..." disabled={true} onPress={handleSubmit} />
+          );
+        } else {
+          submitButton = (
+            <Button raised primary text="Submit" onPress={handleSubmit} />
+          );
+        }
+      }
+    }
+
+    if (_.isEqual(radioButtonValue, 'currentLocation')) {
+      if (submitButtonClicked === true) {
+        submitButton = (
+          <Button raised accent text="Loading..." disabled={true} onPress={handleSubmit} />
+        );
+      } else {
+        submitButton = (
+          <Button raised primary text="Submit" onPress={handleSubmit} />
+        );
+      }
+    }
+
+    return submitButton;
+  }
+
+  const renderClearButton = () => {
+    const clearButton = (
+      <Button raised accent text="Clear" onPress={handleClear} />
+    );
+
+    return clearButton;
+  }
+
   const handleDropdownChange = (selectedValue) => {
     setSelectedTerm(selectedValue);
   }
@@ -148,24 +363,62 @@ function Home() {
     return dropdownItemList;
   }
 
+  const handleRadioButton = (radioButtonValue) => {
+    setRadioButtonValue(radioButtonValue);
+  }
+
+  const handleLocationChange = (text) => {
+    setLocation(text);
+  }
+
+  const handleSubmit = () => {
+    setResultList([]);
+    setSubmitButtonClicked(true);
+
+    if (_.isEqual(radioButtonValue, 'places')) {
+      if (!_.isEmpty(location)) {
+        const term = !_.isEmpty(selectedTerm) ? selectedTerm : '';
+        findRestaurantsByLocation(term, location);
+      }
+    }
+
+    if (_.isEqual(radioButtonValue, 'currentLocation')) {
+      if (latitude !== 0 && longitude !== 0) {
+        const term = !_.isEmpty(selectedTerm) ? selectedTerm : '';
+        findRestaurantsByLatLong(term, latitude, longitude);
+      }
+    }
+  }
+
+  const handleClear = () => {
+    setSelectedTerm('');
+    setRadioButtonValue('');
+
+    setResultList([]);
+  }
+
   return (
-    <View style={style.container}>
-      <Card>
-        <Image
-          style={style.logo}
-          source={{
-            uri: logo
-          }}
-        />
-        <Picker
-          selectedValue={selectedTerm}
-          style={style.picker}
-          onValueChange={(itemValue, itemIndex) => handleDropdownChange(itemValue)}
-        >
-          {renderDropdownItem()}
-        </Picker>
-      </Card>
-    </View>
+    <ScrollView style={style.scrollViewContainer}>
+      <View style={style.container}>
+        <Card>
+          <Divder margin={10} />
+          <Image
+            style={style.logo}
+            source={{
+              uri: logo
+            }}
+          />
+          <Divder margin={5} />
+          {renderSelectDropdown()}
+          {renderRadioButton()}
+          {renderLocationInput()}
+          <Divder margin={5} />
+          {renderSubmitButton()}
+          <Divder margin={5} />
+          {renderClearButton()}
+        </Card>
+      </View>
+    </ScrollView>
   );
 }
 
