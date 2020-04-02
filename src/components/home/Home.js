@@ -6,6 +6,7 @@ import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
 
 import Divder from '../divider/Divider';
+import DisplayResult from '../displayResult/DisplayResult';
 
 import logo from '../../images/logo2.png';
 
@@ -24,7 +25,7 @@ const style = StyleSheet.create({
     backgroundColor: '#FAFAD2',
   },
   logo: {
-    width: 380,
+    width: '100%',
     height: 180,
   },
   picker: {
@@ -136,7 +137,12 @@ function Home() {
                 return optionsObj;
               });
             }
-            let formattedSelectedTermList = [];
+            let formattedSelectedTermList = [
+              {
+                value: 'Select the food you want...',
+                label: 'Select the food you want...'
+              }
+            ];
             formattedSelectedTermList = formattedSelectedTermList.concat(foodList);
             formattedSelectedTermList = formattedSelectedTermList.concat(restaurantsList);
             formattedSelectedTermList = formattedSelectedTermList.concat(barsList);
@@ -207,6 +213,7 @@ function Home() {
         if (!_.isEmpty(response)) {
           log("response = ", response);
           setResultList(response.data.restaurants.businesses);
+          setSubmitButtonClicked(false);
         }
       })
       .catch((error) => {
@@ -235,6 +242,7 @@ function Home() {
         if (!_.isEmpty(response)) {
           log("response = ", response);
           setResultList(response.data.restaurants.businesses);
+          setSubmitButtonClicked(false);
         }
       })
       .catch((error) => {
@@ -345,8 +353,23 @@ function Home() {
     return clearButton;
   }
 
+  const renderDisplayResult = () => {
+    let displayResult = null;
+
+    if (!_.isEmpty(resultList)) {
+      displayResult = (
+        <View>
+          <DisplayResult resultList={resultList} />
+        </View>
+      );
+    }
+
+    return displayResult;
+  }
+
   const handleDropdownChange = (selectedValue) => {
-    setSelectedTerm(selectedValue);
+    if (!_.isEqual(selectedValue, 'Select the food you want...'))
+      setSelectedTerm(selectedValue);
   }
 
   const renderDropdownItem = () => {
@@ -407,6 +430,7 @@ function Home() {
             source={{
               uri: logo
             }}
+            resizeMode={'cover'}
           />
           <Divder margin={5} />
           {renderSelectDropdown()}
@@ -418,6 +442,8 @@ function Home() {
           {renderClearButton()}
         </Card>
       </View>
+      <Divder margin={5} />
+      {renderDisplayResult()}
     </ScrollView>
   );
 }
