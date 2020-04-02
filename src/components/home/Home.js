@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Card } from 'react-native-material-ui';
+
+import logo from '../../images/logo2.png';
 
 const style = StyleSheet.create({
   container: {
@@ -7,6 +10,10 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FAFAD2',
+  },
+  logo: {
+    width: 350,
+    height: 150,
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -22,7 +29,15 @@ const style = StyleSheet.create({
 function Home() {
   return (
     <View style={style.container}>
-      <Text>Home</Text>
+      <Card>
+        <Image
+          style={style.logo}
+          source={{
+            uri: logo
+          }}
+        />
+        <Text>Home</Text>
+      </Card>
     </View>
   );
 }
