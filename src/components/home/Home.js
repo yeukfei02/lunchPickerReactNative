@@ -43,7 +43,7 @@ const style = StyleSheet.create({
   }
 });
 
-function Home() {
+function Home({ navigation }) {
   const [selectedTermList, setSelectedTermList] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('');
   const [radioButtonValue, setRadioButtonValue] = useState('');
@@ -359,7 +359,7 @@ function Home() {
     if (!_.isEmpty(resultList)) {
       displayResult = (
         <View>
-          <DisplayResult resultList={resultList} />
+          <DisplayResult navigation={navigation} resultList={resultList} />
         </View>
       );
     }

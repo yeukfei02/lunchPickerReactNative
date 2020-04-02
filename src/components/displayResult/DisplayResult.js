@@ -3,14 +3,14 @@ import { View, FlatList } from 'react-native';
 
 import CardView from '../cardView/CardView';
 
-function DisplayResult(props) {
+function DisplayResult({ navigation, resultList }) {
   return (
     <View>
       <FlatList
-        data={props.resultList}
+        data={resultList}
         renderItem={({ item }) => {
           return (
-            <CardView item={item} />
+            <CardView navigation={navigation} item={item} />
           );
         }}
         keyExtractor={(item) => item.id}
