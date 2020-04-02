@@ -23,7 +23,7 @@ function App() {
               case 'Home':
                 iconName = focused ? 'ios-home' : 'ios-home';
                 break;
-              case 'Random food':
+              case 'RandomFood':
                 iconName = focused ? 'ios-list-box' : 'ios-list';
                 break;
               case 'Favourites':
@@ -32,7 +32,7 @@ function App() {
               case 'Settings':
                 iconName = focused ? 'ios-settings' : 'ios-settings';
                 break;
-              case 'Contact us':
+              case 'ContactUs':
                 iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
                 break;
               default:
@@ -48,10 +48,10 @@ function App() {
         }}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Random food" component={RandomFood} />
+        <Tab.Screen name="RandomFood" component={RandomFood} />
         <Tab.Screen name="Favourites" component={Favourites} />
         <Tab.Screen name="Settings" component={Settings} />
-        <Tab.Screen name="Contact us" component={ContactUs} />
+        <Tab.Screen name="ContactUs" component={ContactUs} />
       </Tab.Navigator>
     </NavigationContainer>
   );

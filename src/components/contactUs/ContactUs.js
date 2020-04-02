@@ -1,9 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Card } from 'react-native-material-ui';
 
 const style = StyleSheet.create({
+  scrollViewContainer: {
+    flex: 1,
+    backgroundColor: '#FAFAD2',
+  },
   container: {
     flex: 1,
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FAFAD2',
@@ -21,9 +27,13 @@ const style = StyleSheet.create({
 
 function ContactUs() {
   return (
-    <View style={style.container}>
-      <Text>Contact us</Text>
-    </View>
+    <ScrollView style={style.scrollViewContainer}>
+      <View style={style.container}>
+        <Card>
+          <Text>Contact us</Text>
+        </Card>
+      </View>
+    </ScrollView>
   );
 }
 
