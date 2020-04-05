@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Button } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
+
+import Divder from '../divider/Divider';
 
 const ROOT_URL = getRootUrl();
 
@@ -92,14 +95,96 @@ function RestaurantDetails({ navigation, id }) {
 }
 
 function ContactUs(props) {
+  const [radioButtonValue, setRadioButtonValue] = useState('');
+
+  const handleRadioButton = (radioButtonValue) => {
+    setRadioButtonValue(radioButtonValue);
+  }
+
+  const handleDonorboxClick = () => {
+    Linking.openURL('https://donorbox.org/donate-for-lunch-picker-better-features-and-development');
+  }
+
+  const handleBuyMeACoffeeClick = () => {
+    Linking.openURL('https://www.buymeacoffee.com/yeukfei02');
+  }
+
+  const handleStripeClick = () => {
+
+  }
+
+  const renderButton = () => {
+    let result = null;
+
+    if (_.isEqual(radioButtonValue, 'donorbox')) {
+      result = (
+        <Button
+          onPress={handleDonorboxClick}
+          title="donorbox"
+          color={style.colorPrimary.color}
+        >
+          Donorbox
+        </Button>
+      );
+    } else if (_.isEqual(radioButtonValue, 'buyMeACoffee')) {
+      result = (
+        <Button
+          onPress={handleBuyMeACoffeeClick}
+          title="buyMeACoffee"
+          color={style.colorPrimary.color}
+        >
+          Buy Me A Coffee
+        </Button>
+      );
+    } else if (_.isEqual(radioButtonValue, 'stripe')) {
+
+    }
+
+    return result;
+  }
+
   const renderDiv = () => {
     let result = (
-      <Text>Contact us</Text>
+      <View>
+        <View style={style.container}>
+          <Text>Contact us via email or visit our github repo</Text>
+        </View>
+
+        <View style={style.container}>
+          <Text>Donate for lunch picker better features and development</Text>
+
+          <RadioButton
+            value="places"
+            status={radioButtonValue === 'donorbox' ? 'checked' : 'unchecked'}
+            onPress={() => handleRadioButton('donorbox')}
+          />
+          <Text>Donorbox</Text>
+
+          <RadioButton
+            value="places"
+            status={radioButtonValue === 'buyMeACoffee' ? 'checked' : 'unchecked'}
+            onPress={() => handleRadioButton('buyMeACoffee')}
+          />
+          <Text>Buy Me A Coffee</Text>
+
+          <RadioButton
+            value="places"
+            status={radioButtonValue === 'stripe' ? 'checked' : 'unchecked'}
+            onPress={() => handleRadioButton('stripe')}
+          />
+          <Text>Stripe</Text>
+
+          <Divder margin={5} />
+          {renderButton()}
+        </View>
+      </View>
     );
 
     if (!_.isEmpty(props.route) && !_.isEmpty(props.route.params) && !_.isEmpty(props.route.params.id)) {
       result = (
-        <RestaurantDetails navigation={props.navigation} id={props.route.params.id} />
+        <View style={style.container}>
+          <RestaurantDetails navigation={props.navigation} id={props.route.params.id} />
+        </View>
       );
     }
 
@@ -108,9 +193,7 @@ function ContactUs(props) {
 
   return (
     <ScrollView style={style.scrollViewContainer}>
-      <View style={style.container}>
-        {renderDiv()}
-      </View>
+      {renderDiv()}
     </ScrollView>
   );
 }
