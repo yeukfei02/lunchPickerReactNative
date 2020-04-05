@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import { Card } from 'react-native-material-ui';
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -9,10 +8,11 @@ const style = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 100,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FAFAD2',
+    backgroundColor: 'white',
   },
 });
 
@@ -20,9 +20,7 @@ function Settings() {
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Card>
-          <Text>Settings</Text>
-        </Card>
+        <Text>Settings</Text>
       </View>
     </ScrollView>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import { Card, Button } from 'react-native-material-ui';
+import { StyleSheet, ScrollView, View, Text, Button } from 'react-native';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -14,11 +13,15 @@ const style = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 100,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FAFAD2',
+    backgroundColor: 'white',
   },
+  colorPrimary: {
+    color: '#ed1f30'
+  }
 });
 
 function RestaurantDetails({ navigation, id }) {
@@ -75,27 +78,23 @@ function RestaurantDetails({ navigation, id }) {
   }
 
   return (
-    <ScrollView style={style.scrollViewContainer}>
-      <View style={style.container}>
-        <Card>
-          <Text>Restaurant Details</Text>
-          <Button raised primary text="Back to Home" onPress={handleBackToHome} />
-        </Card>
-      </View>
-    </ScrollView>
+    <View>
+      <Text>Restaurant Details</Text>
+      <Button
+        onPress={handleBackToHome}
+        title="Back to Home"
+        color={style.colorPrimary.color}
+      >
+        Back to Home
+      </Button>
+    </View>
   );
 }
 
 function ContactUs(props) {
   const renderDiv = () => {
     let result = (
-      <ScrollView style={style.scrollViewContainer}>
-        <View style={style.container}>
-          <Card>
-            <Text>Contact us</Text>
-          </Card>
-        </View>
-      </ScrollView>
+      <Text>Contact us</Text>
     );
 
     if (!_.isEmpty(props.route) && !_.isEmpty(props.route.params) && !_.isEmpty(props.route.params.id)) {
@@ -108,7 +107,11 @@ function ContactUs(props) {
   }
 
   return (
-    renderDiv()
+    <ScrollView style={style.scrollViewContainer}>
+      <View style={style.container}>
+        {renderDiv()}
+      </View>
+    </ScrollView>
   );
 }
 

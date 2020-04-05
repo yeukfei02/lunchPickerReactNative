@@ -1,16 +1,18 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableHighlight } from 'react-native';
-import { Card } from 'react-native-material-ui';
+import { StyleSheet, View, Text, Image, TouchableHighlight, Linking } from 'react-native';
+import _ from 'lodash';
 
 import Divder from '../divider/Divider';
 
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginVertical: 10,
     marginHorizontal: 20,
+    backgroundColor: 'white',
   },
   avatarStrAndtitleContainer: {
     flex: 1,
@@ -30,7 +32,7 @@ const style = StyleSheet.create({
   },
   avatarStr: {
     color: 'white',
-    marginTop: 8,
+    marginTop: 5,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
@@ -97,12 +99,12 @@ function CardView({ navigation, item }) {
   }
 
   const handleImageClick = () => {
-    window.open(url);
+    Linking.openURL(url);
   }
 
   const handleLocationClick = (e) => {
     const text = e.target.innerHTML;
-    window.open(`https://www.google.com/maps/search/?api=1&query=${text}`);
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${text}`);
   }
 
   const handleAvatarClick = () => {
@@ -119,41 +121,39 @@ function CardView({ navigation, item }) {
 
   return (
     <View style={style.container}>
-      <Card>
-        <Divder margin={5} />
-        <View style={style.avatarStrAndtitleContainer}>
-          <View style={style.circle}>
-            <Text style={style.avatarStr} onPress={handleAvatarClick}>{avatarStr}</Text>
-          </View>
-          <View style={style.titleContainer}>
-            <Text style={style.name} onPress={handleTitleClick}>{name}</Text>
-            <Divder margin={3} />
-            <Text style={style.subHeader}>{subHeader}</Text>
-          </View>
+      <Divder margin={5} />
+      <View style={style.avatarStrAndtitleContainer}>
+        <View style={style.circle}>
+          <Text style={style.avatarStr} onPress={handleAvatarClick}>{avatarStr}</Text>
         </View>
-        <Divder margin={5} />
-        <TouchableHighlight onPress={handleImageClick}>
-          <Image
-            style={style.logo}
-            source={{
-              uri: imageUrl
-            }}
-            resizeMode={'cover'}
-          />
-        </TouchableHighlight>
-        <Divder margin={5} />
-        <Text style={style.location}>Location: <Text style={style.locationClick} onClick={(e) => handleLocationClick(e)}>{location}</Text></Text>
-        <Divder margin={5} />
-        {
-          !_.isEmpty(displayPhone) ?
-            <Text style={style.phone}>Phone: {displayPhone}</Text>
-            :
-            null
-        }
-        <Divder margin={5} />
-        <Text style={style.rating}>Rating: {rating}</Text>
-        <Divder margin={5} />
-      </Card>
+        <View style={style.titleContainer}>
+          <Text style={style.name} onPress={handleTitleClick}>{name}</Text>
+          <Divder margin={3} />
+          <Text style={style.subHeader}>{subHeader}</Text>
+        </View>
+      </View>
+      <Divder margin={5} />
+      <TouchableHighlight onPress={handleImageClick}>
+        <Image
+          style={style.logo}
+          source={{
+            uri: imageUrl
+          }}
+          resizeMode={'cover'}
+        />
+      </TouchableHighlight>
+      <Divder margin={5} />
+      <Text style={style.location}>Location: <Text style={style.locationClick} onClick={(e) => handleLocationClick(e)}>{location}</Text></Text>
+      <Divder margin={5} />
+      {
+        !_.isEmpty(displayPhone) ?
+          <Text style={style.phone}>Phone: {displayPhone}</Text>
+          :
+          null
+      }
+      <Divder margin={5} />
+      <Text style={style.rating}>Rating: {rating}</Text>
+      <Divder margin={5} />
     </View>
   );
 }
