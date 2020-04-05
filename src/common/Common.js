@@ -2,7 +2,7 @@
 export const getRootUrl = () => {
   let ROOT_URL = '';
   if (process.env.NODE_ENV === 'development') {
-    ROOT_URL = "http://192.168.1.100:3000/api";
+    ROOT_URL = "http://192.168.1.119:3000/api";
   } else {
     ROOT_URL = "https://lunch-picker-api.herokuapp.com/api";
   }
