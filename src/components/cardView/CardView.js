@@ -46,8 +46,8 @@ const style = StyleSheet.create({
     color: 'gray'
   },
   logo: {
-    width: '100%',
-    height: 200,
+    width: 320,
+    height: 220,
   },
   location: {
     fontSize: 15,
