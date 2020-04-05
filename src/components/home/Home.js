@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Picker, TextInput } from 'react-native';
-import { Card, RadioButton, Button } from 'react-native-material-ui';
+import { StyleSheet, ScrollView, View, Image, Picker, Text, TextInput, Button } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -8,7 +8,7 @@ import { getRootUrl, log } from '../../common/Common';
 import Divder from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
-import logo from '../../images/logo2.png';
+const logo = require('../../images/logo2.png');
 
 const ROOT_URL = getRootUrl();
 
@@ -19,10 +19,11 @@ const style = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FAFAD2',
+    marginTop: 100,
+    padding: 15,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
   },
   logo: {
     width: '100%',
@@ -269,27 +270,31 @@ function Home({ navigation }) {
     return (
       <View>
         <RadioButton
-          label="Places"
-          checked={radioButtonValue === 'places' ? true : false}
           value="places"
-          onSelect={() => handleRadioButton('places')}
+          status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
+          onPress={() => handleRadioButton('places')}
         />
+        <Text>Places</Text>
         {
           latitude !== 0 && longitude !== 0 ?
-            <RadioButton
-              label="Current Location"
-              checked={radioButtonValue === 'currentLocation' ? true : false}
-              value="currentLocation"
-              onSelect={() => handleRadioButton('currentLocation')}
-            />
+            <View>
+              <RadioButton
+                value="currentLocation"
+                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                onPress={() => handleRadioButton('currentLocation')}
+              />
+              <Text>Current Location</Text>
+            </View>
             :
-            <RadioButton
-              label="Current Location"
-              checked={radioButtonValue === 'currentLocation' ? true : false}
-              value="currentLocation"
-              disabled={true}
-              onSelect={() => handleRadioButton('currentLocation')}
-            />
+            <View>
+              <RadioButton
+                value="currentLocation"
+                disabled={true}
+                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                onPress={() => handleRadioButton('currentLocation')}
+              />
+              <Text>Current Location</Text>
+            </View>
         }
       </View>
     );
@@ -320,11 +325,24 @@ function Home({ navigation }) {
       if (!_.isEmpty(location)) {
         if (submitButtonClicked === true) {
           submitButton = (
-            <Button raised accent text="Loading..." disabled={true} onPress={handleSubmit} />
+            <Button
+              onPress={handleSubmit}
+              title="Loading..."
+              disabled={true}
+              color={style.colorAccent.color}
+            >
+              Loading...
+            </Button>
           );
         } else {
           submitButton = (
-            <Button raised primary text="Submit" onPress={handleSubmit} />
+            <Button
+              onPress={handleSubmit}
+              title="Submit"
+              color={style.colorAccent.color}
+            >
+              Submit
+            </Button>
           );
         }
       }
@@ -333,11 +351,22 @@ function Home({ navigation }) {
     if (_.isEqual(radioButtonValue, 'currentLocation')) {
       if (submitButtonClicked === true) {
         submitButton = (
-          <Button raised accent text="Loading..." disabled={true} onPress={handleSubmit} />
+          <Button
+            onPress={handleSubmit}
+            title="Loading..."
+            disabled={true}
+            color={style.colorAccent.color}
+          >
+            Loading...
+          </Button>
         );
       } else {
         submitButton = (
-          <Button raised primary text="Submit" onPress={handleSubmit} />
+          <Button
+            onPress={handleSubmit}
+            title="Submit"
+            color={style.colorAccent.color}
+          />
         );
       }
     }
@@ -347,7 +376,13 @@ function Home({ navigation }) {
 
   const renderClearButton = () => {
     const clearButton = (
-      <Button raised accent text="Clear" onPress={handleClear} />
+      <Button
+        onPress={handleClear}
+        title="Clear"
+        color={style.colorPrimary.color}
+      >
+        Clear
+      </Button>
     );
 
     return clearButton;
@@ -423,24 +458,21 @@ function Home({ navigation }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Card>
-          <Divder margin={10} />
-          <Image
-            style={style.logo}
-            source={{
-              uri: logo
-            }}
-            resizeMode={'cover'}
-          />
-          <Divder margin={5} />
-          {renderSelectDropdown()}
-          {renderRadioButton()}
-          {renderLocationInput()}
-          <Divder margin={5} />
-          {renderSubmitButton()}
-          <Divder margin={5} />
-          {renderClearButton()}
-        </Card>
+        <Divder margin={5} />
+        <Image
+          style={style.logo}
+          source={logo}
+          resizeMode={'cover'}
+        />
+        <Divder margin={5} />
+        {renderSelectDropdown()}
+        {renderRadioButton()}
+        <Divder margin={5} />
+        {renderLocationInput()}
+        <Divder margin={5} />
+        {renderSubmitButton()}
+        <Divder margin={5} />
+        {renderClearButton()}
       </View>
       <Divder margin={5} />
       {renderDisplayResult()}
