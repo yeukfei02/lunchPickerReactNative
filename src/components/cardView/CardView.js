@@ -142,7 +142,7 @@ function CardView({ navigation, item }) {
         />
       </TouchableHighlight>
       <Divder margin={5} />
-      <Text style={style.location}>Location: <Text style={style.locationClick} onClick={handleLocationClick}>{location}</Text></Text>
+      <Text style={style.location}>Location: <Text style={style.locationClick} onPress={handleLocationClick}>{location}</Text></Text>
       <Divder margin={5} />
       {
         !_.isEmpty(displayPhone) ?
