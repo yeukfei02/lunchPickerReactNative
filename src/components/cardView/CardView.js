@@ -102,9 +102,8 @@ function CardView({ navigation, item }) {
     Linking.openURL(url);
   }
 
-  const handleLocationClick = (e) => {
-    const text = e.target.innerHTML;
-    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${text}`);
+  const handleLocationClick = () => {
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${location}`);
   }
 
   const handleAvatarClick = () => {
@@ -143,7 +142,7 @@ function CardView({ navigation, item }) {
         />
       </TouchableHighlight>
       <Divder margin={5} />
-      <Text style={style.location}>Location: <Text style={style.locationClick} onClick={(e) => handleLocationClick(e)}>{location}</Text></Text>
+      <Text style={style.location}>Location: <Text style={style.locationClick} onClick={handleLocationClick}>{location}</Text></Text>
       <Divder margin={5} />
       {
         !_.isEmpty(displayPhone) ?
