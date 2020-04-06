@@ -134,7 +134,7 @@ function ContactUs(props) {
       result = (
         <Button
           onPress={handleDonorboxClick}
-          title="donorbox"
+          title="Donorbox"
           color={style.colorPrimary.color}
         >
           Donorbox
@@ -144,7 +144,7 @@ function ContactUs(props) {
       result = (
         <Button
           onPress={handleBuyMeACoffeeClick}
-          title="buyMeACoffee"
+          title="Buy Me A Coffee"
           color={style.colorPrimary.color}
         >
           Buy Me A Coffee

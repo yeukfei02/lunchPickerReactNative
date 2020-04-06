@@ -1,5 +1,13 @@
-import React from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, ScrollView, View, Text, Button } from 'react-native';
+import _ from 'lodash';
+import axios from 'axios';
+import { getRootUrl, log } from '../../common/Common';
+
+const ROOT_URL = getRootUrl();
+
+import Divder from '../divider/Divider';
+import DisplayResult from '../displayResult/DisplayResult';
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -10,18 +18,137 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 100,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     backgroundColor: 'white',
+  },
+  yourTotalFavouritesText: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  favouritesLengthText: {
+    fontWeight: 'normal'
+  },
+  colorPrimary: {
+    color: '#ed1f30'
   },
 });
 
-function Favourites() {
+function Favourites({ navigation }) {
+  const [favourites, setFavourites] = useState([]);
+
+  const [deleteAllFavouritesButtonClicked, setDeleteAllFavouritesButtonClicked] = useState(false);
+
+  useEffect(() => {
+    getFavourites();
+    detectChangeTab();
+  }, []);
+
+  const detectChangeTab = () => {
+    navigation.addListener('focus', () => {
+      getFavourites();
+    });
+  }
+
+  const getFavourites = () => {
+    axios.get(
+      `${ROOT_URL}/favourites/get-favourites`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          const favourites = response.data.favourites;
+          setFavourites(favourites);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+        }
+      });
+  }
+
+  const handleDeleteAllFavourites = () => {
+    setDeleteAllFavouritesButtonClicked(true);
+
+    axios.delete(
+      `${ROOT_URL}/favourites/delete-all-favourites`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          setDeleteAllFavouritesButtonClicked(false);
+          getFavourites();
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+          setDeleteAllFavouritesButtonClicked(false);
+        }
+      });
+  }
+
+  const renderDeleteAllFavouritesButton = () => {
+    let deleteAllFavouritesButton = (
+      <Button
+        onPress={handleDeleteAllFavourites}
+        title="Delete All Favourites"
+        color={style.colorPrimary.color}
+      >
+        Delete All Favourites
+      </Button>
+    );
+
+    if (deleteAllFavouritesButtonClicked === true) {
+      deleteAllFavouritesButton = (
+        <Button
+          onPress={handleDeleteAllFavourites}
+          title="Loading..."
+          disabled={true}
+          color={style.colorPrimary.color}
+        >
+          Loading...
+        </Button>
+      );
+    }
+
+    return deleteAllFavouritesButton;
+  }
+
+  const renderDisplayResult = () => {
+    let displayResult = null;
+
+    if (!_.isEmpty(favourites)) {
+      displayResult = (
+        <View>
+          <DisplayResult navigation={navigation} resultList={favourites} isFavourites={true} getFavourites={() => getFavourites()} />
+        </View>
+      );
+    }
+
+    return displayResult;
+  }
+
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Text>Favourites</Text>
+        <Text style={style.yourTotalFavouritesText}>Your total favourites: <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text></Text>
+        <Divder margin={5} />
+        {renderDeleteAllFavouritesButton()}
       </View>
+      <Divder margin={5} />
+      {renderDisplayResult()}
     </ScrollView>
   );
 }
