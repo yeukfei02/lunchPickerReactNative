@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, Linking } from 'react-native';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import _ from 'lodash';
+import axios from 'axios';
+import { getRootUrl, log } from '../../common/Common';
+
+const ROOT_URL = getRootUrl();
 
 import Divder from '../divider/Divider';
 
@@ -14,9 +19,13 @@ const style = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: 'white',
   },
-  avatarStrAndtitleContainer: {
+  rowContainer: {
     flex: 1,
     flexDirection: 'row',
+  },
+  deleteFavouritesByIdContainer: {
+    flex: 1,
+    alignSelf: 'flex-end',
   },
   titleContainer: {
     flex: 1,
@@ -62,10 +71,15 @@ const style = StyleSheet.create({
   },
   rating: {
     fontSize: 15,
-  }
+  },
+  colorPrimary: {
+    color: '#ed1f30'
+  },
 });
 
-function CardView({ navigation, item }) {
+function CardView({ navigation, item, isFavourites, getFavourites }) {
+  const [favouritesClicked, setFavouritesClicked] = useState(false);
+
   let id = '';
   let name = '';
   let avatarStr = '';
@@ -75,16 +89,20 @@ function CardView({ navigation, item }) {
   let rating = '';
   let location = '';
   let displayPhone = '';
-  if (!_.isEmpty(item)) {
-    id = item.id;
-    name = item.name;
-    avatarStr = item.name[0].toUpperCase();
-    categories = item.categories;
-    imageUrl = item.image_url;
-    url = item.url;
-    rating = item.rating;
-    location = item.location.display_address.join(', ');
-    displayPhone = item.display_phone;
+
+  const cardViewItem = isFavourites === false ? item : item.item;
+  const _id = isFavourites === true ? item._id : '';
+
+  if (!_.isEmpty(cardViewItem)) {
+    id = cardViewItem.id;
+    name = cardViewItem.name;
+    avatarStr = cardViewItem.name[0].toUpperCase();
+    categories = cardViewItem.categories;
+    imageUrl = cardViewItem.image_url;
+    url = cardViewItem.url;
+    rating = cardViewItem.rating;
+    location = cardViewItem.location.display_address.join(', ');
+    displayPhone = cardViewItem.display_phone;
   }
 
   let subHeader = "";
@@ -118,10 +136,94 @@ function CardView({ navigation, item }) {
     });
   }
 
+  const handleLinkClick = () => {
+    Linking.openURL(url);
+  }
+
+  const handleFavouritesIconClick = () => {
+    setFavouritesClicked(true);
+
+    axios.post(
+      `${ROOT_URL}/favourites/add-to-favourites`,
+      {
+        item: item
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+        }
+      });
+  }
+
+  const renderFavouritesIcon = () => {
+    let favouritesIcon = (
+      <MaterialIcons style={{ marginRight: 10 }} name={'favorite-border'} size={40} color={'black'} onPress={handleFavouritesIconClick} />
+    );
+
+    if (favouritesClicked || isFavourites) {
+      favouritesIcon = (
+        <MaterialIcons style={{ marginRight: 10 }} name={'favorite'} size={40} color={style.colorPrimary.color} />
+      );
+    }
+
+    return favouritesIcon;
+  }
+
+  const handleDeleteFavouritesById = () => {
+    axios.delete(
+      `${ROOT_URL}/favourites/delete-favourites/${_id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+          setTimeout(() => {
+            getFavourites();
+          }, 500);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+        }
+      });
+  }
+
+  const renderDeleteFavouritesByIdButton = () => {
+    let deleteFavouritesByIdButton = null;
+
+    if (isFavourites) {
+      deleteFavouritesByIdButton = (
+        <View style={style.deleteFavouritesByIdContainer}>
+          <Entypo name="cross" size={35} color={'black'} onPress={handleDeleteFavouritesById} />
+        </View>
+      );
+    }
+
+    return deleteFavouritesByIdButton;
+  }
+
   return (
     <View style={style.container}>
       <Divder margin={5} />
-      <View style={style.avatarStrAndtitleContainer}>
+      {renderDeleteFavouritesByIdButton()}
+      <Divder margin={5} />
+      <View style={style.rowContainer}>
         <View style={style.circle}>
           <Text style={style.avatarStr} onPress={handleAvatarClick}>{avatarStr}</Text>
         </View>
@@ -153,6 +255,10 @@ function CardView({ navigation, item }) {
       <Divder margin={5} />
       <Text style={style.rating}>Rating: {rating}</Text>
       <Divder margin={5} />
+      <View style={style.rowContainer}>
+        {renderFavouritesIcon()}
+        <Entypo name="link" size={40} color={'black'} onPress={handleLinkClick} />
+      </View>
     </View>
   );
 }

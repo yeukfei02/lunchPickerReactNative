@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 import Home from './src/components/home/Home';
 import RandomFood from './src/components/randomFood/RandomFood';
@@ -17,29 +17,29 @@ function App() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName = '';
+            let icon = null;
 
             switch (route.name) {
               case 'Home':
-                iconName = focused ? 'ios-home' : 'ios-home';
+                icon = focused ? <MaterialIcons name={'home'} size={size} color={color} /> : <MaterialIcons name={'home'} size={size} color={color} />;
                 break;
               case 'Random food':
-                iconName = focused ? 'ios-list-box' : 'ios-list';
+                icon = focused ? <MaterialCommunityIcons name={'food'} size={size} color={color} /> : <MaterialCommunityIcons name={'food'} size={size} color={color} />;
                 break;
               case 'Favourites':
-                iconName = focused ? 'ios-heart' : 'ios-heart-empty';
+                icon = focused ? <MaterialIcons name={'favorite'} size={size} color={color} /> : <MaterialIcons name={'favorite'} size={size} color={color} />;
                 break;
               case 'Settings':
-                iconName = focused ? 'ios-settings' : 'ios-settings';
+                icon = focused ? <MaterialIcons name={'settings'} size={size} color={color} /> : <MaterialIcons name={'settings'} size={size} color={color} />;
                 break;
               case 'Contact us':
-                iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
+                icon = focused ? <AntDesign name={'questioncircle'} size={size} color={color} /> : <AntDesign name={'questioncircleo'} size={size} color={color} />;
                 break;
               default:
 
             }
 
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return icon;
           },
         })}
         tabBarOptions={{

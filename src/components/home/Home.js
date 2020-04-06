@@ -366,7 +366,9 @@ function Home({ navigation }) {
             onPress={handleSubmit}
             title="Submit"
             color={style.colorAccent.color}
-          />
+          >
+            Submit
+          </Button>
         );
       }
     }
@@ -394,7 +396,7 @@ function Home({ navigation }) {
     if (!_.isEmpty(resultList)) {
       displayResult = (
         <View>
-          <DisplayResult navigation={navigation} resultList={resultList} />
+          <DisplayResult navigation={navigation} resultList={resultList} isFavourites={false} />
         </View>
       );
     }

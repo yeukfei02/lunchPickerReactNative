@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -20,6 +21,18 @@ const style = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  radioButtonContainer: {
+    flex: 1,
+    marginTop: 50,
+    padding: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     backgroundColor: 'white',
   },
   colorPrimary: {
@@ -83,6 +96,7 @@ function RestaurantDetails({ navigation, id }) {
   return (
     <View>
       <Text>Restaurant Details</Text>
+      <Divder margin={10} />
       <Button
         onPress={handleBackToHome}
         title="Back to Home"
@@ -120,7 +134,7 @@ function ContactUs(props) {
       result = (
         <Button
           onPress={handleDonorboxClick}
-          title="donorbox"
+          title="Donorbox"
           color={style.colorPrimary.color}
         >
           Donorbox
@@ -130,7 +144,7 @@ function ContactUs(props) {
       result = (
         <Button
           onPress={handleBuyMeACoffeeClick}
-          title="buyMeACoffee"
+          title="Buy Me A Coffee"
           color={style.colorPrimary.color}
         >
           Buy Me A Coffee
@@ -143,14 +157,27 @@ function ContactUs(props) {
     return result;
   }
 
+  const handleGithubClick = () => {
+    Linking.openURL(`https://github.com/yeukfei02`);
+  }
+
+  const handleEmailClick = () => {
+    Linking.openURL(`mailto:yeukfei02@gmail.com`);
+  }
+
   const renderDiv = () => {
     let result = (
       <View>
         <View style={style.container}>
           <Text>Contact us via email or visit our github repo</Text>
+          <Divder margin={5} />
+          <View style={style.iconContainer}>
+            <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
+            <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
+          </View>
         </View>
 
-        <View style={style.container}>
+        <View style={style.radioButtonContainer}>
           <Text>Donate for lunch picker better features and development</Text>
 
           <RadioButton
