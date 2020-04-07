@@ -19,7 +19,7 @@ const style = StyleSheet.create({
     marginHorizontal: 30
   },
   titleStyle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   rowContainer: {
