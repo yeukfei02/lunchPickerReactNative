@@ -30,6 +30,9 @@ $ yarn run test
 
 // use eslint and prettier to format code
 $ yarn run lint
+
+// publish ios and android app to expo
+$ expo publish
 ```
 
 ## Contributing
