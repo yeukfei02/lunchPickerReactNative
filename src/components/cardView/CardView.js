@@ -220,7 +220,6 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
 
   return (
     <View style={style.container}>
-      <Divder margin={5} />
       {renderDeleteFavouritesByIdButton()}
       <Divder margin={5} />
       <View style={style.rowContainer}>

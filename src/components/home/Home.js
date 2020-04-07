@@ -24,13 +24,17 @@ const style = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
+    marginHorizontal: 30
+  },
+  rowContainer: {
+    flexDirection: 'row'
   },
   logo: {
-    width: '100%',
-    height: 180,
+    width: 310,
+    height: 200,
   },
   picker: {
-    width: 380,
+    width: 320,
     height: 30
   },
   colorPrimary: {
@@ -269,31 +273,34 @@ function Home({ navigation }) {
   const renderRadioButton = () => {
     return (
       <View>
-        <RadioButton
-          value="places"
-          status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
-          onPress={() => handleRadioButton('places')}
-        />
-        <Text>Places</Text>
+        <View style={style.rowContainer}>
+          <RadioButton
+            value="places"
+            status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
+            onPress={() => handleRadioButton('places')}
+          />
+          <Text style={{ marginTop: 8, marginLeft: 5 }}>Places</Text>
+        </View>
+        <Divder margin={5} />
         {
           latitude !== 0 && longitude !== 0 ?
-            <View>
+            <View style={style.rowContainer}>
               <RadioButton
                 value="currentLocation"
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
                 onPress={() => handleRadioButton('currentLocation')}
               />
-              <Text>Current Location</Text>
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>Current Location</Text>
             </View>
             :
-            <View>
+            <View style={style.rowContainer}>
               <RadioButton
                 value="currentLocation"
                 disabled={true}
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
                 onPress={() => handleRadioButton('currentLocation')}
               />
-              <Text>Current Location</Text>
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>Current Location</Text>
             </View>
         }
       </View>
@@ -460,20 +467,19 @@ function Home({ navigation }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Divder margin={5} />
         <Image
           style={style.logo}
           source={logo}
-          resizeMode={'cover'}
+          resizeMode={'center'}
         />
-        <Divder margin={5} />
         {renderSelectDropdown()}
+        <Divder margin={5} />
         {renderRadioButton()}
         <Divder margin={5} />
         {renderLocationInput()}
-        <Divder margin={5} />
+        <Divder margin={8} />
         {renderSubmitButton()}
-        <Divder margin={5} />
+        <Divder margin={8} />
         {renderClearButton()}
       </View>
       <Divder margin={5} />

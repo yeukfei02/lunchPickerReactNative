@@ -22,6 +22,10 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    marginHorizontal: 30
+  },
+  titleStyle: {
+    fontWeight: 'bold'
   },
   iconContainer: {
     flex: 1,
@@ -34,6 +38,7 @@ const style = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
+    marginHorizontal: 30
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -108,7 +113,7 @@ function RestaurantDetails({ navigation, id }) {
   );
 }
 
-function ContactUs(props) {
+function ContactUs({ navigation, route }) {
   const [radioButtonValue, setRadioButtonValue] = useState('');
 
   const handleRadioButton = (radioButtonValue) => {
@@ -169,7 +174,7 @@ function ContactUs(props) {
     let result = (
       <View>
         <View style={style.container}>
-          <Text>Contact us via email or visit our github repo</Text>
+          <Text style={style.titleStyle}>Contact us via email or visit our github repo</Text>
           <Divder margin={5} />
           <View style={style.iconContainer}>
             <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
@@ -178,7 +183,9 @@ function ContactUs(props) {
         </View>
 
         <View style={style.radioButtonContainer}>
-          <Text>Donate for lunch picker better features and development</Text>
+          <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
+
+          <Divder margin={5} />
 
           <RadioButton
             value="places"
@@ -207,10 +214,10 @@ function ContactUs(props) {
       </View>
     );
 
-    if (!_.isEmpty(props.route) && !_.isEmpty(props.route.params) && !_.isEmpty(props.route.params.id)) {
+    if (!_.isEmpty(route) && !_.isEmpty(route.params) && !_.isEmpty(route.params.id)) {
       result = (
         <View style={style.container}>
-          <RestaurantDetails navigation={props.navigation} id={props.route.params.id} />
+          <RestaurantDetails navigation={navigation} id={route.params.id} />
         </View>
       );
     }

@@ -16,11 +16,10 @@ const style = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 100,
+    marginTop: 50,
     padding: 20,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    backgroundColor: 'white',
   },
   yourTotalFavouritesText: {
     fontSize: 18,
