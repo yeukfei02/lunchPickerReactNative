@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/ic_launcher.png",
     "splash": {
@@ -23,6 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question."
   }
 }
