@@ -24,6 +24,9 @@ const style = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 30
   },
+  titleStyle: {
+    fontWeight: 'bold'
+  },
   iconContainer: {
     flex: 1,
     flexDirection: 'row'
@@ -171,7 +174,7 @@ function ContactUs({ navigation, route }) {
     let result = (
       <View>
         <View style={style.container}>
-          <Text>Contact us via email or visit our github repo</Text>
+          <Text style={style.titleStyle}>Contact us via email or visit our github repo</Text>
           <Divder margin={5} />
           <View style={style.iconContainer}>
             <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
@@ -180,7 +183,9 @@ function ContactUs({ navigation, route }) {
         </View>
 
         <View style={style.radioButtonContainer}>
-          <Text>Donate for lunch picker better features and development</Text>
+          <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
+
+          <Divder margin={5} />
 
           <RadioButton
             value="places"
