@@ -26,7 +26,7 @@ const style = StyleSheet.create({
     marginHorizontal: 30
   },
   titleStyle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold'
   },
   iconContainer: {
@@ -56,16 +56,20 @@ const style = StyleSheet.create({
     marginHorizontal: 30
   },
   restaurantDetailsTitleText: {
+    fontSize: 16,
     fontWeight: 'bold'
   },
   restaurantDetailsValueText: {
+    fontSize: 16,
     fontWeight: 'normal'
   },
   restaurantDetailsUrlValueText: {
+    fontSize: 16,
     fontWeight: 'normal',
     color: '#ed1f30',
   },
   restaurantDetailsLocationValueText: {
+    fontSize: 16,
     fontWeight: 'normal',
     color: '#ed1f30',
     textDecorationLine: 'underline'
@@ -163,7 +167,7 @@ function RestaurantDetails({ navigation, id }) {
           color={style.colorPrimary.color}
         >
           Back to Home
-      </Button>
+        </Button>
       </View>
     </View >
   );
