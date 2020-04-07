@@ -48,11 +48,27 @@ const style = StyleSheet.create({
   restaurantDetailsContainer: {
     flex: 1,
     marginTop: 10,
+    marginBottom: 20,
     padding: 20,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
+  },
+  restaurantDetailsTitleText: {
+    fontWeight: 'bold'
+  },
+  restaurantDetailsValueText: {
+    fontWeight: 'normal'
+  },
+  restaurantDetailsUrlValueText: {
+    fontWeight: 'normal',
+    color: '#ed1f30',
+  },
+  restaurantDetailsLocationValueText: {
+    fontWeight: 'normal',
+    color: '#ed1f30',
+    textDecorationLine: 'underline'
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -112,6 +128,14 @@ function RestaurantDetails({ navigation, id }) {
     navigation.navigate('Home');
   }
 
+  const handleOpenUrl = () => {
+    Linking.openURL(`${restaurantDetails.url}`);
+  }
+
+  const handleLocationClick = () => {
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${locationStr}`);
+  }
+
   return (
     <View>
       <View style={{ marginTop: 100 }}>
@@ -121,9 +145,17 @@ function RestaurantDetails({ navigation, id }) {
           dotColor={style.colorPrimary.color}
           inactiveDotColor="lightgray" />
       </View>
-      <Divder margin={10} />
+      <Divder margin={8} />
       <View style={style.restaurantDetailsContainer}>
         <Text style={style.titleStyle}>Restaurant details</Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Phone: <Text style={style.restaurantDetailsValueText}>{restaurantDetails.phone}</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
         <Divder margin={10} />
         <Button
           onPress={handleBackToHome}
@@ -133,7 +165,7 @@ function RestaurantDetails({ navigation, id }) {
           Back to Home
       </Button>
       </View>
-    </View>
+    </View >
   );
 }
 
