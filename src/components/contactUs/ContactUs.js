@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { SliderBox } from "react-native-image-slider-box";
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -25,6 +26,7 @@ const style = StyleSheet.create({
     marginHorizontal: 30
   },
   titleStyle: {
+    fontSize: 16,
     fontWeight: 'bold'
   },
   iconContainer: {
@@ -39,6 +41,34 @@ const style = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
+  },
+  rowContainer: {
+    flexDirection: 'row'
+  },
+  restaurantDetailsContainer: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 20,
+    padding: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
+    marginHorizontal: 30
+  },
+  restaurantDetailsTitleText: {
+    fontWeight: 'bold'
+  },
+  restaurantDetailsValueText: {
+    fontWeight: 'normal'
+  },
+  restaurantDetailsUrlValueText: {
+    fontWeight: 'normal',
+    color: '#ed1f30',
+  },
+  restaurantDetailsLocationValueText: {
+    fontWeight: 'normal',
+    color: '#ed1f30',
+    textDecorationLine: 'underline'
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -98,18 +128,44 @@ function RestaurantDetails({ navigation, id }) {
     navigation.navigate('Home');
   }
 
+  const handleOpenUrl = () => {
+    Linking.openURL(`${restaurantDetails.url}`);
+  }
+
+  const handleLocationClick = () => {
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${locationStr}`);
+  }
+
   return (
     <View>
-      <Text>Restaurant Details</Text>
-      <Divder margin={10} />
-      <Button
-        onPress={handleBackToHome}
-        title="Back to Home"
-        color={style.colorPrimary.color}
-      >
-        Back to Home
+      <View style={{ marginTop: 100 }}>
+        <SliderBox
+          images={photosList}
+          sliderBoxHeight={250}
+          dotColor={style.colorPrimary.color}
+          inactiveDotColor="lightgray" />
+      </View>
+      <Divder margin={8} />
+      <View style={style.restaurantDetailsContainer}>
+        <Text style={style.titleStyle}>Restaurant details</Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Phone: <Text style={style.restaurantDetailsValueText}>{restaurantDetails.phone}</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
+        <Divder margin={10} />
+        <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
+        <Divder margin={10} />
+        <Button
+          onPress={handleBackToHome}
+          title="Back to Home"
+          color={style.colorPrimary.color}
+        >
+          Back to Home
       </Button>
-    </View>
+      </View>
+    </View >
   );
 }
 
@@ -187,28 +243,38 @@ function ContactUs({ navigation, route }) {
 
           <Divder margin={5} />
 
-          <RadioButton
-            value="places"
-            status={radioButtonValue === 'donorbox' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioButton('donorbox')}
-          />
-          <Text>Donorbox</Text>
-
-          <RadioButton
-            value="places"
-            status={radioButtonValue === 'buyMeACoffee' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioButton('buyMeACoffee')}
-          />
-          <Text>Buy Me A Coffee</Text>
-
-          <RadioButton
-            value="places"
-            status={radioButtonValue === 'stripe' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioButton('stripe')}
-          />
-          <Text>Stripe</Text>
+          <View style={style.rowContainer}>
+            <RadioButton
+              value="places"
+              status={radioButtonValue === 'donorbox' ? 'checked' : 'unchecked'}
+              onPress={() => handleRadioButton('donorbox')}
+            />
+            <Text style={{ marginTop: 8, marginLeft: 8 }}>Donorbox</Text>
+          </View>
 
           <Divder margin={5} />
+
+          <View style={style.rowContainer}>
+            <RadioButton
+              value="places"
+              status={radioButtonValue === 'buyMeACoffee' ? 'checked' : 'unchecked'}
+              onPress={() => handleRadioButton('buyMeACoffee')}
+            />
+            <Text style={{ marginTop: 8, marginLeft: 8 }}>Buy Me A Coffee</Text>
+          </View>
+
+          <Divder margin={5} />
+
+          <View style={style.rowContainer}>
+            <RadioButton
+              value="places"
+              status={radioButtonValue === 'stripe' ? 'checked' : 'unchecked'}
+              onPress={() => handleRadioButton('stripe')}
+            />
+            <Text style={{ marginTop: 8, marginLeft: 8 }}>Stripe</Text>
+          </View>
+
+          <Divder margin={8} />
           {renderButton()}
         </View>
       </View>
@@ -216,7 +282,7 @@ function ContactUs({ navigation, route }) {
 
     if (!_.isEmpty(route) && !_.isEmpty(route.params) && !_.isEmpty(route.params.id)) {
       result = (
-        <View style={style.container}>
+        <View>
           <RestaurantDetails navigation={navigation} id={route.params.id} />
         </View>
       );

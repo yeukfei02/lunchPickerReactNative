@@ -9,11 +9,8 @@ function DisplayResult({ navigation, resultList, isFavourites, getFavourites }) 
       <FlatList
         data={resultList}
         renderItem={({ item }) => {
-          const index = resultList.indexOf(item);
-
           return (
             <CardView
-              key={index}
               navigation={navigation}
               item={item}
               isFavourites={isFavourites}
