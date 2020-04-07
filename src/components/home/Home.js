@@ -24,10 +24,11 @@ const style = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
+    marginHorizontal: 30
   },
   logo: {
-    width: '100%',
-    height: 180,
+    width: 310,
+    height: 200,
   },
   picker: {
     width: 380,
@@ -460,13 +461,11 @@ function Home({ navigation }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Divder margin={5} />
         <Image
           style={style.logo}
           source={logo}
-          resizeMode={'cover'}
+          resizeMode={'center'}
         />
-        <Divder margin={5} />
         {renderSelectDropdown()}
         {renderRadioButton()}
         <Divder margin={5} />
