@@ -165,11 +165,11 @@ function RandomFood({ navigation }) {
       refreshButton = (
         <Button
           onPress={handleRefresh}
-          title="Refresh"
+          title="Loading..."
           disabled={true}
           color={style.colorPrimary.color}
         >
-          Refresh
+          Loading...
         </Button>
       );
     } else {
