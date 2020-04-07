@@ -36,7 +36,7 @@ $ yarn run lint
 ```
 
 ```
-// publish ios and android app to expo
+// publish project to expo
 $ expo publish
 
 // make ios ipa
@@ -44,6 +44,9 @@ $ expo build:ios
 
 // make android apk
 $ expo build:android
+
+// make android app bundle
+$ expo build:android -t app-bundle
 
 // make web bundle
 $ expo build:web
