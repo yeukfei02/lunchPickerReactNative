@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "LunchPicker",
-    "slug": "lunchPickerReactNative",
+    "name": "LunchPickerLite",
+    "slug": "LunchPickerLite",
     "platforms": [
       "ios",
       "android",
