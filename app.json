@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/ic_launcher.png",
     "splash": {
@@ -21,8 +21,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "sdkVersion": "37.0.0",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.donaldwu.lunchpickerlite",
+      "buildNumber": "1.0.4"
+    },
+    "android": {
+      "package": "com.donaldwu.lunchpickerlite",
+      "versionCode": 1
     },
     "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question."
   }

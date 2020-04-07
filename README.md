@@ -33,9 +33,23 @@ $ yarn run test
 
 // use eslint and prettier to format code
 $ yarn run lint
+```
 
+```
 // publish ios and android app to expo
 $ expo publish
+
+// make ios ipa
+$ expo build:ios
+
+// make android apk
+$ expo build:android
+
+// make web bundle
+$ expo build:web
+
+// get current build status
+$ expo build:status
 ```
 
 ## Contributing
