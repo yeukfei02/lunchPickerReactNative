@@ -18,35 +18,43 @@ import Divider from '../components/divider/Divider';
 describe('main.test', () => {
   describe('render test', () => {
     it('Home', () => {
-      shallow(<Home />);
+      const wrapper = shallow(<Home />);
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('RandomFood', () => {
-      shallow(<RandomFood />);
+      const wrapper = shallow(<RandomFood />);
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('Favourites', () => {
-      shallow(<Favourites />);
+      const wrapper = shallow(<Favourites />);
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('Settings', () => {
-      shallow(<Settings />);
+      const wrapper = shallow(<Settings />);
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('ContactUs', () => {
-      shallow(<ContactUs />);
+      const wrapper = shallow(<ContactUs />);
+      expect(wrapper).toMatchSnapshot();
     });
 
-    it('CardView', () => {
-      shallow(<CardView />);
-    });
+    // it('CardView', () => {
+    //   const wrapper = shallow(<CardView />);
+    //   expect(wrapper).toMatchSnapshot();
+    // });
 
     it('DisplayResult', () => {
-      shallow(<DisplayResult />);
+      const wrapper = shallow(<DisplayResult />);
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('Divider', () => {
-      shallow(<Divider />);
+      const wrapper = shallow(<Divider />);
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });
