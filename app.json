@@ -4,10 +4,9 @@
     "slug": "LunchPickerLite",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/ic_launcher.png",
     "splash": {
@@ -25,12 +24,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.donaldwu.lunchpickerlite",
-      "buildNumber": "1.0.6"
+      "buildNumber": "1.0.7"
     },
     "android": {
       "package": "com.donaldwu.lunchpickerlite",
-      "versionCode": 4
+      "versionCode": 5
     },
-    "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question."
+    "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question.",
+    "privacy": "public",
+    "githubUrl": "https://github.com/yeukfei02/lunchPickerReactNative"
   }
 }

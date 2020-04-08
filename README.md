@@ -48,9 +48,6 @@ $ expo build:android
 // make android app bundle
 $ expo build:android -t app-bundle
 
-// make web bundle
-$ expo build:web
-
 // get current build status
 $ expo build:status
 ```
