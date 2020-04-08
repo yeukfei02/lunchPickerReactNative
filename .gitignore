@@ -15,3 +15,5 @@ web-report/
 
 /coverage
 .env
+
+/src/test/__snapshots__
