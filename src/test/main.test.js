@@ -3,8 +3,6 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, mount } from "enzyme";
 
-Enzyme.configure({ adapter: new Adapter() });
-
 import Home from '../components/home/Home';
 import RandomFood from '../components/randomFood/RandomFood';
 import Favourites from '../components/favourites/Favourites';
@@ -14,6 +12,8 @@ import ContactUs from '../components/contactUs/ContactUs';
 import CardView from '../components/cardView/CardView';
 import DisplayResult from '../components/displayResult/DisplayResult';
 import Divider from '../components/divider/Divider';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('main.test', () => {
   describe('render test', () => {
