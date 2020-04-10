@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-nativ
 import { RadioButton } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
+import { Table, Row, Rows } from 'react-native-table-component';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -45,7 +46,7 @@ const style = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row'
   },
-  restaurantDetailsContainer: {
+  cardViewContainer: {
     flex: 1,
     marginTop: 10,
     marginBottom: 20,
@@ -73,6 +74,17 @@ const style = StyleSheet.create({
     fontWeight: 'normal',
     color: '#ed1f30',
     textDecorationLine: 'underline'
+  },
+  tableHead: {
+    height: 40,
+    backgroundColor: '#ed1f30',
+  },
+  tableHeadText: {
+    margin: 6,
+    color: 'white'
+  },
+  tableRowText: {
+    margin: 6,
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -140,6 +152,104 @@ function RestaurantDetails({ navigation, id }) {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${locationStr}`);
   }
 
+  const renderOpeningTimeTable = () => {
+    let table = null;
+
+    let formattedDataList = [];
+    let hoursType = '';
+    let isOpenNow = '';
+
+    if (!_.isEmpty(restaurantDetails)) {
+      const hours = restaurantDetails.hours;
+      if (!_.isEmpty(hours)) {
+        hours.forEach((item, i) => {
+          const open = item.open;
+          if (!_.isEmpty(open)) {
+            open.forEach((item, i) => {
+              let data = [];
+
+              switch (item.day) {
+                case 0:
+                  item.day = "Mon";
+                  break;
+                case 1:
+                  item.day = "Tue";
+                  break;
+                case 2:
+                  item.day = "Wed";
+                  break;
+                case 3:
+                  item.day = "Thu";
+                  break;
+                case 4:
+                  item.day = "Fri";
+                  break;
+                case 5:
+                  item.day = "Sat";
+                  break;
+                case 6:
+                  item.day = "Sun";
+                  break;
+                default:
+
+              }
+              if (!item.start.includes(':')) {
+                item.start = `${item.start.substring(0, 2)}:${item.start.substring(2)}`;
+              }
+              if (!item.end.includes(':')) {
+                item.end = `${item.end.substring(0, 2)}:${item.end.substring(2)}`;
+              }
+              item.is_overnight = item.is_overnight ? 'yes' : 'no';
+
+              data.push(item.day);
+              data.push(item.start);
+              data.push(item.end);
+              data.push(item.is_overnight);
+              formattedDataList.push(data);
+            });
+          }
+
+          hoursType = item.hours_type;
+          isOpenNow = item.is_open_now;
+        });
+      }
+    }
+
+    const tableHead = [
+      'Days',
+      'Start',
+      'End',
+      'Is overnight'
+    ];
+    const tableData = formattedDataList;
+    if (!_.isEmpty(tableHead) && !_.isEmpty(tableData)) {
+      table = (
+        <View>
+          <Table borderStyle={{ borderWidth: 1.5, borderColor: 'black' }}>
+            <Row data={tableHead} style={style.tableHead} textStyle={style.tableHeadText} />
+            <Rows data={tableData} textStyle={style.tableRowText} />
+          </Table>
+          <Divder margin={5} />
+          <View style={style.cardViewContainer}>
+            <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
+            <Divder margin={10} />
+
+            <Divder margin={10} />
+            <Button
+              onPress={handleBackToHome}
+              title="Back to Home"
+              color={style.colorPrimary.color}
+            >
+              Back to Home
+            </Button>
+          </View>
+        </View>
+      );
+    }
+
+    return table;
+  }
+
   return (
     <View>
       <View style={{ marginTop: 100 }}>
@@ -150,7 +260,7 @@ function RestaurantDetails({ navigation, id }) {
           inactiveDotColor="lightgray" />
       </View>
       <Divder margin={8} />
-      <View style={style.restaurantDetailsContainer}>
+      <View style={style.cardViewContainer}>
         <Text style={style.titleStyle}>Restaurant details</Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
@@ -160,15 +270,8 @@ function RestaurantDetails({ navigation, id }) {
         <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
-        <Divder margin={10} />
-        <Button
-          onPress={handleBackToHome}
-          title="Back to Home"
-          color={style.colorPrimary.color}
-        >
-          Back to Home
-        </Button>
       </View>
+      {renderOpeningTimeTable()}
     </View >
   );
 }
