@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { RadioButton, Checkbox } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -233,7 +233,13 @@ function RestaurantDetails({ navigation, id }) {
           <View style={style.cardViewContainer}>
             <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
             <Divder margin={10} />
-
+            <View style={style.rowContainer}>
+              <Checkbox
+                status={isOpenNow ? 'checked' : 'unchecked'}
+                disabled={true}
+              />
+              <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
+            </View>
             <Divder margin={10} />
             <Button
               onPress={handleBackToHome}
