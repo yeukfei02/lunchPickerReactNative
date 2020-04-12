@@ -5,9 +5,10 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
 import { LiteCreditCardInput } from "react-native-credit-card-input";
+import Stripe from 'react-native-stripe-api';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl, log, getStripeApiKey } from '../../common/Common';
 
 import Divder from '../divider/Divider';
 
@@ -35,17 +36,18 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  radioButtonContainer: {
+  donateCardViewContainer: {
     flex: 1,
     marginTop: 50,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
   rowContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignSelf: 'flex-start'
   },
   cardViewContainer: {
     flex: 1,
@@ -293,11 +295,23 @@ function ContactUs({ navigation, route }) {
   const [currencyList, setCurrencyList] = useState([]);
   const [amount, setAmount] = useState('0');
   const [currency, setCurrency] = useState('');
+  const [token, setToken] = useState('');
+  const [card, setCard] = useState({});
+
   const [cardValid, setCardValid] = useState(false);
+  const [cardInfoData, setCardInfoData] = useState(null);
 
   useEffect(() => {
     getCurrencyList();
   }, []);
+
+  useEffect(() => {
+    if (!_.isEmpty(amount) && !_.isEmpty(currency) && !_.isEmpty(token) && !_.isEmpty(card)) {
+      creditCardPayment(amount, currency, token, card);
+      setToken('');
+      setCard({});
+    }
+  }, [amount, currency, token, card]);
 
   const getCurrencyList = () => {
     const currencyList = [
@@ -330,9 +344,22 @@ function ContactUs({ navigation, route }) {
     Linking.openURL('https://www.buymeacoffee.com/yeukfei02');
   }
 
-  const handlePayNow = () => {
-    if (!_.isEmpty(amount) && !_.isEmpty(currency)) {
-      creditCardPayment(amount, currency, null, null);
+  const handlePayNow = async () => {
+    if (!_.isEmpty(amount) && !_.isEmpty(currency) && cardValid) {
+      const stripeApiKey = getStripeApiKey();
+      const apiKey = stripeApiKey;
+      const client = new Stripe(apiKey);
+
+      const token = await client.createToken({
+        number: cardInfoData.values.number,
+        exp_month: cardInfoData.values.expiry.substring(0, 2),
+        exp_year: cardInfoData.values.expiry.substring(3),
+        cvc: cardInfoData.values.cvc,
+      });
+      if (!_.isEmpty(token)) {
+        setToken(token.id);
+        setCard(token.card);
+      }
     }
   }
 
@@ -461,8 +488,10 @@ function ContactUs({ navigation, route }) {
   const handleCreditCardInputChange = (inputData) => {
     if (!_.isEmpty(inputData)) {
       if (inputData.valid) {
+        setCardInfoData(inputData);
         setCardValid(true);
       } else {
+        setCardInfoData(null);
         setCardValid(false);
       }
     }
@@ -473,7 +502,7 @@ function ContactUs({ navigation, route }) {
       `${ROOT_URL}/stripe/credit-card-payment`,
       {
         amount: Math.round(amount * 100),
-        currency: currency.value,
+        currency: currency,
         token: token,
         card: card
       },
@@ -507,7 +536,7 @@ function ContactUs({ navigation, route }) {
           </View>
         </View>
 
-        <View style={style.radioButtonContainer}>
+        <View style={style.donateCardViewContainer}>
           <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
 
           <Divder margin={5} />
