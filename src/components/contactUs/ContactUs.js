@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Button, Linking } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Button, TextInput, Picker, Linking } from 'react-native';
 import { RadioButton, Checkbox } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
+import { LiteCreditCardInput } from "react-native-credit-card-input";
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -74,6 +75,10 @@ const style = StyleSheet.create({
     fontWeight: 'normal',
     color: '#ed1f30',
     textDecorationLine: 'underline'
+  },
+  picker: {
+    width: 320,
+    height: 30
   },
   tableHead: {
     height: 40,
@@ -285,8 +290,36 @@ function RestaurantDetails({ navigation, id }) {
 function ContactUs({ navigation, route }) {
   const [radioButtonValue, setRadioButtonValue] = useState('');
 
+  const [currencyList, setCurrencyList] = useState([]);
+  const [amount, setAmount] = useState('0');
+  const [currency, setCurrency] = useState('');
+  const [cardValid, setCardValid] = useState(false);
+
+  useEffect(() => {
+    getCurrencyList();
+  }, []);
+
+  const getCurrencyList = () => {
+    const currencyList = [
+      { value: 'hkd', label: 'Hong Kong Dollar (HKD)' },
+      { value: 'sgd', label: 'Singapore Dollar (SGD)' },
+      { value: 'gbp', label: 'British Dollar Pound (GBP)' },
+      { value: 'cny', label: 'Chinese Renminbi Yuan (CNY)' },
+      { value: 'usd', label: 'US Dollar (USD)' },
+    ];
+    setCurrencyList(currencyList);
+  }
+
   const handleRadioButton = (radioButtonValue) => {
     setRadioButtonValue(radioButtonValue);
+  }
+
+  const handleGithubClick = () => {
+    Linking.openURL(`https://github.com/yeukfei02`);
+  }
+
+  const handleEmailClick = () => {
+    Linking.openURL(`mailto:yeukfei02@gmail.com`);
   }
 
   const handleDonorboxClick = () => {
@@ -297,15 +330,17 @@ function ContactUs({ navigation, route }) {
     Linking.openURL('https://www.buymeacoffee.com/yeukfei02');
   }
 
-  const handleStripeClick = () => {
-
+  const handlePayNow = () => {
+    if (!_.isEmpty(amount) && !_.isEmpty(currency)) {
+      creditCardPayment(amount, currency, null, null);
+    }
   }
 
-  const renderButton = () => {
-    let result = null;
+  const renderResultDiv = () => {
+    let resultDiv = null;
 
     if (_.isEqual(radioButtonValue, 'donorbox')) {
-      result = (
+      resultDiv = (
         <Button
           onPress={handleDonorboxClick}
           title="Donorbox"
@@ -315,7 +350,7 @@ function ContactUs({ navigation, route }) {
         </Button>
       );
     } else if (_.isEqual(radioButtonValue, 'buyMeACoffee')) {
-      result = (
+      resultDiv = (
         <Button
           onPress={handleBuyMeACoffeeClick}
           title="Buy Me A Coffee"
@@ -325,18 +360,139 @@ function ContactUs({ navigation, route }) {
         </Button>
       );
     } else if (_.isEqual(radioButtonValue, 'stripe')) {
-
+      resultDiv = (
+        <View>
+          <TextInput
+            style={{ height: 40, borderColor: 'black', borderWidth: 1 }}
+            onChangeText={(number) => handleAmountChange(number)}
+            value={amount}
+            keyboardType="numeric"
+          />
+          <Divder margin={5} />
+          <Picker
+            selectedValue={currency}
+            style={style.picker}
+            onValueChange={(itemValue, itemIndex) => handleCurrencyChange(itemValue)}
+          >
+            {renderDropdownItem()}
+          </Picker>
+          <Divder margin={5} />
+          <LiteCreditCardInput onChange={handleCreditCardInputChange} />
+          <Divder margin={5} />
+          {renderPaynowButton()}
+        </View>
+      );
     }
 
-    return result;
+    return resultDiv;
   }
 
-  const handleGithubClick = () => {
-    Linking.openURL(`https://github.com/yeukfei02`);
+  const renderDropdownItem = () => {
+    let dropdownItemList = null;
+
+    if (!_.isEmpty(currencyList)) {
+      dropdownItemList = currencyList.map((item, i) => {
+        return (
+          <Picker.Item key={i} label={item.label} value={item.value} />
+        );
+      })
+    }
+
+    return dropdownItemList;
   }
 
-  const handleEmailClick = () => {
-    Linking.openURL(`mailto:yeukfei02@gmail.com`);
+  const renderPaynowButton = () => {
+    let paynowButton = (
+      <Button
+        onPress={handlePayNow}
+        title="Pay now"
+        color={style.colorPrimary.color}
+        disabled={true}
+      >
+        Pay now
+      </Button>
+    );
+
+    if (!_.isEmpty(amount) && !_.isEmpty(currency) && cardValid) {
+      paynowButton = (
+        <Button
+          onPress={handlePayNow}
+          title="Pay now"
+          color={style.colorPrimary.color}
+        >
+          Pay now
+        </Button>
+      );
+    }
+
+    return paynowButton;
+  }
+
+  const handleAmountChange = (number) => {
+    setAmount(number);
+  }
+
+  const handleCurrencyChange = (selectedCurrency) => {
+    setCurrency(selectedCurrency);
+
+    if (!_.isEmpty(selectedCurrency)) {
+      switch (selectedCurrency) {
+        case 'hkd':
+          setAmount('3');
+          break;
+        case 'sgd':
+          setAmount('1');
+          break;
+        case 'gbp':
+          setAmount('1');
+          break;
+        case 'cny':
+          setAmount('3');
+          break;
+        case 'usd':
+          setAmount('1');
+          break;
+        default:
+
+      }
+    }
+  }
+
+  const handleCreditCardInputChange = (inputData) => {
+    if (!_.isEmpty(inputData)) {
+      if (inputData.valid) {
+        setCardValid(true);
+      } else {
+        setCardValid(false);
+      }
+    }
+  }
+
+  const creditCardPayment = (amount, currency, token, card) => {
+    axios.post(
+      `${ROOT_URL}/stripe/credit-card-payment`,
+      {
+        amount: Math.round(amount * 100),
+        currency: currency.value,
+        token: token,
+        card: card
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((response) => {
+        if (!_.isEmpty(response)) {
+          log("response = ", response);
+        }
+      })
+      .catch((error) => {
+        if (!_.isEmpty(error)) {
+          log("error = ", error);
+        }
+      });
   }
 
   const renderDiv = () => {
@@ -388,7 +544,7 @@ function ContactUs({ navigation, route }) {
           </View>
 
           <Divder margin={8} />
-          {renderButton()}
+          {renderResultDiv()}
         </View>
       </View>
     );
