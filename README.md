@@ -7,6 +7,8 @@ If you’re a working software engineer, you’ve probably encountered with one 
 
 Lunch picker is the tool you’ll turn to to answer this question.
 
+[<img src="https://github.com/yeukfei02/lunchPickerReactNative/blob/master/google-play-badge.png" width="30%" height="30%">](https://play.google.com/store/apps/details?id=com.donaldwu.lunchpickerlite)
+
 ## Requirement:
  - install expo-cli
  - install yarn
