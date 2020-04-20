@@ -27,9 +27,6 @@ $ yarn run android
 // expo start ios
 $ yarn run ios
 
-// expo start web
-$ yarn run web
-
 // run test case
 $ yarn run test
 
