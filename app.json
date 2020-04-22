@@ -8,9 +8,9 @@
     ],
     "version": "1.1.5",
     "orientation": "portrait",
-    "icon": "./assets/ic_launcher.png",
+    "icon": "./assets/appIcon.png",
     "splash": {
-      "image": "./assets/ic_launcher_round.png",
+      "image": "./assets/appIcon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
