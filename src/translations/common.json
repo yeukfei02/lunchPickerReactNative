@@ -1,0 +1,120 @@
+{
+  "eng": {
+    "translation": {
+      "home": "Home",
+      "randomFood": "Random food",
+      "randomFoodMapView": "Random food map view",
+      "favourites": "Favourites",
+      "settings": "Settings",
+      "contactUs": "Contact us",
+
+      "selectTheFoodYouWant": "Select the food you want...",
+      "places": "Places",
+      "currentLocation": "Current Location",
+      "currentLocationWaitForBrowserDetection": "Current Location (wait for browser detection)",
+      "enterLocation":"Enter location...",
+      "submit": "Submit",
+      "clear": "Clear",
+      "randomFoodCategory": "Random food category:",
+
+      "useRandomFoodCategory": "Use random food category",
+      "sortedByRating": "Sorted by rating",
+      "sortedByDistance": "Sorted by distance",
+
+      "currentFoodCategory": "Current food category:",
+      "refresh": "Refresh",
+      "loading": "Loading...",
+
+      "yourTotalFavourites": "Your total favourites:",
+      "deleteAllFavourites": "Delete all favourites",
+      "thereAreNoResult": "There are no result.",
+
+      "setting": "Setting",
+      "subscribeMessage": "Subscribe message",
+      "changeLanguage": "Change Language",
+      "selectLanguage": "Select language",
+      "english": "English",
+      "chinese": "Chinese",
+
+      "contactTitle": "Contact us via email or visit our github repo",
+      "donateTitle": "Donate for lunch picker better features and development",
+      "donate": "Donate",
+      "buyMeACoffee": "Buy me a coffee",
+      "amount": "Amount",
+      "enterAmount": "Enter amount",
+      "selectCurrency": "Select currency",
+      "payNow": "Pay now",
+
+      "location": "Location:",
+      "phone": "Phone:",
+      "rating": "Rating:",
+      "review": "Review:",
+
+      "restaurantDetails": "Restaurant details",
+      "name": "Name:",
+      "url": "Url:",
+      "hoursType": "Hours Type:",
+      "isOpenNow": "is open now",
+      "backToHome": "Back to Home"
+    }
+  },
+  "chi": {
+    "translation": {
+      "home": "主頁",
+      "randomFood": "隨機食物",
+      "randomFoodMapView": "隨機食物地圖視圖",
+      "favourites": "我的最愛",
+      "settings": "設定",
+      "contactUs": "聯繫我們",
+
+      "selectTheFoodYouWant": "選擇你想要的食物...",
+      "places": "地點",
+      "currentLocation": "當前位置",
+      "currentLocationWaitForBrowserDetection": "當前位置 (等待瀏覽器偵查)",
+      "enterLocation":"輸入位置...",
+      "submit": "提交",
+      "clear": "清除",
+      "randomFoodCategory": "隨機食物類別:",
+
+      "useRandomFoodCategory": "使用隨機食物類別",
+      "sortedByRating": "按評分排序",
+      "sortedByDistance": "按距離排序",
+
+      "currentFoodCategory": "當前食品類別:",
+      "refresh": "更新",
+      "loading": "等待中...",
+
+      "yourTotalFavourites": "全部我的最愛:",
+      "deleteAllFavourites": "刪除所有我的最愛",
+      "thereAreNoResult": "沒有結果",
+
+      "setting": "設定",
+      "subscribeMessage": "訂閱通知",
+      "changeLanguage": "變更語言",
+      "selectLanguage": "選擇語言",
+      "english": "英文",
+      "chinese": "中文",
+
+      "contactTitle": "通過電子郵件聯繫我們或訪問我們的github",
+      "donateTitle": "為lunch picker捐贈 將來有更好的功能和發展",
+      "donate": "捐贈",
+      "buyMeACoffee": "給我買杯咖啡",
+      "amount": "數量",
+      "enterAmount": "輸入金額",
+      "selectCurrency": "選擇貨幣",
+      "payNow": "付款",
+
+      "location": "地點:",
+      "phone": "電話:",
+      "rating": "評分:",
+      "review": "評論:",
+
+      "restaurantDetails": "餐廳詳情",
+      "name": "姓名:",
+      "url": "連結:",
+      "hoursType": "營業時間類型:",
+      "isOpenNow": "現在開放",
+      "backToHome": "回到首頁"
+    }
+  }
+}

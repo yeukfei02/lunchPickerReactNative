@@ -10,6 +10,8 @@ import Favourites from './src/components/favourites/Favourites';
 import Settings from './src/components/settings/Settings';
 import ContactUs from './src/components/contactUs/ContactUs';
 
+import './i18n';
+
 const Tab = createBottomTabNavigator();
 
 const theme = {
