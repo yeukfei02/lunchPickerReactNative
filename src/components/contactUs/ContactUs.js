@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, TextInput, Linking } from 'react-native';
-import { RadioButton, Checkbox, Button, Snackbar } from 'react-native-paper';
-import { Picker } from '@react-native-community/picker';
+import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
+import { RadioButton, Checkbox, Button, TextInput, Card, Snackbar } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -35,15 +35,17 @@ const style = StyleSheet.create({
   },
   iconContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   donateCardViewContainer: {
     flex: 1,
-    marginTop: 50,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    marginVertical: 35,
     marginHorizontal: 30
   },
   rowContainer: {
@@ -55,8 +57,6 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
@@ -78,10 +78,6 @@ const style = StyleSheet.create({
     fontWeight: 'normal',
     color: '#ed1f30',
     textDecorationLine: 'underline'
-  },
-  picker: {
-    width: 300,
-    height: 30
   },
   tableHead: {
     height: 40,
@@ -232,28 +228,27 @@ function RestaurantDetails({ navigation, id }) {
     const tableData = formattedDataList;
     if (!_.isEmpty(tableHead) && !_.isEmpty(tableData)) {
       table = (
-        <View>
+        <Card style={style.cardViewContainer}>
           <Table borderStyle={{ borderWidth: 1.5, borderColor: 'black' }}>
             <Row data={tableHead} style={style.tableHead} textStyle={style.tableHeadText} />
             <Rows data={tableData} textStyle={style.tableRowText} />
           </Table>
-          <Divder margin={5} />
-          <View style={style.cardViewContainer}>
-            <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
-            <Divder margin={10} />
-            <View style={style.rowContainer}>
-              <Checkbox
-                status={isOpenNow ? 'checked' : 'unchecked'}
-                disabled={true}
-              />
-              <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
-            </View>
-            <Divder margin={10} />
-            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
-              Back to Home
-            </Button>
+
+          <Divder margin={10} />
+          <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
+          <Divder margin={8} />
+          <View style={style.rowContainer}>
+            <Checkbox
+              status={isOpenNow ? 'checked' : 'unchecked'}
+              disabled={true}
+            />
+            <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
           </View>
-        </View>
+          <Divder margin={10} />
+          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
+            Back to Home
+            </Button>
+        </Card>
       );
     }
 
@@ -270,7 +265,7 @@ function RestaurantDetails({ navigation, id }) {
           inactiveDotColor="lightgray" />
       </View>
       <Divder margin={8} />
-      <View style={style.cardViewContainer}>
+      <Card style={style.cardViewContainer}>
         <Text style={style.titleStyle}>Restaurant details</Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
@@ -280,7 +275,7 @@ function RestaurantDetails({ navigation, id }) {
         <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
-      </View>
+      </Card>
       {renderOpeningTimeTable()}
     </View >
   );
@@ -316,11 +311,11 @@ function ContactUs({ navigation, route }) {
 
   const getCurrencyList = () => {
     const currencyList = [
-      { value: 'hkd', label: 'Hong Kong Dollar (HKD)' },
-      { value: 'sgd', label: 'Singapore Dollar (SGD)' },
-      { value: 'gbp', label: 'British Dollar Pound (GBP)' },
-      { value: 'cny', label: 'Chinese Renminbi Yuan (CNY)' },
-      { value: 'usd', label: 'US Dollar (USD)' },
+      { value: 'Hong Kong Dollar (HKD)' },
+      { value: 'Singapore Dollar (SGD)' },
+      { value: 'British Dollar Pound (GBP)' },
+      { value: 'Chinese Renminbi Yuan (CNY)' },
+      { value: 'US Dollar (USD)' },
     ];
     setCurrencyList(currencyList);
   }
@@ -380,6 +375,23 @@ function ContactUs({ navigation, route }) {
     }
   }
 
+  const renderSelectDropdown = () => {
+    let selectDropdown = null;
+
+    const data = getDropdownData();
+    if (!_.isEmpty(data)) {
+      selectDropdown = (
+        <Dropdown
+          label='Select currency'
+          data={data}
+          onChangeText={handleCurrencyChange}
+        />
+      );
+    }
+
+    return selectDropdown;
+  }
+
   const renderResultDiv = () => {
     let resultDiv = null;
 
@@ -399,19 +411,14 @@ function ContactUs({ navigation, route }) {
       resultDiv = (
         <View style={{ alignSelf: 'stretch' }}>
           <TextInput
-            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
-            onChangeText={(number) => handleAmountChange(number)}
+            mode="outlined"
+            label='Amount'
             value={amount}
-            keyboardType="numeric"
+            placeholder="Enter amount"
+            onChangeText={(number) => handleAmountChange(number)}
           />
           <Divder margin={5} />
-          <Picker
-            selectedValue={currency}
-            style={style.picker}
-            onValueChange={(itemValue, itemIndex) => handleCurrencyChange(itemValue)}
-          >
-            {renderDropdownItem()}
-          </Picker>
+          {renderSelectDropdown()}
           <Divder margin={5} />
           <LiteCreditCardInput onChange={handleCreditCardInputChange} />
           <Divder margin={5} />
@@ -423,18 +430,8 @@ function ContactUs({ navigation, route }) {
     return resultDiv;
   }
 
-  const renderDropdownItem = () => {
-    let dropdownItemList = null;
-
-    if (!_.isEmpty(currencyList)) {
-      dropdownItemList = currencyList.map((item, i) => {
-        return (
-          <Picker.Item key={i} label={item.label} value={item.value} />
-        );
-      })
-    }
-
-    return dropdownItemList;
+  const getDropdownData = () => {
+    return currencyList;
   }
 
   const renderPaynowButton = () => {
@@ -456,28 +453,32 @@ function ContactUs({ navigation, route }) {
   }
 
   const handleAmountChange = (number) => {
-    setAmount(number);
+    if (!isNaN(number))
+      setAmount(number);
   }
 
   const handleCurrencyChange = (selectedCurrency) => {
-    setCurrency(selectedCurrency);
-
     if (!_.isEmpty(selectedCurrency)) {
       switch (selectedCurrency) {
-        case 'hkd':
+        case 'Hong Kong Dollar (HKD)':
           setAmount('3');
+          setCurrency('hkd');
           break;
-        case 'sgd':
+        case 'Singapore Dollar (SGD)':
           setAmount('1');
+          setCurrency('sgd');
           break;
-        case 'gbp':
+        case 'British Dollar Pound (GBP)':
           setAmount('1');
+          setCurrency('gbp');
           break;
-        case 'cny':
+        case 'Chinese Renminbi Yuan (CNY)':
           setAmount('3');
+          setCurrency('cny');
           break;
-        case 'usd':
+        case 'US Dollar (USD)':
           setAmount('1');
+          setCurrency('usd');
           break;
         default:
 
@@ -527,16 +528,16 @@ function ContactUs({ navigation, route }) {
   const renderDiv = () => {
     let result = (
       <View>
-        <View style={style.container}>
+        <Card style={style.container}>
           <Text style={style.titleStyle}>Contact us via email or visit our github repo</Text>
           <Divder margin={5} />
           <View style={style.iconContainer}>
             <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
             <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
           </View>
-        </View>
+        </Card>
 
-        <View style={style.donateCardViewContainer}>
+        <Card style={style.donateCardViewContainer}>
           <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
 
           <Divder margin={5} />
@@ -577,7 +578,20 @@ function ContactUs({ navigation, route }) {
 
           <Divder margin={8} />
           {renderResultDiv()}
-        </View>
+
+          <Snackbar
+            visible={snackBarStatus}
+            onDismiss={handleDismissSnackBar}
+            action={{
+              label: 'Close',
+              onPress: () => {
+                setSnackBarStatus(false);
+              },
+            }}
+          >
+            {snackBarMessage}
+          </Snackbar>
+        </Card>
       </View>
     );
 
@@ -599,18 +613,6 @@ function ContactUs({ navigation, route }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       {renderDiv()}
-      <Snackbar
-        visible={snackBarStatus}
-        onDismiss={handleDismissSnackBar}
-        action={{
-          label: 'Close',
-          onPress: () => {
-            setSnackBarStatus(false);
-          },
-        }}
-      >
-        {snackBarMessage}
-      </Snackbar>
     </ScrollView>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Text, TextInput } from 'react-native';
-import { RadioButton, Button, Card } from 'react-native-paper';
-import { Picker } from '@react-native-community/picker';
+import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
+import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -33,10 +33,6 @@ const style = StyleSheet.create({
   logo: {
     width: 300,
     height: 200,
-  },
-  picker: {
-    width: 300,
-    height: 30
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -143,12 +139,7 @@ function Home({ navigation }) {
                 return optionsObj;
               });
             }
-            let formattedSelectedTermList = [
-              {
-                value: 'Select the food you want...',
-                label: 'Select the food you want...'
-              }
-            ];
+            let formattedSelectedTermList = [];
             formattedSelectedTermList = formattedSelectedTermList.concat(foodList);
             formattedSelectedTermList = formattedSelectedTermList.concat(restaurantsList);
             formattedSelectedTermList = formattedSelectedTermList.concat(barsList);
@@ -259,16 +250,26 @@ function Home({ navigation }) {
       });
   }
 
+  const handleDropdownChange = (value, index, data) => {
+    if (!_.isEmpty(value))
+      setSelectedTerm(value);
+  }
+
   const renderSelectDropdown = () => {
-    return (
-      <Picker
-        selectedValue={selectedTerm}
-        style={style.picker}
-        onValueChange={(itemValue, itemIndex) => handleDropdownChange(itemValue)}
-      >
-        {renderDropdownItem()}
-      </Picker>
-    )
+    let selectDropdown = null;
+
+    const data = getDropdownData();
+    if (!_.isEmpty(data)) {
+      selectDropdown = (
+        <Dropdown
+          label='Select the food you want...'
+          data={data}
+          onChangeText={handleDropdownChange}
+        />
+      );
+    }
+
+    return selectDropdown;
   }
 
   const renderRadioButton = () => {
@@ -318,15 +319,38 @@ function Home({ navigation }) {
       locationInput = (
         <View>
           <TextInput
-            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
-            onChangeText={(text) => handleLocationChange(text)}
+            mode="outlined"
+            label='Location'
             value={location}
+            placeholder="address, city, place, street name, zip code, country, state, building name, etc..."
+            onChangeText={(text) => handleLocationChange(text)}
           />
+          <Divder margin={8} />
+          {renderSubmitButton()}
+          <Divder margin={8} />
+          {renderClearButton()}
         </View>
       );
     }
 
     return locationInput;
+  }
+
+  const renderButtons = () => {
+    let buttons = null;
+
+    if (_.isEqual(radioButtonValue, 'currentLocation')) {
+      buttons = (
+        <View>
+          <Divder margin={8} />
+          {renderSubmitButton()}
+          <Divder margin={8} />
+          {renderClearButton()}
+        </View>
+      );
+    }
+
+    return buttons;
   }
 
   const renderSubmitButton = () => {
@@ -393,19 +417,15 @@ function Home({ navigation }) {
     return displayResult;
   }
 
-  const handleDropdownChange = (selectedValue) => {
-    if (!_.isEqual(selectedValue, 'Select the food you want...'))
-      setSelectedTerm(selectedValue);
-  }
-
-  const renderDropdownItem = () => {
+  const getDropdownData = () => {
     let dropdownItemList = null;
 
     if (!_.isEmpty(selectedTermList)) {
       dropdownItemList = selectedTermList.map((item, i) => {
-        return (
-          <Picker.Item key={i} label={item.label} value={item.label} />
-        );
+        let obj = {
+          value: item.label
+        };
+        return obj;
       })
     }
 
@@ -459,10 +479,7 @@ function Home({ navigation }) {
         {renderRadioButton()}
         <Divder margin={5} />
         {renderLocationInput()}
-        <Divder margin={8} />
-        {renderSubmitButton()}
-        <Divder margin={8} />
-        {renderClearButton()}
+        {renderButtons()}
       </Card>
       <Divder margin={5} />
       {renderDisplayResult()}

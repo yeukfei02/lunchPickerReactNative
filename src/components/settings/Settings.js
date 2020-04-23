@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import { Switch } from 'react-native-paper';
-import { Picker } from '@react-native-community/picker';
+import { Switch, Card } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import _ from 'lodash';
 
 import Divder from '../divider/Divider';
@@ -15,8 +15,6 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 100,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
@@ -31,14 +29,8 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 50,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
-  },
-  picker: {
-    width: 300,
-    height: 30
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -55,33 +47,25 @@ function Settings() {
   const [subscribeStatus, setSubscribeStatus] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState('eng');
 
-  const handleDropdownChange = (selectedLanguage) => {
-    setSelectedLanguage(selectedLanguage);
+  const handleDropdownChange = (value, index, data) => {
+    if (value)
+      setSelectedLanguage(value);
   }
 
-  const renderDropdownItem = () => {
-    let dropdownItemList = null;
-
+  const getDropdownData = () => {
     const languageList = [
       {
-        label: 'English',
-        value: 'eng'
+        value: 'Please select...'
       },
       {
-        label: 'Chinese',
-        value: 'chi'
+        value: 'English'
+      },
+      {
+        value: 'Chinese'
       },
     ];
 
-    if (!_.isEmpty(languageList)) {
-      dropdownItemList = languageList.map((item, i) => {
-        return (
-          <Picker.Item key={i} label={item.label} value={item.value} />
-        );
-      })
-    }
-
-    return dropdownItemList;
+    return languageList;
   }
 
   const toggleSwitch = () => {
@@ -91,9 +75,26 @@ function Settings() {
       setSubscribeStatus(false);
   }
 
+  const renderSelectDropdown = () => {
+    let selectDropdown = null;
+
+    const data = getDropdownData();
+    if (!_.isEmpty(data)) {
+      selectDropdown = (
+        <Dropdown
+          label='Select language'
+          data={data}
+          onChangeText={handleDropdownChange}
+        />
+      );
+    }
+
+    return selectDropdown;
+  }
+
   return (
     <ScrollView style={style.scrollViewContainer}>
-      <View style={style.container}>
+      <Card style={style.container}>
         <Text style={style.titleStyle}>Settings</Text>
         <Divder margin={10} />
         <View style={style.rowContainer}>
@@ -104,19 +105,12 @@ function Settings() {
           />
           <Text style={{ marginTop: 4, marginLeft: 10 }}>Subscribe message</Text>
         </View>
-      </View>
+      </Card>
 
-      <View style={style.changeLanguageContainer}>
+      <Card style={style.changeLanguageContainer}>
         <Text style={style.titleStyle}>Change Language</Text>
-        <Divder margin={12} />
-        <Picker
-          selectedValue={selectedLanguage}
-          style={style.picker}
-          onValueChange={(itemValue, itemIndex) => handleDropdownChange(itemValue)}
-        >
-          {renderDropdownItem()}
-        </Picker>
-      </View>
+        {renderSelectDropdown()}
+      </Card>
     </ScrollView>
   );
 }
