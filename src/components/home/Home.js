@@ -139,12 +139,7 @@ function Home({ navigation }) {
                 return optionsObj;
               });
             }
-            let formattedSelectedTermList = [
-              {
-                value: 'Select the food you want...',
-                label: 'Select the food you want...'
-              }
-            ];
+            let formattedSelectedTermList = [];
             formattedSelectedTermList = formattedSelectedTermList.concat(foodList);
             formattedSelectedTermList = formattedSelectedTermList.concat(restaurantsList);
             formattedSelectedTermList = formattedSelectedTermList.concat(barsList);
@@ -256,7 +251,7 @@ function Home({ navigation }) {
   }
 
   const handleDropdownChange = (value, index, data) => {
-    if (!_.isEmpty(value) && !_.isEqual(value, 'Select the food you want...'))
+    if (!_.isEmpty(value))
       setSelectedTerm(value);
   }
 

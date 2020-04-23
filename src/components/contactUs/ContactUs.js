@@ -385,7 +385,7 @@ function ContactUs({ navigation, route }) {
     if (!_.isEmpty(data)) {
       selectDropdown = (
         <Dropdown
-          label='Select language'
+          label='Select currency'
           data={data}
           onChangeText={handleCurrencyChange}
         />
