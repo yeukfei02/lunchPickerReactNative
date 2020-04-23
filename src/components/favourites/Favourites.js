@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Button } from 'react-native';
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Button } from 'react-native-paper';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -100,23 +101,14 @@ function Favourites({ navigation }) {
 
   const renderDeleteAllFavouritesButton = () => {
     let deleteAllFavouritesButton = (
-      <Button
-        onPress={handleDeleteAllFavourites}
-        title="Delete All Favourites"
-        color={style.colorPrimary.color}
-      >
+      <Button mode="contained" color={style.colorPrimary.color} onPress={handleDeleteAllFavourites}>
         Delete All Favourites
       </Button>
     );
 
     if (deleteAllFavouritesButtonClicked === true) {
       deleteAllFavouritesButton = (
-        <Button
-          onPress={handleDeleteAllFavourites}
-          title="Loading..."
-          disabled={true}
-          color={style.colorPrimary.color}
-        >
+        <Button mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handleDeleteAllFavourites}>
           Loading...
         </Button>
       );
@@ -146,7 +138,6 @@ function Favourites({ navigation }) {
         <Divder margin={5} />
         {renderDeleteAllFavouritesButton()}
       </View>
-      <Divder margin={5} />
       {renderDisplayResult()}
     </ScrollView>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Button, TextInput, Linking } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, TextInput, Linking } from 'react-native';
 import { Picker } from '@react-native-community/picker';
-import { RadioButton, Checkbox } from 'react-native-paper';
+import { RadioButton, Checkbox, Button } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -249,11 +249,7 @@ function RestaurantDetails({ navigation, id }) {
               <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
             </View>
             <Divder margin={10} />
-            <Button
-              onPress={handleBackToHome}
-              title="Back to Home"
-              color={style.colorPrimary.color}
-            >
+            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
               Back to Home
             </Button>
           </View>
@@ -370,6 +366,8 @@ function ContactUs({ navigation, route }) {
     if (_.isEqual(radioButtonValue, 'donorbox')) {
       resultDiv = (
         <Button
+          style={{ alignSelf: 'stretch' }}
+          mode="contained"
           onPress={handleDonorboxClick}
           title="Donorbox"
           color={style.colorPrimary.color}
@@ -380,6 +378,8 @@ function ContactUs({ navigation, route }) {
     } else if (_.isEqual(radioButtonValue, 'buyMeACoffee')) {
       resultDiv = (
         <Button
+          style={{ alignSelf: 'stretch' }}
+          mode="contained"
           onPress={handleBuyMeACoffeeClick}
           title="Buy Me A Coffee"
           color={style.colorPrimary.color}
@@ -391,7 +391,7 @@ function ContactUs({ navigation, route }) {
       resultDiv = (
         <View>
           <TextInput
-            style={{ height: 40, borderColor: 'black', borderWidth: 1 }}
+            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
             onChangeText={(number) => handleAmountChange(number)}
             value={amount}
             keyboardType="numeric"
@@ -544,6 +544,7 @@ function ContactUs({ navigation, route }) {
 
           <View style={style.rowContainer}>
             <RadioButton
+              color={style.colorPrimary.color}
               value="places"
               status={radioButtonValue === 'donorbox' ? 'checked' : 'unchecked'}
               onPress={() => handleRadioButton('donorbox')}
@@ -555,6 +556,7 @@ function ContactUs({ navigation, route }) {
 
           <View style={style.rowContainer}>
             <RadioButton
+              color={style.colorPrimary.color}
               value="places"
               status={radioButtonValue === 'buyMeACoffee' ? 'checked' : 'unchecked'}
               onPress={() => handleRadioButton('buyMeACoffee')}
@@ -566,6 +568,7 @@ function ContactUs({ navigation, route }) {
 
           <View style={style.rowContainer}>
             <RadioButton
+              color={style.colorPrimary.color}
               value="places"
               status={radioButtonValue === 'stripe' ? 'checked' : 'unchecked'}
               onPress={() => handleRadioButton('stripe')}

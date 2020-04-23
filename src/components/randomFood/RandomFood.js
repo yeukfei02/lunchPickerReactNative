@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Switch, Button } from 'react-native';
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Button, Switch } from 'react-native-paper';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -163,22 +164,13 @@ function RandomFood({ navigation }) {
 
     if (refreshButtonClicked === true) {
       refreshButton = (
-        <Button
-          onPress={handleRefresh}
-          title="Loading..."
-          disabled={true}
-          color={style.colorPrimary.color}
-        >
+        <Button mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handleRefresh}>
           Loading...
         </Button>
       );
     } else {
       refreshButton = (
-        <Button
-          onPress={handleRefresh}
-          title="Refresh"
-          color={style.colorPrimary.color}
-        >
+        <Button mode="contained" color={style.colorPrimary.color} onPress={handleRefresh}>
           Refresh
         </Button>
       );
@@ -215,11 +207,9 @@ function RandomFood({ navigation }) {
         <Divder margin={8} />
         <View style={style.rowContainer}>
           <Switch
-            trackColor={{ false: 'lightgray', true: style.colorPrimary.color }}
-            thumbColor={useRandomFoodCategory ? style.colorPrimary.color : 'lightgray'}
-            ios_backgroundColor="lightgray"
-            onValueChange={toggleSwitch}
+            color={style.colorPrimary.color}
             value={useRandomFoodCategory}
+            onValueChange={toggleSwitch}
           />
           <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>Use random food category</Text>
         </View>
