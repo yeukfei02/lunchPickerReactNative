@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, TextInput, Linking } from 'react-native';
+import { RadioButton, Checkbox, Button, Snackbar } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
-import { RadioButton, Checkbox, Button } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -80,7 +80,7 @@ const style = StyleSheet.create({
     textDecorationLine: 'underline'
   },
   picker: {
-    width: 320,
+    width: 300,
     height: 30
   },
   tableHead: {
@@ -298,6 +298,10 @@ function ContactUs({ navigation, route }) {
   const [cardValid, setCardValid] = useState(false);
   const [cardInfoData, setCardInfoData] = useState(null);
 
+  const [payNowButtonClicked, setPayNowButtonClicked] = useState(false);
+  const [snackBarStatus, setSnackBarStatus] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState('');
+
   useEffect(() => {
     getCurrencyList();
   }, []);
@@ -342,21 +346,37 @@ function ContactUs({ navigation, route }) {
   }
 
   const handlePayNow = async () => {
-    if (!_.isEmpty(amount) && !_.isEmpty(currency) && cardValid) {
-      const stripeApiKey = getStripeApiKey();
-      const apiKey = stripeApiKey;
-      const client = new Stripe(apiKey);
+    setPayNowButtonClicked(true);
 
-      const token = await client.createToken({
-        number: cardInfoData.values.number,
-        exp_month: cardInfoData.values.expiry.substring(0, 2),
-        exp_year: cardInfoData.values.expiry.substring(3),
-        cvc: cardInfoData.values.cvc,
-      });
-      if (!_.isEmpty(token)) {
-        setToken(token.id);
-        setCard(token.card);
+    try {
+      if (!_.isEmpty(amount) && !_.isEmpty(currency) && cardValid) {
+        const stripeApiKey = getStripeApiKey();
+        const apiKey = stripeApiKey;
+        const client = new Stripe(apiKey);
+
+        const token = await client.createToken({
+          number: cardInfoData.values.number,
+          exp_month: cardInfoData.values.expiry.substring(0, 2),
+          exp_year: cardInfoData.values.expiry.substring(3),
+          cvc: cardInfoData.values.cvc,
+        });
+        if (!_.isEmpty(token)) {
+          setToken(token.id);
+          setCard(token.card);
+
+          setPayNowButtonClicked(false);
+          setSnackBarStatus(true);
+          setSnackBarMessage(`Payment success`);
+        }
+      } else {
+        setPayNowButtonClicked(false);
+        setSnackBarStatus(true);
+        setSnackBarMessage(`Please check amount/currency/card input`);
       }
+    } catch (e) {
+      setPayNowButtonClicked(false);
+      setSnackBarStatus(true);
+      setSnackBarMessage(`Payment error = ${e.message}`);
     }
   }
 
@@ -365,31 +385,19 @@ function ContactUs({ navigation, route }) {
 
     if (_.isEqual(radioButtonValue, 'donorbox')) {
       resultDiv = (
-        <Button
-          style={{ alignSelf: 'stretch' }}
-          mode="contained"
-          onPress={handleDonorboxClick}
-          title="Donorbox"
-          color={style.colorPrimary.color}
-        >
+        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handleDonorboxClick}>
           Donorbox
         </Button>
       );
     } else if (_.isEqual(radioButtonValue, 'buyMeACoffee')) {
       resultDiv = (
-        <Button
-          style={{ alignSelf: 'stretch' }}
-          mode="contained"
-          onPress={handleBuyMeACoffeeClick}
-          title="Buy Me A Coffee"
-          color={style.colorPrimary.color}
-        >
+        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handleBuyMeACoffeeClick}>
           Buy Me A Coffee
         </Button>
       );
     } else if (_.isEqual(radioButtonValue, 'stripe')) {
       resultDiv = (
-        <View>
+        <View style={{ alignSelf: 'stretch' }}>
           <TextInput
             style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
             onChangeText={(number) => handleAmountChange(number)}
@@ -431,24 +439,15 @@ function ContactUs({ navigation, route }) {
 
   const renderPaynowButton = () => {
     let paynowButton = (
-      <Button
-        onPress={handlePayNow}
-        title="Pay now"
-        color={style.colorPrimary.color}
-        disabled={true}
-      >
+      <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handlePayNow}>
         Pay now
       </Button>
     );
 
-    if (!_.isEmpty(amount) && !_.isEmpty(currency) && cardValid) {
+    if (payNowButtonClicked) {
       paynowButton = (
-        <Button
-          onPress={handlePayNow}
-          title="Pay now"
-          color={style.colorPrimary.color}
-        >
-          Pay now
+        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handlePayNow}>
+          Loading...
         </Button>
       );
     }
@@ -593,9 +592,25 @@ function ContactUs({ navigation, route }) {
     return result;
   }
 
+  const handleDismissSnackBar = () => {
+    setSnackBarStatus(false);
+  }
+
   return (
     <ScrollView style={style.scrollViewContainer}>
       {renderDiv()}
+      <Snackbar
+        visible={snackBarStatus}
+        onDismiss={handleDismissSnackBar}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            setSnackBarStatus(false);
+          },
+        }}
+      >
+        {snackBarMessage}
+      </Snackbar>
     </ScrollView>
   );
 }

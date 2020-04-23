@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, Linking } from 'react-native';
+import { Card } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import _ from 'lodash';
 import axios from 'axios';
@@ -219,7 +220,7 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
   }
 
   return (
-    <View style={style.container}>
+    <Card style={style.container}>
       {renderDeleteFavouritesByIdButton()}
       <Divder margin={5} />
       <View style={style.rowContainer}>
@@ -239,7 +240,7 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
           source={{
             uri: imageUrl
           }}
-          resizeMode={'cover'}
+          resizeMode={'contain'}
         />
       </TouchableHighlight>
       <Divder margin={5} />
@@ -258,7 +259,7 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
         {renderFavouritesIcon()}
         <Entypo name="link" size={40} color={'black'} onPress={handleLinkClick} />
       </View>
-    </View>
+    </Card>
   );
 }
 

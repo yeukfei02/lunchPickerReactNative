@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Image, Text, TextInput } from 'react-native';
-import { RadioButton, Button } from 'react-native-paper';
+import { RadioButton, Button, Card } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 import axios from 'axios';
@@ -21,7 +21,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 100,
-    padding: 15,
+    padding: 16,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
@@ -31,11 +31,11 @@ const style = StyleSheet.create({
     flexDirection: 'row'
   },
   logo: {
-    width: 310,
+    width: 300,
     height: 200,
   },
   picker: {
-    width: 320,
+    width: 300,
     height: 30
   },
   colorPrimary: {
@@ -448,11 +448,11 @@ function Home({ navigation }) {
 
   return (
     <ScrollView style={style.scrollViewContainer}>
-      <View style={style.container}>
+      <Card style={style.container}>
         <Image
           style={style.logo}
           source={logo}
-          resizeMode={'center'}
+          resizeMode={'contain'}
         />
         {renderSelectDropdown()}
         <Divder margin={5} />
@@ -463,7 +463,7 @@ function Home({ navigation }) {
         {renderSubmitButton()}
         <Divder margin={8} />
         {renderClearButton()}
-      </View>
+      </Card>
       <Divder margin={5} />
       {renderDisplayResult()}
     </ScrollView>
