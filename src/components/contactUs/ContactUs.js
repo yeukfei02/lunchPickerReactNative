@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, TextInput, Linking } from 'react-native';
-import { RadioButton, Checkbox, Button, Snackbar } from 'react-native-paper';
+import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
+import { RadioButton, Checkbox, Button, TextInput, Snackbar } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
@@ -39,11 +39,11 @@ const style = StyleSheet.create({
   },
   donateCardViewContainer: {
     flex: 1,
-    marginTop: 50,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    marginVertical: 30,
     marginHorizontal: 30
   },
   rowContainer: {
@@ -399,10 +399,11 @@ function ContactUs({ navigation, route }) {
       resultDiv = (
         <View style={{ alignSelf: 'stretch' }}>
           <TextInput
-            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
-            onChangeText={(number) => handleAmountChange(number)}
+            mode="outlined"
+            label='Amount'
             value={amount}
-            keyboardType="numeric"
+            placeholder="Enter amount"
+            onChangeText={(number) => handleAmountChange(number)}
           />
           <Divder margin={5} />
           <Picker
@@ -456,7 +457,8 @@ function ContactUs({ navigation, route }) {
   }
 
   const handleAmountChange = (number) => {
-    setAmount(number);
+    if (!isNaN(number))
+      setAmount(number);
   }
 
   const handleCurrencyChange = (selectedCurrency) => {

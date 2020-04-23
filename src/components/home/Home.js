@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Text, TextInput } from 'react-native';
-import { RadioButton, Button, Card } from 'react-native-paper';
+import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
+import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 import axios from 'axios';
@@ -318,15 +318,38 @@ function Home({ navigation }) {
       locationInput = (
         <View>
           <TextInput
-            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
-            onChangeText={(text) => handleLocationChange(text)}
+            mode="outlined"
+            label='Location'
             value={location}
+            placeholder="address, city, place, street name, zip code, country, state, building name, etc..."
+            onChangeText={(text) => handleLocationChange(text)}
           />
+          <Divder margin={8} />
+          {renderSubmitButton()}
+          <Divder margin={8} />
+          {renderClearButton()}
         </View>
       );
     }
 
     return locationInput;
+  }
+
+  const renderButtons = () => {
+    let buttons = null;
+
+    if (_.isEqual(radioButtonValue, 'currentLocation')) {
+      buttons = (
+        <View>
+          <Divder margin={8} />
+          {renderSubmitButton()}
+          <Divder margin={8} />
+          {renderClearButton()}
+        </View>
+      );
+    }
+
+    return buttons;
   }
 
   const renderSubmitButton = () => {
@@ -459,10 +482,7 @@ function Home({ navigation }) {
         {renderRadioButton()}
         <Divder margin={5} />
         {renderLocationInput()}
-        <Divder margin={8} />
-        {renderSubmitButton()}
-        <Divder margin={8} />
-        {renderClearButton()}
+        {renderButtons()}
       </Card>
       <Divder margin={5} />
       {renderDisplayResult()}
