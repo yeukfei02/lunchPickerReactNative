@@ -45,7 +45,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    marginVertical: 30,
+    marginVertical: 35,
     marginHorizontal: 30
   },
   rowContainer: {

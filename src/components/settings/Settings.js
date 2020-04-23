@@ -15,8 +15,6 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 100,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
@@ -31,8 +29,6 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 50,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
