@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
 import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
-import { Picker } from '@react-native-community/picker';
+import { Dropdown } from 'react-native-material-dropdown';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -33,10 +33,6 @@ const style = StyleSheet.create({
   logo: {
     width: 300,
     height: 200,
-  },
-  picker: {
-    width: 300,
-    height: 30
   },
   colorPrimary: {
     color: '#ed1f30'
@@ -259,16 +255,26 @@ function Home({ navigation }) {
       });
   }
 
+  const handleDropdownChange = (value, index, data) => {
+    if (!_.isEmpty(value) && !_.isEqual(value, 'Select the food you want...'))
+      setSelectedTerm(value);
+  }
+
   const renderSelectDropdown = () => {
-    return (
-      <Picker
-        selectedValue={selectedTerm}
-        style={style.picker}
-        onValueChange={(itemValue, itemIndex) => handleDropdownChange(itemValue)}
-      >
-        {renderDropdownItem()}
-      </Picker>
-    )
+    let selectDropdown = null;
+
+    const data = getDropdownData();
+    if (!_.isEmpty(data)) {
+      selectDropdown = (
+        <Dropdown
+          label='Select the food you want...'
+          data={data}
+          onChangeText={handleDropdownChange}
+        />
+      );
+    }
+
+    return selectDropdown;
   }
 
   const renderRadioButton = () => {
@@ -416,19 +422,15 @@ function Home({ navigation }) {
     return displayResult;
   }
 
-  const handleDropdownChange = (selectedValue) => {
-    if (!_.isEqual(selectedValue, 'Select the food you want...'))
-      setSelectedTerm(selectedValue);
-  }
-
-  const renderDropdownItem = () => {
+  const getDropdownData = () => {
     let dropdownItemList = null;
 
     if (!_.isEmpty(selectedTermList)) {
       dropdownItemList = selectedTermList.map((item, i) => {
-        return (
-          <Picker.Item key={i} label={item.label} value={item.label} />
-        );
+        let obj = {
+          value: item.label
+        };
+        return obj;
       })
     }
 

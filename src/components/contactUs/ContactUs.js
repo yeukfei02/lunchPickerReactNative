@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
-import { RadioButton, Checkbox, Button, TextInput, Snackbar } from 'react-native-paper';
-import { Picker } from '@react-native-community/picker';
+import { RadioButton, Checkbox, Button, TextInput, Card, Snackbar } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
@@ -35,7 +35,9 @@ const style = StyleSheet.create({
   },
   iconContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   donateCardViewContainer: {
     flex: 1,
@@ -78,10 +80,6 @@ const style = StyleSheet.create({
     fontWeight: 'normal',
     color: '#ed1f30',
     textDecorationLine: 'underline'
-  },
-  picker: {
-    width: 300,
-    height: 30
   },
   tableHead: {
     height: 40,
@@ -316,11 +314,11 @@ function ContactUs({ navigation, route }) {
 
   const getCurrencyList = () => {
     const currencyList = [
-      { value: 'hkd', label: 'Hong Kong Dollar (HKD)' },
-      { value: 'sgd', label: 'Singapore Dollar (SGD)' },
-      { value: 'gbp', label: 'British Dollar Pound (GBP)' },
-      { value: 'cny', label: 'Chinese Renminbi Yuan (CNY)' },
-      { value: 'usd', label: 'US Dollar (USD)' },
+      { value: 'Hong Kong Dollar (HKD)' },
+      { value: 'Singapore Dollar (SGD)' },
+      { value: 'British Dollar Pound (GBP)' },
+      { value: 'Chinese Renminbi Yuan (CNY)' },
+      { value: 'US Dollar (USD)' },
     ];
     setCurrencyList(currencyList);
   }
@@ -380,6 +378,23 @@ function ContactUs({ navigation, route }) {
     }
   }
 
+  const renderSelectDropdown = () => {
+    let selectDropdown = null;
+
+    const data = getDropdownData();
+    if (!_.isEmpty(data)) {
+      selectDropdown = (
+        <Dropdown
+          label='Select language'
+          data={data}
+          onChangeText={handleCurrencyChange}
+        />
+      );
+    }
+
+    return selectDropdown;
+  }
+
   const renderResultDiv = () => {
     let resultDiv = null;
 
@@ -406,13 +421,7 @@ function ContactUs({ navigation, route }) {
             onChangeText={(number) => handleAmountChange(number)}
           />
           <Divder margin={5} />
-          <Picker
-            selectedValue={currency}
-            style={style.picker}
-            onValueChange={(itemValue, itemIndex) => handleCurrencyChange(itemValue)}
-          >
-            {renderDropdownItem()}
-          </Picker>
+          {renderSelectDropdown()}
           <Divder margin={5} />
           <LiteCreditCardInput onChange={handleCreditCardInputChange} />
           <Divder margin={5} />
@@ -424,18 +433,8 @@ function ContactUs({ navigation, route }) {
     return resultDiv;
   }
 
-  const renderDropdownItem = () => {
-    let dropdownItemList = null;
-
-    if (!_.isEmpty(currencyList)) {
-      dropdownItemList = currencyList.map((item, i) => {
-        return (
-          <Picker.Item key={i} label={item.label} value={item.value} />
-        );
-      })
-    }
-
-    return dropdownItemList;
+  const getDropdownData = () => {
+    return currencyList;
   }
 
   const renderPaynowButton = () => {
@@ -462,24 +461,27 @@ function ContactUs({ navigation, route }) {
   }
 
   const handleCurrencyChange = (selectedCurrency) => {
-    setCurrency(selectedCurrency);
-
     if (!_.isEmpty(selectedCurrency)) {
       switch (selectedCurrency) {
-        case 'hkd':
+        case 'Hong Kong Dollar (HKD)':
           setAmount('3');
+          setCurrency('hkd');
           break;
-        case 'sgd':
+        case 'Singapore Dollar (SGD)':
           setAmount('1');
+          setCurrency('sgd');
           break;
-        case 'gbp':
+        case 'British Dollar Pound (GBP)':
           setAmount('1');
+          setCurrency('gbp');
           break;
-        case 'cny':
+        case 'Chinese Renminbi Yuan (CNY)':
           setAmount('3');
+          setCurrency('cny');
           break;
-        case 'usd':
+        case 'US Dollar (USD)':
           setAmount('1');
+          setCurrency('usd');
           break;
         default:
 
@@ -529,16 +531,16 @@ function ContactUs({ navigation, route }) {
   const renderDiv = () => {
     let result = (
       <View>
-        <View style={style.container}>
+        <Card style={style.container}>
           <Text style={style.titleStyle}>Contact us via email or visit our github repo</Text>
           <Divder margin={5} />
           <View style={style.iconContainer}>
             <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
             <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
           </View>
-        </View>
+        </Card>
 
-        <View style={style.donateCardViewContainer}>
+        <Card style={style.donateCardViewContainer}>
           <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
 
           <Divder margin={5} />
@@ -579,7 +581,7 @@ function ContactUs({ navigation, route }) {
 
           <Divder margin={8} />
           {renderResultDiv()}
-        </View>
+        </Card>
       </View>
     );
 
