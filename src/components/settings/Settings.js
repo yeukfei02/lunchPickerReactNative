@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, Picker, Switch } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Switch } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 
 import Divder from '../divider/Divider';

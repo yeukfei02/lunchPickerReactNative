@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Button, TextInput, Picker, Linking } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Button, TextInput, Linking } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 import { RadioButton, Checkbox } from 'react-native-paper';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SliderBox } from "react-native-image-slider-box";

@@ -18,7 +18,7 @@ function DisplayResult({ navigation, resultList, isFavourites, getFavourites }) 
             />
           );
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => !isFavourites ? item.id : item.item.id}
       />
     </View>
   );

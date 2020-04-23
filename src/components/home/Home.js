@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Picker, Text, TextInput, Button } from 'react-native';
+import { StyleSheet, ScrollView, View, Image, Text, TextInput, Button } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
