@@ -31,7 +31,7 @@ const style = StyleSheet.create({
     flexDirection: 'row'
   },
   logo: {
-    width: 310,
+    width: 300,
     height: 200,
   },
   picker: {
@@ -452,7 +452,7 @@ function Home({ navigation }) {
         <Image
           style={style.logo}
           source={logo}
-          resizeMode={'center'}
+          resizeMode={'contain'}
         />
         {renderSelectDropdown()}
         <Divder margin={5} />

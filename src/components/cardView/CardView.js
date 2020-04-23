@@ -239,7 +239,7 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
           source={{
             uri: imageUrl
           }}
-          resizeMode={'cover'}
+          resizeMode={'contain'}
         />
       </TouchableHighlight>
       <Divder margin={5} />
