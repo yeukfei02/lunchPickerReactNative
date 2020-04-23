@@ -35,7 +35,7 @@ const style = StyleSheet.create({
     height: 200,
   },
   picker: {
-    width: 320,
+    width: 300,
     height: 30
   },
   colorPrimary: {
