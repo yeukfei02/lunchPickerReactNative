@@ -57,8 +57,6 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 30
   },
@@ -230,28 +228,27 @@ function RestaurantDetails({ navigation, id }) {
     const tableData = formattedDataList;
     if (!_.isEmpty(tableHead) && !_.isEmpty(tableData)) {
       table = (
-        <View>
+        <Card style={style.cardViewContainer}>
           <Table borderStyle={{ borderWidth: 1.5, borderColor: 'black' }}>
             <Row data={tableHead} style={style.tableHead} textStyle={style.tableHeadText} />
             <Rows data={tableData} textStyle={style.tableRowText} />
           </Table>
-          <Divder margin={5} />
-          <View style={style.cardViewContainer}>
-            <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
-            <Divder margin={10} />
-            <View style={style.rowContainer}>
-              <Checkbox
-                status={isOpenNow ? 'checked' : 'unchecked'}
-                disabled={true}
-              />
-              <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
-            </View>
-            <Divder margin={10} />
-            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
-              Back to Home
-            </Button>
+
+          <Divder margin={10} />
+          <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
+          <Divder margin={8} />
+          <View style={style.rowContainer}>
+            <Checkbox
+              status={isOpenNow ? 'checked' : 'unchecked'}
+              disabled={true}
+            />
+            <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
           </View>
-        </View>
+          <Divder margin={10} />
+          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
+            Back to Home
+            </Button>
+        </Card>
       );
     }
 
@@ -268,7 +265,7 @@ function RestaurantDetails({ navigation, id }) {
           inactiveDotColor="lightgray" />
       </View>
       <Divder margin={8} />
-      <View style={style.cardViewContainer}>
+      <Card style={style.cardViewContainer}>
         <Text style={style.titleStyle}>Restaurant details</Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
@@ -278,7 +275,7 @@ function RestaurantDetails({ navigation, id }) {
         <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
         <Divder margin={10} />
         <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
-      </View>
+      </Card>
       {renderOpeningTimeTable()}
     </View >
   );
@@ -581,6 +578,19 @@ function ContactUs({ navigation, route }) {
 
           <Divder margin={8} />
           {renderResultDiv()}
+
+          <Snackbar
+            visible={snackBarStatus}
+            onDismiss={handleDismissSnackBar}
+            action={{
+              label: 'Close',
+              onPress: () => {
+                setSnackBarStatus(false);
+              },
+            }}
+          >
+            {snackBarMessage}
+          </Snackbar>
         </Card>
       </View>
     );
@@ -603,18 +613,6 @@ function ContactUs({ navigation, route }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       {renderDiv()}
-      <Snackbar
-        visible={snackBarStatus}
-        onDismiss={handleDismissSnackBar}
-        action={{
-          label: 'Close',
-          onPress: () => {
-            setSnackBarStatus(false);
-          },
-        }}
-      >
-        {snackBarMessage}
-      </Snackbar>
     </ScrollView>
   );
 }
