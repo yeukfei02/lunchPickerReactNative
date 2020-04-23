@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
 import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown';
+import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -46,11 +47,13 @@ const style = StyleSheet.create({
 });
 
 function Home({ navigation }) {
+  const { t } = useTranslation();
+
   const [selectedTermList, setSelectedTermList] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('');
   const [radioButtonValue, setRadioButtonValue] = useState('');
 
-  const [location, setLocation] = useState('Enter location...');
+  const [location, setLocation] = useState(t('enterLocation'));
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
@@ -262,7 +265,7 @@ function Home({ navigation }) {
     if (!_.isEmpty(data)) {
       selectDropdown = (
         <Dropdown
-          label='Select the food you want...'
+          label={t('selectTheFoodYouWant')}
           data={data}
           onChangeText={handleDropdownChange}
         />
@@ -282,7 +285,7 @@ function Home({ navigation }) {
             status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioButton('places')}
           />
-          <Text style={{ marginTop: 8, marginLeft: 5 }}>Places</Text>
+          <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('places')}</Text>
         </View>
         <Divder margin={5} />
         {
@@ -294,7 +297,7 @@ function Home({ navigation }) {
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
                 onPress={() => handleRadioButton('currentLocation')}
               />
-              <Text style={{ marginTop: 8, marginLeft: 5 }}>Current Location</Text>
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
             </View>
             :
             <View style={style.rowContainer}>
@@ -305,7 +308,7 @@ function Home({ navigation }) {
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
                 onPress={() => handleRadioButton('currentLocation')}
               />
-              <Text style={{ marginTop: 8, marginLeft: 5 }}>Current Location</Text>
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
             </View>
         }
       </View>
@@ -361,13 +364,13 @@ function Home({ navigation }) {
         if (submitButtonClicked === true) {
           submitButton = (
             <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
-              Loading...
+              {t('loading')}
             </Button>
           );
         } else {
           submitButton = (
             <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
-              Submit
+              {t('submit')}
             </Button>
           );
         }
@@ -378,13 +381,13 @@ function Home({ navigation }) {
       if (submitButtonClicked === true) {
         submitButton = (
           <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
-            Loading...
+            {t('loading')}
           </Button>
         );
       } else {
         submitButton = (
           <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
-            Submit
+            {t('submit')}
           </Button>
         );
       }
@@ -396,7 +399,7 @@ function Home({ navigation }) {
   const renderClearButton = () => {
     const clearButton = (
       <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleClear}>
-        Clear
+        {t('clear')}
       </Button>
     );
 

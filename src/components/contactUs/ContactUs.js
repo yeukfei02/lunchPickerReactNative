@@ -7,6 +7,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import { Table, Row, Rows } from 'react-native-table-component';
 import { LiteCreditCardInput } from "react-native-credit-card-input";
 import Stripe from 'react-native-stripe-api';
+import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log, getStripeApiKey } from '../../common/Common';
@@ -54,10 +55,9 @@ const style = StyleSheet.create({
   },
   cardViewContainer: {
     flex: 1,
-    marginTop: 10,
-    marginBottom: 20,
     padding: 20,
     backgroundColor: 'white',
+    marginVertical: 15,
     marginHorizontal: 30
   },
   restaurantDetailsTitleText: {
@@ -96,6 +96,8 @@ const style = StyleSheet.create({
 });
 
 function RestaurantDetails({ navigation, id }) {
+  const { t } = useTranslation();
+
   const [restaurantDetails, setRestaurantDetails] = useState({});
   const [photosList, setPhotosList] = useState([]);
   const [name, setName] = useState('');
@@ -235,19 +237,19 @@ function RestaurantDetails({ navigation, id }) {
           </Table>
 
           <Divder margin={10} />
-          <Text style={style.titleStyle}>Hours type: <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
+          <Text style={style.titleStyle}>{t('hoursType')} <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
           <Divder margin={8} />
           <View style={style.rowContainer}>
             <Checkbox
               status={isOpenNow ? 'checked' : 'unchecked'}
               disabled={true}
             />
-            <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>is open now</Text>
+            <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>{t('isOpenNow')}</Text>
           </View>
           <Divder margin={10} />
           <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
-            Back to Home
-            </Button>
+            {t('backToHome')}
+          </Button>
         </Card>
       );
     }
@@ -266,15 +268,15 @@ function RestaurantDetails({ navigation, id }) {
       </View>
       <Divder margin={8} />
       <Card style={style.cardViewContainer}>
-        <Text style={style.titleStyle}>Restaurant details</Text>
+        <Text style={style.titleStyle}>{t('restaurantDetails')}</Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>Name: <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>{t('name')} <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>Phone: <Text style={style.restaurantDetailsValueText}>{restaurantDetails.phone}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>{t('phone')} <Text style={style.restaurantDetailsValueText}>{restaurantDetails.phone}</Text></Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>Url: <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>{t('url')} <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>Location: <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>{t('location')} <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
       </Card>
       {renderOpeningTimeTable()}
     </View >
@@ -282,6 +284,8 @@ function RestaurantDetails({ navigation, id }) {
 }
 
 function ContactUs({ navigation, route }) {
+  const { t } = useTranslation();
+
   const [radioButtonValue, setRadioButtonValue] = useState('');
 
   const [currencyList, setCurrencyList] = useState([]);
@@ -382,7 +386,7 @@ function ContactUs({ navigation, route }) {
     if (!_.isEmpty(data)) {
       selectDropdown = (
         <Dropdown
-          label='Select currency'
+          label={t('selectCurrency')}
           data={data}
           onChangeText={handleCurrencyChange}
         />
@@ -412,9 +416,9 @@ function ContactUs({ navigation, route }) {
         <View style={{ alignSelf: 'stretch' }}>
           <TextInput
             mode="outlined"
-            label='Amount'
+            label={t('amount')}
             value={amount}
-            placeholder="Enter amount"
+            placeholder={t('enterAmount')}
             onChangeText={(number) => handleAmountChange(number)}
           />
           <Divder margin={5} />
@@ -437,14 +441,14 @@ function ContactUs({ navigation, route }) {
   const renderPaynowButton = () => {
     let paynowButton = (
       <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handlePayNow}>
-        Pay now
+        {t('payNow')}
       </Button>
     );
 
     if (payNowButtonClicked) {
       paynowButton = (
         <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handlePayNow}>
-          Loading...
+          {t('loading')}
         </Button>
       );
     }
@@ -529,7 +533,7 @@ function ContactUs({ navigation, route }) {
     let result = (
       <View>
         <Card style={style.container}>
-          <Text style={style.titleStyle}>Contact us via email or visit our github repo</Text>
+          <Text style={style.titleStyle}>{t('contactTitle')}</Text>
           <Divder margin={5} />
           <View style={style.iconContainer}>
             <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
@@ -538,7 +542,7 @@ function ContactUs({ navigation, route }) {
         </Card>
 
         <Card style={style.donateCardViewContainer}>
-          <Text style={style.titleStyle}>Donate for lunch picker better features and development</Text>
+          <Text style={style.titleStyle}>{t('donateTitle')}</Text>
 
           <Divder margin={5} />
 
@@ -578,19 +582,6 @@ function ContactUs({ navigation, route }) {
 
           <Divder margin={8} />
           {renderResultDiv()}
-
-          <Snackbar
-            visible={snackBarStatus}
-            onDismiss={handleDismissSnackBar}
-            action={{
-              label: 'Close',
-              onPress: () => {
-                setSnackBarStatus(false);
-              },
-            }}
-          >
-            {snackBarMessage}
-          </Snackbar>
         </Card>
       </View>
     );
@@ -613,6 +604,18 @@ function ContactUs({ navigation, route }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       {renderDiv()}
+      <Snackbar
+        visible={snackBarStatus}
+        onDismiss={handleDismissSnackBar}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            setSnackBarStatus(false);
+          },
+        }}
+      >
+        {snackBarMessage}
+      </Snackbar>
     </ScrollView>
   );
 }

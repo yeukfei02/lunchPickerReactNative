@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -35,6 +36,8 @@ const style = StyleSheet.create({
 });
 
 function Favourites({ navigation }) {
+  const { t } = useTranslation();
+
   const [favourites, setFavourites] = useState([]);
 
   const [deleteAllFavouritesButtonClicked, setDeleteAllFavouritesButtonClicked] = useState(false);
@@ -102,14 +105,14 @@ function Favourites({ navigation }) {
   const renderDeleteAllFavouritesButton = () => {
     let deleteAllFavouritesButton = (
       <Button mode="contained" color={style.colorPrimary.color} onPress={handleDeleteAllFavourites}>
-        Delete All Favourites
+        {t('deleteAllFavourites')}
       </Button>
     );
 
     if (deleteAllFavouritesButtonClicked === true) {
       deleteAllFavouritesButton = (
         <Button mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handleDeleteAllFavourites}>
-          Loading...
+          {t('loading')}
         </Button>
       );
     }
@@ -134,7 +137,7 @@ function Favourites({ navigation }) {
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Text style={style.yourTotalFavouritesText}>Your total favourites: <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text></Text>
+        <Text style={style.yourTotalFavouritesText}>{t('yourTotalFavourites')} <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text></Text>
         <Divder margin={5} />
         {renderDeleteAllFavouritesButton()}
       </View>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableHighlight, Linking } from 'react-native';
 import { Card } from 'react-native-paper';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -79,6 +80,8 @@ const style = StyleSheet.create({
 });
 
 function CardView({ navigation, item, isFavourites, getFavourites }) {
+  const { t } = useTranslation();
+
   const [favouritesClicked, setFavouritesClicked] = useState(false);
 
   let id = '';
@@ -244,16 +247,16 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
         />
       </TouchableHighlight>
       <Divder margin={5} />
-      <Text style={style.location}>Location: <Text style={style.locationClick} onPress={handleLocationClick}>{location}</Text></Text>
+      <Text style={style.location}>{t('location')} <Text style={style.locationClick} onPress={handleLocationClick}>{location}</Text></Text>
       <Divder margin={5} />
       {
         !_.isEmpty(displayPhone) ?
-          <Text style={style.phone}>Phone: {displayPhone}</Text>
+          <Text style={style.phone}>{t('phone')} {displayPhone}</Text>
           :
           null
       }
       <Divder margin={5} />
-      <Text style={style.rating}>Rating: {rating}</Text>
+      <Text style={style.rating}>{t('rating')} {rating}</Text>
       <Divder margin={5} />
       <View style={style.rowContainer}>
         {renderFavouritesIcon()}

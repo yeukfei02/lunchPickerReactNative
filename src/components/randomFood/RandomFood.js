@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { Button, Switch } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
@@ -39,6 +40,8 @@ const style = StyleSheet.create({
 });
 
 function RandomFood({ navigation }) {
+  const { t } = useTranslation();
+
   const [useRandomFoodCategory, setUseRandomFoodCategory] = useState(false);
   const [selectedTerm, setSelectedTerm] = useState('');
 
@@ -152,7 +155,7 @@ function RandomFood({ navigation }) {
 
     if (useRandomFoodCategory) {
       currentFoodCategory = (
-        <Text style={style.titleStyle}>Current food category: <Text style={style.currentFoodCategoryValueStyle}>{selectedTerm}</Text></Text>
+        <Text style={style.titleStyle}>{t('currentFoodCategory')} <Text style={style.currentFoodCategoryValueStyle}>{selectedTerm}</Text></Text>
       );
     }
 
@@ -165,13 +168,13 @@ function RandomFood({ navigation }) {
     if (refreshButtonClicked === true) {
       refreshButton = (
         <Button mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handleRefresh}>
-          Loading...
+          {t('loading')}
         </Button>
       );
     } else {
       refreshButton = (
         <Button mode="contained" color={style.colorPrimary.color} onPress={handleRefresh}>
-          Refresh
+          {t('refresh')}
         </Button>
       );
     }
@@ -211,7 +214,7 @@ function RandomFood({ navigation }) {
             value={useRandomFoodCategory}
             onValueChange={toggleSwitch}
           />
-          <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>Use random food category</Text>
+          <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>{t('useRandomFoodCategory')}</Text>
         </View>
         <Divder margin={8} />
         {renderRefreshButton()}
