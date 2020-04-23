@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Text, TextInput, Button } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import { StyleSheet, ScrollView, View, Image, Text, TextInput } from 'react-native';
+import { RadioButton, Button } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 import axios from 'axios';
@@ -276,6 +276,7 @@ function Home({ navigation }) {
       <View>
         <View style={style.rowContainer}>
           <RadioButton
+            color={style.colorPrimary.color}
             value="places"
             status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioButton('places')}
@@ -287,6 +288,7 @@ function Home({ navigation }) {
           latitude !== 0 && longitude !== 0 ?
             <View style={style.rowContainer}>
               <RadioButton
+                color={style.colorPrimary.color}
                 value="currentLocation"
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
                 onPress={() => handleRadioButton('currentLocation')}
@@ -296,6 +298,7 @@ function Home({ navigation }) {
             :
             <View style={style.rowContainer}>
               <RadioButton
+                color={style.colorPrimary.color}
                 value="currentLocation"
                 disabled={true}
                 status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
@@ -315,7 +318,7 @@ function Home({ navigation }) {
       locationInput = (
         <View>
           <TextInput
-            style={{ height: 40, borderColor: 'black', borderWidth: 1 }}
+            style={{ alignSelf: 'stretch', height: 40, borderColor: 'black', borderWidth: 1 }}
             onChangeText={(text) => handleLocationChange(text)}
             value={location}
           />
@@ -333,22 +336,13 @@ function Home({ navigation }) {
       if (!_.isEmpty(location)) {
         if (submitButtonClicked === true) {
           submitButton = (
-            <Button
-              onPress={handleSubmit}
-              title="Loading..."
-              disabled={true}
-              color={style.colorAccent.color}
-            >
+            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
               Loading...
             </Button>
           );
         } else {
           submitButton = (
-            <Button
-              onPress={handleSubmit}
-              title="Submit"
-              color={style.colorAccent.color}
-            >
+            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
               Submit
             </Button>
           );
@@ -359,22 +353,13 @@ function Home({ navigation }) {
     if (_.isEqual(radioButtonValue, 'currentLocation')) {
       if (submitButtonClicked === true) {
         submitButton = (
-          <Button
-            onPress={handleSubmit}
-            title="Loading..."
-            disabled={true}
-            color={style.colorAccent.color}
-          >
+          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
             Loading...
           </Button>
         );
       } else {
         submitButton = (
-          <Button
-            onPress={handleSubmit}
-            title="Submit"
-            color={style.colorAccent.color}
-          >
+          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
             Submit
           </Button>
         );
@@ -386,11 +371,7 @@ function Home({ navigation }) {
 
   const renderClearButton = () => {
     const clearButton = (
-      <Button
-        onPress={handleClear}
-        title="Clear"
-        color={style.colorPrimary.color}
-      >
+      <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleClear}>
         Clear
       </Button>
     );

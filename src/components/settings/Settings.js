@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, Switch } from 'react-native';
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Switch } from 'react-native-paper';
 import { Picker } from '@react-native-community/picker';
 import _ from 'lodash';
 
@@ -97,11 +98,9 @@ function Settings() {
         <Divder margin={10} />
         <View style={style.rowContainer}>
           <Switch
-            trackColor={{ false: 'lightgray', true: style.colorPrimary.color }}
-            thumbColor={subscribeStatus ? style.colorPrimary.color : 'lightgray'}
-            ios_backgroundColor="lightgray"
-            onValueChange={toggleSwitch}
+            color={style.colorPrimary.color}
             value={subscribeStatus}
+            onValueChange={toggleSwitch}
           />
           <Text style={{ marginTop: 4, marginLeft: 10 }}>Subscribe message</Text>
         </View>
