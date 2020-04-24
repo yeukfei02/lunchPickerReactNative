@@ -279,38 +279,40 @@ function Home({ navigation }) {
     return (
       <View>
         <View style={style.rowContainer}>
-          <RadioButton
-            color={style.colorPrimary.color}
-            value="places"
-            status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioButton('places')}
-          />
-          <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('places')}</Text>
+          <View style={style.rowContainer}>
+            <RadioButton
+              color={style.colorPrimary.color}
+              value="places"
+              status={radioButtonValue === 'places' ? 'checked' : 'unchecked'}
+              onPress={() => handleRadioButton('places')}
+            />
+            <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('places')}</Text>
+          </View>
+          <Divder margin={5} />
+          {
+            latitude !== 0 && longitude !== 0 ?
+              <View style={style.rowContainer}>
+                <RadioButton
+                  color={style.colorPrimary.color}
+                  value="currentLocation"
+                  status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioButton('currentLocation')}
+                />
+                <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
+              </View>
+              :
+              <View style={style.rowContainer}>
+                <RadioButton
+                  color={style.colorPrimary.color}
+                  value="currentLocation"
+                  disabled={true}
+                  status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioButton('currentLocation')}
+                />
+                <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
+              </View>
+          }
         </View>
-        <Divder margin={5} />
-        {
-          latitude !== 0 && longitude !== 0 ?
-            <View style={style.rowContainer}>
-              <RadioButton
-                color={style.colorPrimary.color}
-                value="currentLocation"
-                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
-                onPress={() => handleRadioButton('currentLocation')}
-              />
-              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
-            </View>
-            :
-            <View style={style.rowContainer}>
-              <RadioButton
-                color={style.colorPrimary.color}
-                value="currentLocation"
-                disabled={true}
-                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
-                onPress={() => handleRadioButton('currentLocation')}
-              />
-              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
-            </View>
-        }
       </View>
     );
   }
