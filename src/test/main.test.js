@@ -15,6 +15,13 @@ import Divider from '../components/divider/Divider';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: key => key,
+    i18n: key => key
+  })
+}));
+
 describe('main.test', () => {
   describe('render test', () => {
     it('Home', () => {
