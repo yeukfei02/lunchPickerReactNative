@@ -51,7 +51,7 @@ function Home({ navigation }) {
 
   const [selectedTermList, setSelectedTermList] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('');
-  const [radioButtonValue, setRadioButtonValue] = useState('');
+  const [radioButtonValue, setRadioButtonValue] = useState('places');
 
   const [location, setLocation] = useState(t('enterLocation'));
   const [latitude, setLatitude] = useState(0);

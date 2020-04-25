@@ -286,7 +286,7 @@ function RestaurantDetails({ navigation, id }) {
 function ContactUs({ navigation, route }) {
   const { t } = useTranslation();
 
-  const [radioButtonValue, setRadioButtonValue] = useState('');
+  const [radioButtonValue, setRadioButtonValue] = useState('stripe');
 
   const [currencyList, setCurrencyList] = useState([]);
   const [amount, setAmount] = useState('0');
