@@ -129,13 +129,13 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
   }
 
   const handleAvatarClick = () => {
-    navigation.navigate('Contact us', {
+    navigation.navigate(t('contactUs'), {
       id: id
     });
   }
 
   const handleTitleClick = () => {
-    navigation.navigate('Contact us', {
+    navigation.navigate(t('contactUs'), {
       id: id
     });
   }
