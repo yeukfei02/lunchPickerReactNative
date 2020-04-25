@@ -147,7 +147,7 @@ function RestaurantDetails({ navigation, id }) {
   }
 
   const handleBackToHome = () => {
-    navigation.navigate('Home');
+    navigation.navigate(t('home'));
   }
 
   const handleOpenUrl = () => {
