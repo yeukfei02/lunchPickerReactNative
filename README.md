@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/yeukfei02/lunchPickerReactNative.svg?branch=master)](https://travis-ci.com/yeukfei02/lunchPickerReactNative)
 [![codecov](https://codecov.io/gh/yeukfei02/lunchPickerReactNative/branch/master/graph/badge.svg)](https://codecov.io/gh/yeukfei02/lunchPickerReactNative)
+[![Discord](https://img.shields.io/discord/709280499503202364)](https://discord.gg/ZSwskB2)
 
 If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch?
 
