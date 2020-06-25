@@ -37,7 +37,7 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "lunchPicker",
+            "organization": "lunchpicker",
             "project": "lunchpickerreactnative",
             "authToken": "9e6e886126054197b6dc2a1da6c15b1f86c7f6304576470888cfe97d4a672ca0"
           }
