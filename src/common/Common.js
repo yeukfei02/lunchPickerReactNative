@@ -1,4 +1,4 @@
-import { REACT_APP_STRIPE_TEST_API_KEY, REACT_APP_STRIPE_API_KEY } from 'react-native-dotenv';
+import { REACT_NATIVE_STRIPE_TEST_API_KEY, REACT_NATIVE_STRIPE_API_KEY } from 'react-native-dotenv';
 
 export const getRootUrl = () => {
   let ROOT_URL = '';
@@ -15,9 +15,9 @@ export const getStripeApiKey = () => {
   let result = '';
 
   if (process.env.NODE_ENV === 'development') {
-    result = REACT_APP_STRIPE_TEST_API_KEY;
+    result = REACT_NATIVE_STRIPE_TEST_API_KEY;
   } else {
-    result = REACT_APP_STRIPE_API_KEY;
+    result = REACT_NATIVE_STRIPE_API_KEY;
   }
 
   return result;
