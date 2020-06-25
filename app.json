@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "1.2.6",
+    "version": "1.2.7",
     "orientation": "portrait",
     "icon": "./assets/playstore-icon.png",
     "splash": {
@@ -23,11 +23,11 @@
     "sdkVersion": "37.0.0",
     "ios": {
       "bundleIdentifier": "com.donaldwu.lunchpickerlite",
-      "buildNumber": "1.2.6"
+      "buildNumber": "1.2.7"
     },
     "android": {
       "package": "com.donaldwu.lunchpickerlite",
-      "versionCode": 23
+      "versionCode": 24
     },
     "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question.",
     "privacy": "public",
@@ -38,7 +38,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "lunchPicker",
-            "project": "lunchPickerReactNative",
+            "project": "lunchpickerreactnative",
             "authToken": "9e6e886126054197b6dc2a1da6c15b1f86c7f6304576470888cfe97d4a672ca0"
           }
         }
