@@ -3,7 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import * as Sentry from 'sentry-expo';
 import { useTranslation } from 'react-i18next';
+import { REACT_APP_SENTRY_DSN } from 'react-native-dotenv';
 
 import Home from './src/components/home/Home';
 import RandomFood from './src/components/randomFood/RandomFood';
@@ -12,6 +14,12 @@ import Settings from './src/components/settings/Settings';
 import ContactUs from './src/components/contactUs/ContactUs';
 
 import './i18n';
+
+Sentry.init({
+  dsn: REACT_APP_SENTRY_DSN,
+  enableInExpoDevelopment: true,
+  debug: true,
+});
 
 const Tab = createBottomTabNavigator();
 
