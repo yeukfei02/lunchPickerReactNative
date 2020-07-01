@@ -17,31 +17,31 @@ const style = StyleSheet.create({
     marginTop: 100,
     padding: 20,
     backgroundColor: 'white',
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   titleStyle: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rowContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   changeLanguageContainer: {
     flex: 1,
     marginTop: 50,
     padding: 20,
     backgroundColor: 'white',
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   colorPrimary: {
-    color: '#ed1f30'
+    color: '#ed1f30',
   },
   colorPrimaryDark: {
-    color: '#ffcc0000'
+    color: '#ffcc0000',
   },
   colorAccent: {
-    color: '#2b76f0'
-  }
+    color: '#2b76f0',
+  },
 });
 
 function Settings() {
@@ -65,7 +65,7 @@ function Settings() {
   const [subscribeStatus, setSubscribeStatus] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
 
-  const handleDropdownChange = (value, index, data) => {
+  const handleDropdownChange = (value: string, index: number, data: any) => {
     if (!_.isEmpty(value)) {
       setSelectedLanguage(value);
 
@@ -77,50 +77,41 @@ function Settings() {
           i18n.changeLanguage('chi');
           break;
         default:
-
       }
     }
-  }
+  };
 
   const getDropdownData = () => {
     const languageList = [
       {
-        value: 'Please select...'
+        value: 'Please select...',
       },
       {
-        value: 'English'
+        value: 'English',
       },
       {
-        value: 'Chinese'
+        value: 'Chinese',
       },
     ];
 
     return languageList;
-  }
+  };
 
   const toggleSwitch = () => {
-    if (!subscribeStatus)
-      setSubscribeStatus(true);
-    else
-      setSubscribeStatus(false);
-  }
+    if (!subscribeStatus) setSubscribeStatus(true);
+    else setSubscribeStatus(false);
+  };
 
   const renderSelectDropdown = () => {
     let selectDropdown = null;
 
     const data = getDropdownData();
     if (!_.isEmpty(data)) {
-      selectDropdown = (
-        <Dropdown
-          label={t('selectLanguage')}
-          data={data}
-          onChangeText={handleDropdownChange}
-        />
-      );
+      selectDropdown = <Dropdown label={t('selectLanguage')} data={data} onChangeText={handleDropdownChange} />;
     }
 
     return selectDropdown;
-  }
+  };
 
   return (
     <ScrollView style={style.scrollViewContainer}>
@@ -128,11 +119,7 @@ function Settings() {
         <Text style={style.titleStyle}>{t('settings')}</Text>
         <Divder margin={10} />
         <View style={style.rowContainer}>
-          <Switch
-            color={style.colorPrimary.color}
-            value={subscribeStatus}
-            onValueChange={toggleSwitch}
-          />
+          <Switch color={style.colorPrimary.color} value={subscribeStatus} onValueChange={toggleSwitch} />
           <Text style={{ marginTop: 4, marginLeft: 10 }}>{t('subscribeMessage')}</Text>
         </View>
       </Card>

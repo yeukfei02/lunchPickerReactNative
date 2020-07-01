@@ -21,25 +21,25 @@ const style = StyleSheet.create({
     marginTop: 70,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   titleStyle: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rowContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   currentFoodCategoryValueStyle: {
     fontSize: 18,
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   colorPrimary: {
-    color: '#ed1f30'
-  }
+    color: '#ed1f30',
+  },
 });
 
-function RandomFood({ navigation }) {
+function RandomFood(props: any) {
   const { t } = useTranslation();
 
   const [useRandomFoodCategory, setUseRandomFoodCategory] = useState(false);
@@ -60,34 +60,37 @@ function RandomFood({ navigation }) {
 
   useEffect(() => {
     const selectedTerm = _.sample(randomFoodList);
-    setSelectedTerm(selectedTerm);
+    setSelectedTerm(selectedTerm as any);
     if (latitude !== 0 && longitude !== 0)
-      findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm, latitude, longitude);
+      findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm as any, latitude, longitude);
   }, [useRandomFoodCategory, randomFoodList, latitude, longitude]);
 
   const getRandomFoodList = () => {
-    axios.get(
-      `${ROOT_URL}/category/get-categories`,
-      {
+    axios
+      .get(`${ROOT_URL}/category/get-categories`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           if (!_.isEmpty(response.data.categories)) {
-            let randomFoodList = [];
-            response.data.categories.forEach((item, i) => {
+            const randomFoodList: any = [];
+            response.data.categories.forEach((item: any, i: number) => {
               if (!_.isEmpty(item.parent_aliases)) {
                 const parentAliases = item.parent_aliases[0];
-                if (_.isEqual(parentAliases, "food") || _.isEqual(parentAliases, "restaurants") || _.isEqual(parentAliases, "bars") || _.isEqual(parentAliases, "breakfast_brunch")) {
+                if (
+                  _.isEqual(parentAliases, 'food') ||
+                  _.isEqual(parentAliases, 'restaurants') ||
+                  _.isEqual(parentAliases, 'bars') ||
+                  _.isEqual(parentAliases, 'breakfast_brunch')
+                ) {
                   randomFoodList.push(item);
                 }
               }
             });
-            const formattedRandomFoodList = randomFoodList.map((item, i) => {
+            const formattedRandomFoodList = randomFoodList.map((item: any, i: number) => {
               return item.title;
             });
             setRandomFoodList(formattedRandomFoodList);
@@ -96,10 +99,10 @@ function RandomFood({ navigation }) {
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const getUserCurrentLatLong = () => {
     navigator.geolocation.getCurrentPosition((location) => {
@@ -108,59 +111,64 @@ function RandomFood({ navigation }) {
       setLatitude(latitude);
       setLongitude(longitude);
     });
-  }
+  };
 
-  const findRestaurantsByLatLong = (useRandomFoodCategory, selectedTerm, latitude, longitude) => {
-    axios.get(
-      `${ROOT_URL}/restaurant/find-restaurants-by-lat-long`,
-      {
+  const findRestaurantsByLatLong = (
+    useRandomFoodCategory: boolean,
+    selectedTerm: string,
+    latitude: number,
+    longitude: number,
+  ) => {
+    axios
+      .get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
         params: {
           term: useRandomFoodCategory === true ? selectedTerm : '',
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
         },
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setResultList(response.data.restaurants.businesses);
           setRefreshButtonClicked(false);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
           setRefreshButtonClicked(false);
         }
       });
-  }
+  };
 
   const handleRefresh = () => {
     setResultList([]);
     setRefreshButtonClicked(true);
 
-    const selectedTerm = _.sample(randomFoodList);
+    const selectedTerm = _.sample(randomFoodList) as any;
     setSelectedTerm(selectedTerm);
     if (latitude !== 0 && longitude !== 0) {
       findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm, latitude, longitude);
     }
-  }
+  };
 
   const renderCurrentFoodCategory = () => {
     let currentFoodCategory = null;
 
     if (useRandomFoodCategory) {
       currentFoodCategory = (
-        <Text style={style.titleStyle}>{t('currentFoodCategory')} <Text style={style.currentFoodCategoryValueStyle}>{selectedTerm}</Text></Text>
+        <Text style={style.titleStyle}>
+          {t('currentFoodCategory')} <Text style={style.currentFoodCategoryValueStyle}>{selectedTerm}</Text>
+        </Text>
       );
     }
 
     return currentFoodCategory;
-  }
+  };
 
   const renderRefreshButton = () => {
     let refreshButton = null;
@@ -180,14 +188,12 @@ function RandomFood({ navigation }) {
     }
 
     return refreshButton;
-  }
+  };
 
   const toggleSwitch = () => {
-    if (!useRandomFoodCategory)
-      setUseRandomFoodCategory(true);
-    else
-      setUseRandomFoodCategory(false);
-  }
+    if (!useRandomFoodCategory) setUseRandomFoodCategory(true);
+    else setUseRandomFoodCategory(false);
+  };
 
   const renderDisplayResult = () => {
     let displayResult = null;
@@ -195,13 +201,13 @@ function RandomFood({ navigation }) {
     if (!_.isEmpty(resultList)) {
       displayResult = (
         <View>
-          <DisplayResult navigation={navigation} resultList={resultList} isFavourites={false} />
+          <DisplayResult navigation={props.navigation} resultList={resultList} isFavourites={false} />
         </View>
       );
     }
 
     return displayResult;
-  }
+  };
 
   return (
     <ScrollView style={style.scrollViewContainer}>
@@ -209,11 +215,7 @@ function RandomFood({ navigation }) {
         {renderCurrentFoodCategory()}
         <Divder margin={8} />
         <View style={style.rowContainer}>
-          <Switch
-            color={style.colorPrimary.color}
-            value={useRandomFoodCategory}
-            onValueChange={toggleSwitch}
-          />
+          <Switch color={style.colorPrimary.color} value={useRandomFoodCategory} onValueChange={toggleSwitch} />
           <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>{t('useRandomFoodCategory')}</Text>
         </View>
         <Divder margin={8} />

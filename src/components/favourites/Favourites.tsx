@@ -25,17 +25,17 @@ const style = StyleSheet.create({
   },
   yourTotalFavouritesText: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   favouritesLengthText: {
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   colorPrimary: {
-    color: '#ed1f30'
+    color: '#ed1f30',
   },
 });
 
-function Favourites({ navigation }) {
+function Favourites(props: any) {
   const { t } = useTranslation();
 
   const [favourites, setFavourites] = useState([]);
@@ -48,59 +48,55 @@ function Favourites({ navigation }) {
   }, []);
 
   const detectChangeTab = () => {
-    navigation.addListener('focus', () => {
+    props.navigation.addListener('focus', () => {
       getFavourites();
     });
-  }
+  };
 
   const getFavourites = () => {
-    axios.get(
-      `${ROOT_URL}/favourites/get-favourites`,
-      {
+    axios
+      .get(`${ROOT_URL}/favourites/get-favourites`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           const favourites = response.data.favourites;
           setFavourites(favourites);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const handleDeleteAllFavourites = () => {
     setDeleteAllFavouritesButtonClicked(true);
 
-    axios.delete(
-      `${ROOT_URL}/favourites/delete-all-favourites`,
-      {
+    axios
+      .delete(`${ROOT_URL}/favourites/delete-all-favourites`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setDeleteAllFavouritesButtonClicked(false);
           getFavourites();
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
           setDeleteAllFavouritesButtonClicked(false);
         }
       });
-  }
+  };
 
   const renderDeleteAllFavouritesButton = () => {
     let deleteAllFavouritesButton = (
@@ -118,7 +114,7 @@ function Favourites({ navigation }) {
     }
 
     return deleteAllFavouritesButton;
-  }
+  };
 
   const renderDisplayResult = () => {
     let displayResult = null;
@@ -126,18 +122,26 @@ function Favourites({ navigation }) {
     if (!_.isEmpty(favourites)) {
       displayResult = (
         <View>
-          <DisplayResult navigation={navigation} resultList={favourites} isFavourites={true} getFavourites={() => getFavourites()} />
+          <DisplayResult
+            navigation={props.navigation}
+            resultList={favourites}
+            isFavourites={true}
+            getFavourites={() => getFavourites()}
+          />
         </View>
       );
     }
 
     return displayResult;
-  }
+  };
 
   return (
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
-        <Text style={style.yourTotalFavouritesText}>{t('yourTotalFavourites')} <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text></Text>
+        <Text style={style.yourTotalFavouritesText}>
+          {t('yourTotalFavourites')}{' '}
+          <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text>
+        </Text>
         <Divder margin={5} />
         {renderDeleteAllFavouritesButton()}
       </View>
