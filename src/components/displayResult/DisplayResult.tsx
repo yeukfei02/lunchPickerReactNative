@@ -3,22 +3,22 @@ import { View, FlatList } from 'react-native';
 
 import CardView from '../cardView/CardView';
 
-function DisplayResult({ navigation, resultList, isFavourites, getFavourites }) {
+function DisplayResult(props: any) {
   return (
     <View>
       <FlatList
-        data={resultList}
+        data={props.resultList}
         renderItem={({ item }) => {
           return (
             <CardView
-              navigation={navigation}
+              navigation={props.navigation}
               item={item}
-              isFavourites={isFavourites}
-              getFavourites={getFavourites}
+              isFavourites={props.isFavourites}
+              getFavourites={props.getFavourites}
             />
           );
         }}
-        keyExtractor={(item) => !isFavourites ? item.id : item.item.id}
+        keyExtractor={(item: any) => (!props.isFavourites ? item.id : item.item.id)}
       />
     </View>
   );

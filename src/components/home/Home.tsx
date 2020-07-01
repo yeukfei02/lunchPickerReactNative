@@ -10,8 +10,6 @@ import { getRootUrl, log } from '../../common/Common';
 import Divder from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
-const logo = require('../../images/logo2.png');
-
 const ROOT_URL = getRootUrl();
 
 const style = StyleSheet.create({
@@ -26,30 +24,30 @@ const style = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'white',
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   rowContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   logo: {
     width: 300,
     height: 200,
   },
   colorPrimary: {
-    color: '#ed1f30'
+    color: '#ed1f30',
   },
   colorPrimaryDark: {
-    color: '#ffcc0000'
+    color: '#ffcc0000',
   },
   colorAccent: {
-    color: '#2b76f0'
-  }
+    color: '#2b76f0',
+  },
 });
 
-function Home({ navigation }) {
+function Home(props: any) {
   const { t } = useTranslation();
 
-  const [selectedTermList, setSelectedTermList] = useState([]);
+  const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
   const [selectedTerm, setSelectedTerm] = useState('');
   const [radioButtonValue, setRadioButtonValue] = useState('places');
 
@@ -67,40 +65,37 @@ function Home({ navigation }) {
   }, []);
 
   useEffect(() => {
-    if (latitude !== 0 && longitude !== 0)
-      findLocationTextByLatLong(latitude, longitude);
+    if (latitude !== 0 && longitude !== 0) findLocationTextByLatLong(latitude, longitude);
   }, [latitude, longitude]);
 
   const getSelectedTermList = () => {
-    axios.get(
-      `${ROOT_URL}/category/get-categories`,
-      {
+    axios
+      .get(`${ROOT_URL}/category/get-categories`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           if (!_.isEmpty(response.data.categories)) {
-            let foodList = [];
-            let restaurantsList = [];
-            let barsList = [];
-            let breakfastBrunchList = [];
-            response.data.categories.forEach((item, i) => {
+            let foodList: any[] = [];
+            let restaurantsList: any[] = [];
+            let barsList: any[] = [];
+            let breakfastBrunchList: any[] = [];
+            response.data.categories.forEach((item: any, i: number) => {
               if (!_.isEmpty(item.parent_aliases)) {
                 const parentAliases = item.parent_aliases[0];
-                if (_.isEqual(parentAliases, "food")) {
+                if (_.isEqual(parentAliases, 'food')) {
                   foodList.push(item);
                 }
-                if (_.isEqual(parentAliases, "restaurants")) {
+                if (_.isEqual(parentAliases, 'restaurants')) {
                   restaurantsList.push(item);
                 }
-                if (_.isEqual(parentAliases, "bars")) {
+                if (_.isEqual(parentAliases, 'bars')) {
                   barsList.push(item);
                 }
-                if (_.isEqual(parentAliases, "breakfast_brunch")) {
+                if (_.isEqual(parentAliases, 'breakfast_brunch')) {
                   breakfastBrunchList.push(item);
                 }
               }
@@ -110,8 +105,8 @@ function Home({ navigation }) {
               foodList = foodList.map((item, i) => {
                 const optionsObj = {
                   value: item.alias,
-                  label: item.title
-                }
+                  label: item.title,
+                };
                 return optionsObj;
               });
             }
@@ -119,8 +114,8 @@ function Home({ navigation }) {
               restaurantsList = restaurantsList.map((item, i) => {
                 const optionsObj = {
                   value: item.alias,
-                  label: item.title
-                }
+                  label: item.title,
+                };
                 return optionsObj;
               });
             }
@@ -128,8 +123,8 @@ function Home({ navigation }) {
               barsList = barsList.map((item, i) => {
                 const optionsObj = {
                   value: item.alias,
-                  label: item.title
-                }
+                  label: item.title,
+                };
                 return optionsObj;
               });
             }
@@ -137,12 +132,12 @@ function Home({ navigation }) {
               breakfastBrunchList = breakfastBrunchList.map((item, i) => {
                 const optionsObj = {
                   value: item.alias,
-                  label: item.title
-                }
+                  label: item.title,
+                };
                 return optionsObj;
               });
             }
-            let formattedSelectedTermList = [];
+            let formattedSelectedTermList: any[] = [];
             formattedSelectedTermList = formattedSelectedTermList.concat(foodList);
             formattedSelectedTermList = formattedSelectedTermList.concat(restaurantsList);
             formattedSelectedTermList = formattedSelectedTermList.concat(barsList);
@@ -153,127 +148,114 @@ function Home({ navigation }) {
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const getUserCurrentLatLong = () => {
-    navigator.geolocation.getCurrentPosition((location) => {
+    navigator.geolocation.getCurrentPosition((location: any) => {
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
-      log("latitude = ", latitude);
-      log("longitude = ", longitude);
+      log('latitude = ', latitude);
+      log('longitude = ', longitude);
       setLatitude(latitude);
       setLongitude(longitude);
     });
-  }
+  };
 
-  const findLocationTextByLatLong = (latitude, longitude) => {
-    axios.get(
-      `${ROOT_URL}/restaurant/find-location-text-by-lat-long`,
-      {
+  const findLocationTextByLatLong = (latitude: number, longitude: number) => {
+    axios
+      .get(`${ROOT_URL}/restaurant/find-location-text-by-lat-long`, {
         params: {
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
         },
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setLocation(response.data.location.display_name);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
           setSubmitButtonClicked(false);
         }
       });
-  }
+  };
 
-  const findRestaurantsByLocation = (selectedTerm, location) => {
-    axios.get(
-      `${ROOT_URL}/restaurant/find-restaurants-by-location`,
-      {
+  const findRestaurantsByLocation = (selectedTerm: string, location: any) => {
+    axios
+      .get(`${ROOT_URL}/restaurant/find-restaurants-by-location`, {
         params: {
           term: selectedTerm,
-          location: location
+          location: location,
         },
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setResultList(response.data.restaurants.businesses);
           setSubmitButtonClicked(false);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
           setSubmitButtonClicked(false);
         }
       });
-  }
+  };
 
-  const findRestaurantsByLatLong = (selectedTerm, latitude, longitude) => {
-    axios.get(
-      `${ROOT_URL}/restaurant/find-restaurants-by-lat-long`,
-      {
+  const findRestaurantsByLatLong = (selectedTerm: string, latitude: number, longitude: number) => {
+    axios
+      .get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
         params: {
           term: selectedTerm,
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
         },
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setResultList(response.data.restaurants.businesses);
           setSubmitButtonClicked(false);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
           setSubmitButtonClicked(false);
         }
       });
-  }
+  };
 
-  const handleDropdownChange = (value, index, data) => {
-    if (!_.isEmpty(value))
-      setSelectedTerm(value);
-  }
+  const handleDropdownChange = (value: string, index: number, data: any) => {
+    if (!_.isEmpty(value)) setSelectedTerm(value);
+  };
 
   const renderSelectDropdown = () => {
     let selectDropdown = null;
 
     const data = getDropdownData();
     if (!_.isEmpty(data)) {
-      selectDropdown = (
-        <Dropdown
-          label={t('selectTheFoodYouWant')}
-          data={data}
-          onChangeText={handleDropdownChange}
-        />
-      );
+      selectDropdown = <Dropdown label={t('selectTheFoodYouWant')} data={data} onChangeText={handleDropdownChange} />;
     }
 
     return selectDropdown;
-  }
+  };
 
   const renderRadioButton = () => {
     return (
@@ -289,33 +271,32 @@ function Home({ navigation }) {
             <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('places')}</Text>
           </View>
           <Divder margin={5} />
-          {
-            latitude !== 0 && longitude !== 0 ?
-              <View style={style.rowContainer}>
-                <RadioButton
-                  color={style.colorPrimary.color}
-                  value="currentLocation"
-                  status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioButton('currentLocation')}
-                />
-                <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
-              </View>
-              :
-              <View style={style.rowContainer}>
-                <RadioButton
-                  color={style.colorPrimary.color}
-                  value="currentLocation"
-                  disabled={true}
-                  status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioButton('currentLocation')}
-                />
-                <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
-              </View>
-          }
+          {latitude !== 0 && longitude !== 0 ? (
+            <View style={style.rowContainer}>
+              <RadioButton
+                color={style.colorPrimary.color}
+                value="currentLocation"
+                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                onPress={() => handleRadioButton('currentLocation')}
+              />
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
+            </View>
+          ) : (
+            <View style={style.rowContainer}>
+              <RadioButton
+                color={style.colorPrimary.color}
+                value="currentLocation"
+                disabled={true}
+                status={radioButtonValue === 'currentLocation' ? 'checked' : 'unchecked'}
+                onPress={() => handleRadioButton('currentLocation')}
+              />
+              <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('currentLocation')}</Text>
+            </View>
+          )}
         </View>
       </View>
     );
-  }
+  };
 
   const renderLocationInput = () => {
     let locationInput = null;
@@ -325,7 +306,7 @@ function Home({ navigation }) {
         <View>
           <TextInput
             mode="outlined"
-            label='Location'
+            label="Location"
             value={location}
             placeholder="address, city, place, street name, zip code, country, state, building name, etc..."
             onChangeText={(text) => handleLocationChange(text)}
@@ -339,7 +320,7 @@ function Home({ navigation }) {
     }
 
     return locationInput;
-  }
+  };
 
   const renderButtons = () => {
     let buttons = null;
@@ -356,7 +337,7 @@ function Home({ navigation }) {
     }
 
     return buttons;
-  }
+  };
 
   const renderSubmitButton = () => {
     let submitButton = null;
@@ -365,13 +346,24 @@ function Home({ navigation }) {
       if (!_.isEmpty(location)) {
         if (submitButtonClicked === true) {
           submitButton = (
-            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
+            <Button
+              style={{ alignSelf: 'stretch' }}
+              mode="outlined"
+              color={style.colorAccent.color}
+              disabled={true}
+              onPress={handleSubmit}
+            >
               {t('loading')}
             </Button>
           );
         } else {
           submitButton = (
-            <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
+            <Button
+              style={{ alignSelf: 'stretch' }}
+              mode="outlined"
+              color={style.colorAccent.color}
+              onPress={handleSubmit}
+            >
               {t('submit')}
             </Button>
           );
@@ -382,13 +374,24 @@ function Home({ navigation }) {
     if (_.isEqual(radioButtonValue, 'currentLocation')) {
       if (submitButtonClicked === true) {
         submitButton = (
-          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} disabled={true} onPress={handleSubmit}>
+          <Button
+            style={{ alignSelf: 'stretch' }}
+            mode="outlined"
+            color={style.colorAccent.color}
+            disabled={true}
+            onPress={handleSubmit}
+          >
             {t('loading')}
           </Button>
         );
       } else {
         submitButton = (
-          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorAccent.color} onPress={handleSubmit}>
+          <Button
+            style={{ alignSelf: 'stretch' }}
+            mode="outlined"
+            color={style.colorAccent.color}
+            onPress={handleSubmit}
+          >
             {t('submit')}
           </Button>
         );
@@ -396,7 +399,7 @@ function Home({ navigation }) {
     }
 
     return submitButton;
-  }
+  };
 
   const renderClearButton = () => {
     const clearButton = (
@@ -406,7 +409,7 @@ function Home({ navigation }) {
     );
 
     return clearButton;
-  }
+  };
 
   const renderDisplayResult = () => {
     let displayResult = null;
@@ -414,36 +417,36 @@ function Home({ navigation }) {
     if (!_.isEmpty(resultList)) {
       displayResult = (
         <View>
-          <DisplayResult navigation={navigation} resultList={resultList} isFavourites={false} />
+          <DisplayResult navigation={props.navigation} resultList={resultList} isFavourites={false} />
         </View>
       );
     }
 
     return displayResult;
-  }
+  };
 
   const getDropdownData = () => {
     let dropdownItemList = null;
 
     if (!_.isEmpty(selectedTermList)) {
       dropdownItemList = selectedTermList.map((item, i) => {
-        let obj = {
-          value: item.label
+        const obj = {
+          value: item.label,
         };
         return obj;
-      })
+      });
     }
 
     return dropdownItemList;
-  }
+  };
 
-  const handleRadioButton = (radioButtonValue) => {
+  const handleRadioButton = (radioButtonValue: string) => {
     setRadioButtonValue(radioButtonValue);
-  }
+  };
 
-  const handleLocationChange = (text) => {
+  const handleLocationChange = (text: any) => {
     setLocation(text);
-  }
+  };
 
   const handleSubmit = () => {
     setResultList([]);
@@ -462,23 +465,19 @@ function Home({ navigation }) {
         findRestaurantsByLatLong(term, latitude, longitude);
       }
     }
-  }
+  };
 
   const handleClear = () => {
     setSelectedTerm('');
     setRadioButtonValue('');
 
     setResultList([]);
-  }
+  };
 
   return (
     <ScrollView style={style.scrollViewContainer}>
       <Card style={style.container}>
-        <Image
-          style={style.logo}
-          source={logo}
-          resizeMode={'contain'}
-        />
+        <Image style={style.logo} source={require('../../images/logo2.png')} resizeMode={'contain'} />
         {renderSelectDropdown()}
         <Divder margin={5} />
         {renderRadioButton()}

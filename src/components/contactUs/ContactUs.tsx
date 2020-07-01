@@ -3,9 +3,9 @@ import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
 import { RadioButton, Checkbox, Button, TextInput, Card, Snackbar } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
-import { SliderBox } from "react-native-image-slider-box";
+import { SliderBox } from 'react-native-image-slider-box';
 import { Table, Row, Rows } from 'react-native-table-component';
-import { LiteCreditCardInput } from "react-native-credit-card-input";
+import { LiteCreditCardInput } from 'react-native-credit-card-input';
 import Stripe from 'react-native-stripe-api';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -28,11 +28,11 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   titleStyle: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   iconContainer: {
     flex: 1,
@@ -47,26 +47,26 @@ const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     marginVertical: 35,
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   rowContainer: {
     flexDirection: 'row',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
   cardViewContainer: {
     flex: 1,
     padding: 20,
     backgroundColor: 'white',
     marginVertical: 15,
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
   restaurantDetailsTitleText: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   restaurantDetailsValueText: {
     fontSize: 16,
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   restaurantDetailsUrlValueText: {
     fontSize: 16,
@@ -77,7 +77,7 @@ const style = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'normal',
     color: '#ed1f30',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   tableHead: {
     height: 40,
@@ -85,17 +85,17 @@ const style = StyleSheet.create({
   },
   tableHeadText: {
     margin: 6,
-    color: 'white'
+    color: 'white',
   },
   tableRowText: {
     margin: 6,
   },
   colorPrimary: {
-    color: '#ed1f30'
-  }
+    color: '#ed1f30',
+  },
 });
 
-function RestaurantDetails({ navigation, id }) {
+function RestaurantDetails(props: any) {
   const { t } = useTranslation();
 
   const [restaurantDetails, setRestaurantDetails] = useState({});
@@ -104,23 +104,21 @@ function RestaurantDetails({ navigation, id }) {
   const [locationStr, setLocationStr] = useState('');
 
   useEffect(() => {
-    if (!_.isEmpty(id)) {
-      getRestaurantsDetailsById(id);
+    if (!_.isEmpty(props.id)) {
+      getRestaurantsDetailsById(props.id);
     }
-  }, [id]);
+  }, [props.id]);
 
-  const getRestaurantsDetailsById = (id) => {
-    axios.get(
-      `${ROOT_URL}/restaurant/get-restaurant-details/${id}`,
-      {
+  const getRestaurantsDetailsById = (id: string) => {
+    axios
+      .get(`${ROOT_URL}/restaurant/get-restaurant-details/${id}`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setRestaurantDetails(response.data.restaurantDetails);
 
           const name = response.data.restaurantDetails.name;
@@ -141,63 +139,62 @@ function RestaurantDetails({ navigation, id }) {
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const handleBackToHome = () => {
-    navigation.navigate(t('home'));
-  }
+    props.navigation.navigate(t('home'));
+  };
 
   const handleOpenUrl = () => {
-    Linking.openURL(`${restaurantDetails.url}`);
-  }
+    Linking.openURL(`${(restaurantDetails as any).url}`);
+  };
 
   const handleLocationClick = () => {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${locationStr}`);
-  }
+  };
 
   const renderOpeningTimeTable = () => {
     let table = null;
 
-    let formattedDataList = [];
+    const formattedDataList: any[] = [];
     let hoursType = '';
     let isOpenNow = '';
 
     if (!_.isEmpty(restaurantDetails)) {
-      const hours = restaurantDetails.hours;
+      const hours = (restaurantDetails as any).hours;
       if (!_.isEmpty(hours)) {
-        hours.forEach((item, i) => {
+        hours.forEach((item: any, i: number) => {
           const open = item.open;
           if (!_.isEmpty(open)) {
-            open.forEach((item, i) => {
-              let data = [];
+            open.forEach((item: any, i: number) => {
+              const data = [];
 
               switch (item.day) {
                 case 0:
-                  item.day = "Mon";
+                  item.day = 'Mon';
                   break;
                 case 1:
-                  item.day = "Tue";
+                  item.day = 'Tue';
                   break;
                 case 2:
-                  item.day = "Wed";
+                  item.day = 'Wed';
                   break;
                 case 3:
-                  item.day = "Thu";
+                  item.day = 'Thu';
                   break;
                 case 4:
-                  item.day = "Fri";
+                  item.day = 'Fri';
                   break;
                 case 5:
-                  item.day = "Sat";
+                  item.day = 'Sat';
                   break;
                 case 6:
-                  item.day = "Sun";
+                  item.day = 'Sun';
                   break;
                 default:
-
               }
               if (!item.start.includes(':')) {
                 item.start = `${item.start.substring(0, 2)}:${item.start.substring(2)}`;
@@ -221,12 +218,7 @@ function RestaurantDetails({ navigation, id }) {
       }
     }
 
-    const tableHead = [
-      'Days',
-      'Start',
-      'End',
-      'Is overnight'
-    ];
+    const tableHead = ['Days', 'Start', 'End', 'Is overnight'];
     const tableData = formattedDataList;
     if (!_.isEmpty(tableHead) && !_.isEmpty(tableData)) {
       table = (
@@ -237,17 +229,22 @@ function RestaurantDetails({ navigation, id }) {
           </Table>
 
           <Divder margin={10} />
-          <Text style={style.titleStyle}>{t('hoursType')} <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text></Text>
+          <Text style={style.titleStyle}>
+            {t('hoursType')}{' '}
+            <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text>
+          </Text>
           <Divder margin={8} />
           <View style={style.rowContainer}>
-            <Checkbox
-              status={isOpenNow ? 'checked' : 'unchecked'}
-              disabled={true}
-            />
+            <Checkbox status={isOpenNow ? 'checked' : 'unchecked'} disabled={true} />
             <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>{t('isOpenNow')}</Text>
           </View>
           <Divder margin={10} />
-          <Button style={{ alignSelf: 'stretch' }} mode="outlined" color={style.colorPrimary.color} onPress={handleBackToHome}>
+          <Button
+            style={{ alignSelf: 'stretch' }}
+            mode="outlined"
+            color={style.colorPrimary.color}
+            onPress={handleBackToHome}
+          >
             {t('backToHome')}
           </Button>
         </Card>
@@ -255,7 +252,7 @@ function RestaurantDetails({ navigation, id }) {
     }
 
     return table;
-  }
+  };
 
   return (
     <View>
@@ -264,31 +261,46 @@ function RestaurantDetails({ navigation, id }) {
           images={photosList}
           sliderBoxHeight={250}
           dotColor={style.colorPrimary.color}
-          inactiveDotColor="lightgray" />
+          inactiveDotColor="lightgray"
+        />
       </View>
       <Divder margin={8} />
       <Card style={style.cardViewContainer}>
         <Text style={style.titleStyle}>{t('restaurantDetails')}</Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>{t('name')} <Text style={style.restaurantDetailsValueText}>{name}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>
+          {t('name')} <Text style={style.restaurantDetailsValueText}>{name}</Text>
+        </Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>{t('phone')} <Text style={style.restaurantDetailsValueText}>{restaurantDetails.phone}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>
+          {t('phone')} <Text style={style.restaurantDetailsValueText}>{(restaurantDetails as any).phone}</Text>
+        </Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>{t('url')} <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>Open Url</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>
+          {t('url')}{' '}
+          <Text style={style.restaurantDetailsUrlValueText} onPress={handleOpenUrl}>
+            Open Url
+          </Text>
+        </Text>
         <Divder margin={10} />
-        <Text style={style.restaurantDetailsTitleText}>{t('location')} <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>{locationStr}</Text></Text>
+        <Text style={style.restaurantDetailsTitleText}>
+          {t('location')}{' '}
+          <Text style={style.restaurantDetailsLocationValueText} onPress={handleLocationClick}>
+            {locationStr}
+          </Text>
+        </Text>
       </Card>
       {renderOpeningTimeTable()}
-    </View >
+    </View>
   );
 }
 
-function ContactUs({ navigation, route }) {
+function ContactUs(props: any) {
   const { t } = useTranslation();
 
   const [radioButtonValue, setRadioButtonValue] = useState('stripe');
 
-  const [currencyList, setCurrencyList] = useState([]);
+  const [currencyList, setCurrencyList] = useState<any[]>([]);
   const [amount, setAmount] = useState('0');
   const [currency, setCurrency] = useState('');
   const [token, setToken] = useState('');
@@ -307,7 +319,7 @@ function ContactUs({ navigation, route }) {
 
   useEffect(() => {
     if (!_.isEmpty(amount) && !_.isEmpty(currency) && !_.isEmpty(token) && !_.isEmpty(card)) {
-      creditCardPayment(amount, currency, token, card);
+      creditCardPayment(parseFloat(amount), currency, token, card);
       setToken('');
       setCard({});
     }
@@ -322,27 +334,27 @@ function ContactUs({ navigation, route }) {
       { value: 'US Dollar (USD)' },
     ];
     setCurrencyList(currencyList);
-  }
+  };
 
-  const handleRadioButton = (radioButtonValue) => {
+  const handleRadioButton = (radioButtonValue: string) => {
     setRadioButtonValue(radioButtonValue);
-  }
+  };
 
   const handleGithubClick = () => {
     Linking.openURL(`https://github.com/yeukfei02`);
-  }
+  };
 
   const handleEmailClick = () => {
     Linking.openURL(`mailto:yeukfei02@gmail.com`);
-  }
+  };
 
   const handleDonorboxClick = () => {
     Linking.openURL('https://donorbox.org/donate-for-lunch-picker-better-features-and-development');
-  }
+  };
 
   const handleBuyMeACoffeeClick = () => {
     Linking.openURL('https://www.buymeacoffee.com/yeukfei02');
-  }
+  };
 
   const handlePayNow = async () => {
     setPayNowButtonClicked(true);
@@ -354,10 +366,10 @@ function ContactUs({ navigation, route }) {
         const client = new Stripe(apiKey);
 
         const token = await client.createToken({
-          number: cardInfoData.values.number,
-          exp_month: cardInfoData.values.expiry.substring(0, 2),
-          exp_year: cardInfoData.values.expiry.substring(3),
-          cvc: cardInfoData.values.cvc,
+          number: (cardInfoData as any).values.number,
+          exp_month: (cardInfoData as any).values.expiry.substring(0, 2),
+          exp_year: (cardInfoData as any).values.expiry.substring(3),
+          cvc: (cardInfoData as any).values.cvc,
         });
         if (!_.isEmpty(token)) {
           setToken(token.id);
@@ -377,37 +389,41 @@ function ContactUs({ navigation, route }) {
       setSnackBarStatus(true);
       setSnackBarMessage(`Payment error = ${e.message}`);
     }
-  }
+  };
 
   const renderSelectDropdown = () => {
     let selectDropdown = null;
 
     const data = getDropdownData();
     if (!_.isEmpty(data)) {
-      selectDropdown = (
-        <Dropdown
-          label={t('selectCurrency')}
-          data={data}
-          onChangeText={handleCurrencyChange}
-        />
-      );
+      selectDropdown = <Dropdown label={t('selectCurrency')} data={data} onChangeText={handleCurrencyChange} />;
     }
 
     return selectDropdown;
-  }
+  };
 
   const renderResultDiv = () => {
     let resultDiv = null;
 
     if (_.isEqual(radioButtonValue, 'donorbox')) {
       resultDiv = (
-        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handleDonorboxClick}>
+        <Button
+          style={{ alignSelf: 'stretch' }}
+          mode="contained"
+          color={style.colorPrimary.color}
+          onPress={handleDonorboxClick}
+        >
           Donorbox
         </Button>
       );
     } else if (_.isEqual(radioButtonValue, 'buyMeACoffee')) {
       resultDiv = (
-        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} onPress={handleBuyMeACoffeeClick}>
+        <Button
+          style={{ alignSelf: 'stretch' }}
+          mode="contained"
+          color={style.colorPrimary.color}
+          onPress={handleBuyMeACoffeeClick}
+        >
           Buy Me A Coffee
         </Button>
       );
@@ -419,7 +435,7 @@ function ContactUs({ navigation, route }) {
             label={t('amount')}
             value={amount}
             placeholder={t('enterAmount')}
-            onChangeText={(number) => handleAmountChange(number)}
+            onChangeText={(number) => handleAmountChange(parseFloat(number))}
           />
           <Divder margin={5} />
           {renderSelectDropdown()}
@@ -432,11 +448,11 @@ function ContactUs({ navigation, route }) {
     }
 
     return resultDiv;
-  }
+  };
 
   const getDropdownData = () => {
     return currencyList;
-  }
+  };
 
   const renderPaynowButton = () => {
     let paynowButton = (
@@ -447,21 +463,26 @@ function ContactUs({ navigation, route }) {
 
     if (payNowButtonClicked) {
       paynowButton = (
-        <Button style={{ alignSelf: 'stretch' }} mode="contained" color={style.colorPrimary.color} disabled={true} onPress={handlePayNow}>
+        <Button
+          style={{ alignSelf: 'stretch' }}
+          mode="contained"
+          color={style.colorPrimary.color}
+          disabled={true}
+          onPress={handlePayNow}
+        >
           {t('loading')}
         </Button>
       );
     }
 
     return paynowButton;
-  }
+  };
 
-  const handleAmountChange = (number) => {
-    if (!isNaN(number))
-      setAmount(number);
-  }
+  const handleAmountChange = (number: number) => {
+    if (!isNaN(number)) setAmount(number.toString());
+  };
 
-  const handleCurrencyChange = (selectedCurrency) => {
+  const handleCurrencyChange = (selectedCurrency: string) => {
     if (!_.isEmpty(selectedCurrency)) {
       switch (selectedCurrency) {
         case 'Hong Kong Dollar (HKD)':
@@ -485,12 +506,11 @@ function ContactUs({ navigation, route }) {
           setCurrency('usd');
           break;
         default:
-
       }
     }
-  }
+  };
 
-  const handleCreditCardInputChange = (inputData) => {
+  const handleCreditCardInputChange = (inputData: any) => {
     if (!_.isEmpty(inputData)) {
       if (inputData.valid) {
         setCardInfoData(inputData);
@@ -500,34 +520,35 @@ function ContactUs({ navigation, route }) {
         setCardValid(false);
       }
     }
-  }
+  };
 
-  const creditCardPayment = (amount, currency, token, card) => {
-    axios.post(
-      `${ROOT_URL}/stripe/credit-card-payment`,
-      {
-        amount: Math.round(amount * 100),
-        currency: currency,
-        token: token,
-        card: card
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+  const creditCardPayment = (amount: number, currency: string, token: string, card: any) => {
+    axios
+      .post(
+        `${ROOT_URL}/stripe/credit-card-payment`,
+        {
+          amount: Math.round(amount * 100),
+          currency: currency,
+          token: token,
+          card: card,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const renderDiv = () => {
     let result = (
@@ -586,20 +607,20 @@ function ContactUs({ navigation, route }) {
       </View>
     );
 
-    if (!_.isEmpty(route) && !_.isEmpty(route.params) && !_.isEmpty(route.params.id)) {
+    if (!_.isEmpty(props.route) && !_.isEmpty(props.route.params) && !_.isEmpty(props.route.params.id)) {
       result = (
         <View>
-          <RestaurantDetails navigation={navigation} id={route.params.id} />
+          <RestaurantDetails navigation={props.navigation} id={props.route.params.id} />
         </View>
       );
     }
 
     return result;
-  }
+  };
 
   const handleDismissSnackBar = () => {
     setSnackBarStatus(false);
-  }
+  };
 
   return (
     <ScrollView style={style.scrollViewContainer}>

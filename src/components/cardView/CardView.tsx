@@ -39,7 +39,7 @@ const style = StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: '#ed1f30',
-    borderRadius: 20
+    borderRadius: 20,
   },
   avatarStr: {
     color: 'white',
@@ -50,11 +50,11 @@ const style = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   subHeader: {
     fontSize: 15,
-    color: 'gray'
+    color: 'gray',
   },
   logo: {
     width: 320,
@@ -66,7 +66,7 @@ const style = StyleSheet.create({
   locationClick: {
     fontSize: 15,
     textDecorationLine: 'underline',
-    color: '#ed1f30'
+    color: '#ed1f30',
   },
   phone: {
     fontSize: 15,
@@ -75,11 +75,11 @@ const style = StyleSheet.create({
     fontSize: 15,
   },
   colorPrimary: {
-    color: '#ed1f30'
+    color: '#ed1f30',
   },
 });
 
-function CardView({ navigation, item, isFavourites, getFavourites }) {
+function CardView(props: any) {
   const { t } = useTranslation();
 
   const [favouritesClicked, setFavouritesClicked] = useState(false);
@@ -87,15 +87,15 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
   let id = '';
   let name = '';
   let avatarStr = '';
-  let categories = '';
+  let categories: any[] = [];
   let imageUrl = '';
   let url = '';
   let rating = '';
   let location = '';
   let displayPhone = '';
 
-  const cardViewItem = isFavourites === false ? item : item.item;
-  const _id = isFavourites === true ? item._id : '';
+  const cardViewItem = props.isFavourites === false ? props.item : props.item.item;
+  const _id = props.isFavourites === true ? props.item._id : '';
 
   if (!_.isEmpty(cardViewItem)) {
     id = cardViewItem.id;
@@ -109,109 +109,112 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
     displayPhone = cardViewItem.display_phone;
   }
 
-  let subHeader = "";
+  let subHeader = '';
   if (!_.isEmpty(categories)) {
-    categories.forEach((item, i) => {
+    categories.forEach((item: any, i: number) => {
       if (!_.isEmpty(item.title))
-        if (i === 0)
-          subHeader += item.title;
-        else
-          subHeader += ", " + item.title;
+        if (i === 0) subHeader += item.title;
+        else subHeader += ', ' + item.title;
     });
   }
 
   const handleImageClick = () => {
     Linking.openURL(url);
-  }
+  };
 
   const handleLocationClick = () => {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${location}`);
-  }
+  };
 
   const handleAvatarClick = () => {
-    navigation.navigate(t('contactUs'), {
-      id: id
+    props.navigation.navigate(t('contactUs'), {
+      id: id,
     });
-  }
+  };
 
   const handleTitleClick = () => {
-    navigation.navigate(t('contactUs'), {
-      id: id
+    props.navigation.navigate(t('contactUs'), {
+      id: id,
     });
-  }
+  };
 
   const handleLinkClick = () => {
     Linking.openURL(url);
-  }
+  };
 
   const handleFavouritesIconClick = () => {
     setFavouritesClicked(true);
 
-    axios.post(
-      `${ROOT_URL}/favourites/add-to-favourites`,
-      {
-        item: item
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+    axios
+      .post(
+        `${ROOT_URL}/favourites/add-to-favourites`,
+        {
+          item: props.item,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const renderFavouritesIcon = () => {
     let favouritesIcon = (
-      <MaterialIcons style={{ marginRight: 10 }} name={'favorite-border'} size={40} color={'black'} onPress={handleFavouritesIconClick} />
+      <MaterialIcons
+        style={{ marginRight: 10 }}
+        name={'favorite-border'}
+        size={40}
+        color={'black'}
+        onPress={handleFavouritesIconClick}
+      />
     );
 
-    if (favouritesClicked || isFavourites) {
+    if (favouritesClicked || props.isFavourites) {
       favouritesIcon = (
         <MaterialIcons style={{ marginRight: 10 }} name={'favorite'} size={40} color={style.colorPrimary.color} />
       );
     }
 
     return favouritesIcon;
-  }
+  };
 
   const handleDeleteFavouritesById = () => {
-    axios.delete(
-      `${ROOT_URL}/favourites/delete-favourites/${_id}`,
-      {
+    axios
+      .delete(`${ROOT_URL}/favourites/delete-favourites/${_id}`, {
         headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         if (!_.isEmpty(response)) {
-          log("response = ", response);
+          log('response = ', response);
           setTimeout(() => {
-            getFavourites();
+            props.getFavourites();
           }, 500);
         }
       })
       .catch((error) => {
         if (!_.isEmpty(error)) {
-          log("error = ", error);
+          log('error = ', error);
         }
       });
-  }
+  };
 
   const renderDeleteFavouritesByIdButton = () => {
     let deleteFavouritesByIdButton = null;
 
-    if (isFavourites) {
+    if (props.isFavourites) {
       deleteFavouritesByIdButton = (
         <View style={style.deleteFavouritesByIdContainer}>
           <Entypo name="cross" size={35} color={'black'} onPress={handleDeleteFavouritesById} />
@@ -220,7 +223,7 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
     }
 
     return deleteFavouritesByIdButton;
-  }
+  };
 
   return (
     <Card style={style.container}>
@@ -228,10 +231,14 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
       <Divder margin={5} />
       <View style={style.rowContainer}>
         <View style={style.circle}>
-          <Text style={style.avatarStr} onPress={handleAvatarClick}>{avatarStr}</Text>
+          <Text style={style.avatarStr} onPress={handleAvatarClick}>
+            {avatarStr}
+          </Text>
         </View>
         <View style={style.titleContainer}>
-          <Text style={style.name} onPress={handleTitleClick}>{name}</Text>
+          <Text style={style.name} onPress={handleTitleClick}>
+            {name}
+          </Text>
           <Divder margin={3} />
           <Text style={style.subHeader}>{subHeader}</Text>
         </View>
@@ -241,22 +248,28 @@ function CardView({ navigation, item, isFavourites, getFavourites }) {
         <Image
           style={style.logo}
           source={{
-            uri: imageUrl
+            uri: imageUrl,
           }}
           resizeMode={'contain'}
         />
       </TouchableHighlight>
       <Divder margin={5} />
-      <Text style={style.location}>{t('location')} <Text style={style.locationClick} onPress={handleLocationClick}>{location}</Text></Text>
+      <Text style={style.location}>
+        {t('location')}{' '}
+        <Text style={style.locationClick} onPress={handleLocationClick}>
+          {location}
+        </Text>
+      </Text>
       <Divder margin={5} />
-      {
-        !_.isEmpty(displayPhone) ?
-          <Text style={style.phone}>{t('phone')} {displayPhone}</Text>
-          :
-          null
-      }
+      {!_.isEmpty(displayPhone) ? (
+        <Text style={style.phone}>
+          {t('phone')} {displayPhone}
+        </Text>
+      ) : null}
       <Divder margin={5} />
-      <Text style={style.rating}>{t('rating')} {rating}</Text>
+      <Text style={style.rating}>
+        {t('rating')} {rating}
+      </Text>
       <Divder margin={5} />
       <View style={style.rowContainer}>
         {renderFavouritesIcon()}
