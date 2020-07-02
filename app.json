@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "1.2.8",
+    "version": "1.2.9",
     "orientation": "portrait",
     "icon": "./assets/playstore-icon.png",
     "splash": {
@@ -23,11 +23,21 @@
     "sdkVersion": "37.0.0",
     "ios": {
       "bundleIdentifier": "com.donaldwu.lunchpickerlite",
-      "buildNumber": "1.2.8"
+      "buildNumber": "1.2.9",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "LunchPickerLite requires your location so that we can know where are you now",
+        "NSLocationAlwaysUsageDescription": "LunchPickerLite requires your location so that we can where are you now",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "LunchPickerLite requires your location so that we can where are you now",
+        "NSLocationUsageDescription": "LunchPickerLite requires your location so that we can where are you now"
+      }
     },
     "android": {
       "package": "com.donaldwu.lunchpickerlite",
-      "versionCode": 25
+      "versionCode": 26,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
     },
     "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question.",
     "privacy": "public",
