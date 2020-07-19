@@ -218,7 +218,7 @@ function RandomFood(props: any) {
 
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={useRandomFoodCategory} onValueChange={toggleSwitch} />
-          <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>{t('useRandomFoodCategory')}</Text>
+          <Text style={{ marginLeft: 5, fontSize: 18, alignSelf: 'center' }}>{t('useRandomFoodCategory')}</Text>
         </View>
 
         <Divder margin={8} />
