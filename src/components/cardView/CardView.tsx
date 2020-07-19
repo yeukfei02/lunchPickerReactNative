@@ -298,7 +298,7 @@ function CardView(props: any) {
             resizeMode={'contain'}
           />
         </TouchableHighlight>
-        
+
         <Divder margin={10} />
 
         <Text style={style.location}>
