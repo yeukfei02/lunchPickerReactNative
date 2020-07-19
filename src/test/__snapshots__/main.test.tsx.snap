@@ -10,6 +10,8 @@ exports[`main.test render test Favourites 1`] = `ShallowWrapper {}`;
 
 exports[`main.test render test Home 1`] = `ShallowWrapper {}`;
 
+exports[`main.test render test MainView 1`] = `ShallowWrapper {}`;
+
 exports[`main.test render test RandomFood 1`] = `ShallowWrapper {}`;
 
 exports[`main.test render test Settings 1`] = `ShallowWrapper {}`;

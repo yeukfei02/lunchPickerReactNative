@@ -3,6 +3,8 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, mount } from 'enzyme';
 
+import MainView from '../components/mainView/MainView';
+
 import Home from '../components/home/Home';
 import RandomFood from '../components/randomFood/RandomFood';
 import Favourites from '../components/favourites/Favourites';
@@ -12,6 +14,8 @@ import ContactUs from '../components/contactUs/ContactUs';
 import CardView from '../components/cardView/CardView';
 import DisplayResult from '../components/displayResult/DisplayResult';
 import Divider from '../components/divider/Divider';
+
+import RestaurantDetails from '../components/restaurantDetails/RestaurantDetails';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,6 +28,11 @@ jest.mock('react-i18next', () => ({
 
 describe('main.test', () => {
   describe('render test', () => {
+    it('MainView', () => {
+      const wrapper = shallow(<MainView />);
+      expect(wrapper).toMatchSnapshot();
+    });
+
     it('Home', () => {
       const wrapper = shallow(<Home />);
       expect(wrapper).toMatchSnapshot();
@@ -63,5 +72,10 @@ describe('main.test', () => {
       const wrapper = shallow(<Divider />);
       expect(wrapper).toMatchSnapshot();
     });
+
+    // it('RestaurantDetails', () => {
+    //   const wrapper = shallow(<RestaurantDetails />);
+    //   expect(wrapper).toMatchSnapshot();
+    // });
   });
 });
