@@ -213,15 +213,21 @@ function RandomFood(props: any) {
     <ScrollView style={style.scrollViewContainer}>
       <View style={style.container}>
         {renderCurrentFoodCategory()}
+
         <Divder margin={8} />
+
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={useRandomFoodCategory} onValueChange={toggleSwitch} />
           <Text style={{ marginTop: 1, marginLeft: 5, fontSize: 18 }}>{t('useRandomFoodCategory')}</Text>
         </View>
+
         <Divder margin={8} />
+
         {renderRefreshButton()}
       </View>
+
       <Divder margin={5} />
+
       {renderDisplayResult()}
     </ScrollView>
   );

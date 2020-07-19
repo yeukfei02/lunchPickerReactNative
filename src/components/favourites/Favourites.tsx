@@ -44,11 +44,14 @@ function Favourites(props: any) {
 
   useEffect(() => {
     getFavourites();
-    detectChangeTab();
   }, []);
 
-  const detectChangeTab = () => {
-    props.navigation.addListener('focus', () => {
+  useEffect(() => {
+    detectChangeTab(props.navigation);
+  }, [props.navigation]);
+
+  const detectChangeTab = (navigation: any) => {
+    navigation.addListener('focus', () => {
       getFavourites();
     });
   };
@@ -142,9 +145,12 @@ function Favourites(props: any) {
           {t('yourTotalFavourites')}{' '}
           <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text>
         </Text>
+
         <Divder margin={5} />
+
         {renderDeleteAllFavouritesButton()}
       </View>
+
       {renderDisplayResult()}
     </ScrollView>
   );

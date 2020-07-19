@@ -20,9 +20,8 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 100,
-    padding: 16,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    padding: 20,
+    alignItems: 'center',
     backgroundColor: 'white',
     marginHorizontal: 30,
   },
@@ -51,7 +50,7 @@ function Home(props: any) {
   const [selectedTerm, setSelectedTerm] = useState('');
   const [radioButtonValue, setRadioButtonValue] = useState('places');
 
-  const [location, setLocation] = useState(t('enterLocation'));
+  const [location, setLocation] = useState<string>(t('enterLocation'));
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
@@ -249,7 +248,7 @@ function Home(props: any) {
   const renderSelectDropdown = () => {
     let selectDropdown = null;
 
-    const data = getDropdownData();
+    const data: any = getDropdownData();
     if (!_.isEmpty(data)) {
       selectDropdown = <Dropdown label={t('selectTheFoodYouWant')} data={data} onChangeText={handleDropdownChange} />;
     }
@@ -478,14 +477,22 @@ function Home(props: any) {
     <ScrollView style={style.scrollViewContainer}>
       <Card style={style.container}>
         <Image style={style.logo} source={require('../../images/logo2.png')} resizeMode={'contain'} />
+
         {renderSelectDropdown()}
+
         <Divder margin={5} />
+
         {renderRadioButton()}
+
         <Divder margin={5} />
+
         {renderLocationInput()}
+
         {renderButtons()}
       </Card>
+
       <Divder margin={5} />
+
       {renderDisplayResult()}
     </ScrollView>
   );
