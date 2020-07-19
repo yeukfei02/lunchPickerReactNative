@@ -15,9 +15,18 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginVertical: 10,
+    alignItems: 'center',
+    marginVertical: 15,
+    marginHorizontal: 20,
+    backgroundColor: 'white',
+  },
+  favouritesContainer: {
+    flex: 1,
+    paddingLeft: 25,
+    paddingRight: 15,
+    paddingVertical: 25,
+    alignItems: 'center',
+    marginVertical: 15,
     marginHorizontal: 20,
     backgroundColor: 'white',
   },
@@ -126,15 +135,21 @@ function CardView(props: any) {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${location}`);
   };
 
-  const handleAvatarClick = () => {
-    props.navigation.navigate(t('contactUs'), {
-      id: id,
+  const handleAvatarClick = (navigation: any) => {
+    navigation.navigate('StackView', {
+      screen: 'RestaurantDetails',
+      params: {
+        id: id,
+      },
     });
   };
 
-  const handleTitleClick = () => {
-    props.navigation.navigate(t('contactUs'), {
-      id: id,
+  const handleTitleClick = (navigation: any) => {
+    navigation.navigate('StackView', {
+      screen: 'RestaurantDetails',
+      params: {
+        id: id,
+      },
     });
   };
 
@@ -211,72 +226,113 @@ function CardView(props: any) {
       });
   };
 
-  const renderDeleteFavouritesByIdButton = () => {
-    let deleteFavouritesByIdButton = null;
+  const renderView = (props: any) => {
+    let renderView = (
+      <Card style={style.container}>
+        <Divder margin={5} />
+
+        <View style={style.rowContainer}>
+          <View style={style.circle}>
+            <Text style={style.avatarStr} onPress={() => handleAvatarClick(props.navigation)}>
+              {avatarStr}
+            </Text>
+          </View>
+          <View style={style.titleContainer}>
+            <Text style={style.name} onPress={() => handleTitleClick(props.navigation)}>
+              {name}
+            </Text>
+            <Divder margin={3} />
+            <Text style={style.subHeader}>{subHeader}</Text>
+          </View>
+        </View>
+
+        <Divder margin={10} />
+
+        {getCommonView(props)}
+      </Card>
+    );
 
     if (props.isFavourites) {
-      deleteFavouritesByIdButton = (
-        <View style={style.deleteFavouritesByIdContainer}>
-          <Entypo name="cross" size={35} color={'black'} onPress={handleDeleteFavouritesById} />
-        </View>
+      renderView = (
+        <Card style={style.favouritesContainer}>
+          <View style={style.deleteFavouritesByIdContainer}>
+            <Entypo name="cross" size={35} color={'black'} onPress={handleDeleteFavouritesById} />
+          </View>
+
+          <Divder margin={5} />
+
+          <View style={style.rowContainer}>
+            <View style={style.circle}>
+              <Text style={style.avatarStr} onPress={() => handleAvatarClick(props.navigation)}>
+                {avatarStr}
+              </Text>
+            </View>
+            <View style={style.titleContainer}>
+              <Text style={style.name} onPress={() => handleTitleClick(props.navigation)}>
+                {name}
+              </Text>
+              <Divder margin={3} />
+              <Text style={style.subHeader}>{subHeader}</Text>
+            </View>
+          </View>
+
+          <Divder margin={8} />
+
+          {getCommonView(props)}
+        </Card>
       );
     }
 
-    return deleteFavouritesByIdButton;
+    return renderView;
   };
 
-  return (
-    <Card style={style.container}>
-      {renderDeleteFavouritesByIdButton()}
-      <Divder margin={5} />
-      <View style={style.rowContainer}>
-        <View style={style.circle}>
-          <Text style={style.avatarStr} onPress={handleAvatarClick}>
-            {avatarStr}
+  const getCommonView = (props: any) => {
+    return (
+      <View>
+        <TouchableHighlight onPress={handleImageClick}>
+          <Image
+            style={style.logo}
+            source={{
+              uri: imageUrl,
+            }}
+            resizeMode={'contain'}
+          />
+        </TouchableHighlight>
+
+        <Divder margin={10} />
+
+        <Text style={style.location}>
+          {t('location')}{' '}
+          <Text style={style.locationClick} onPress={handleLocationClick}>
+            {location}
           </Text>
-        </View>
-        <View style={style.titleContainer}>
-          <Text style={style.name} onPress={handleTitleClick}>
-            {name}
+        </Text>
+
+        <Divder margin={5} />
+
+        {!_.isEmpty(displayPhone) ? (
+          <Text style={style.phone}>
+            {t('phone')} {displayPhone}
           </Text>
-          <Divder margin={3} />
-          <Text style={style.subHeader}>{subHeader}</Text>
+        ) : null}
+
+        <Divder margin={5} />
+
+        <Text style={style.rating}>
+          {t('rating')} {rating}
+        </Text>
+
+        <Divder margin={5} />
+
+        <View style={style.rowContainer}>
+          {renderFavouritesIcon()}
+          <Entypo name="link" size={40} color={'black'} onPress={handleLinkClick} />
         </View>
       </View>
-      <Divder margin={5} />
-      <TouchableHighlight onPress={handleImageClick}>
-        <Image
-          style={style.logo}
-          source={{
-            uri: imageUrl,
-          }}
-          resizeMode={'contain'}
-        />
-      </TouchableHighlight>
-      <Divder margin={5} />
-      <Text style={style.location}>
-        {t('location')}{' '}
-        <Text style={style.locationClick} onPress={handleLocationClick}>
-          {location}
-        </Text>
-      </Text>
-      <Divder margin={5} />
-      {!_.isEmpty(displayPhone) ? (
-        <Text style={style.phone}>
-          {t('phone')} {displayPhone}
-        </Text>
-      ) : null}
-      <Divder margin={5} />
-      <Text style={style.rating}>
-        {t('rating')} {rating}
-      </Text>
-      <Divder margin={5} />
-      <View style={style.rowContainer}>
-        {renderFavouritesIcon()}
-        <Entypo name="link" size={40} color={'black'} onPress={handleLinkClick} />
-      </View>
-    </Card>
-  );
+    );
+  };
+
+  return renderView(props);
 }
 
 export default CardView;

@@ -117,7 +117,9 @@ function Settings() {
     <ScrollView style={style.scrollViewContainer}>
       <Card style={style.container}>
         <Text style={style.titleStyle}>{t('settings')}</Text>
+
         <Divder margin={10} />
+
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={subscribeStatus} onValueChange={toggleSwitch} />
           <Text style={{ marginTop: 4, marginLeft: 10 }}>{t('subscribeMessage')}</Text>
