@@ -331,8 +331,8 @@ function ContactUs(props: any) {
         <Divder margin={5} />
 
         <View style={style.iconContainer}>
-          <AntDesign style={{ marginRight: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
           <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
+          <AntDesign style={{ marginLeft: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
         </View>
       </Card>
 

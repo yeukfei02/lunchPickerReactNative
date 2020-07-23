@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, RefreshControl } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -41,6 +41,8 @@ function Favourites(props: any) {
   const [favourites, setFavourites] = useState([]);
 
   const [deleteAllFavouritesButtonClicked, setDeleteAllFavouritesButtonClicked] = useState(false);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getFavourites();
@@ -138,8 +140,22 @@ function Favourites(props: any) {
     return displayResult;
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    getFavourites();
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
   return (
-    <ScrollView style={style.scrollViewContainer}>
+    <ScrollView
+      style={style.scrollViewContainer}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
+      }
+    >
       <View style={style.container}>
         <Text style={style.yourTotalFavouritesText}>
           {t('yourTotalFavourites')}{' '}
