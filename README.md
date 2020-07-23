@@ -1,12 +1,13 @@
 <p align="center">
-    <img src="https://github.com/yeukfei02/lunchPickerReactNative/blob/master/readme-icon.png" width="200" height="200">
+  <img width="200px" src="https://github.com/yeukfei02/lunchPickerReactNative/blob/master/readme-icon.png"><br/>
+  <h2 align="center">lunchPickerReactNative</h2>
 </p>
 
-# lunchPickerReactNative
-
-[![Build Status](https://travis-ci.com/yeukfei02/lunchPickerReactNative.svg?branch=master)](https://travis-ci.com/yeukfei02/lunchPickerReactNative)
-[![codecov](https://codecov.io/gh/yeukfei02/lunchPickerReactNative/branch/master/graph/badge.svg)](https://codecov.io/gh/yeukfei02/lunchPickerReactNative)
-[![Discord](https://img.shields.io/discord/709280499503202364)](https://discord.gg/ZSwskB2)
+<p align="center">
+  <a href="https://travis-ci.com/yeukfei02/lunchPickerReactNative"><img src="https://travis-ci.com/yeukfei02/lunchPickerReactNative.svg?branch=master" alt=""></a>
+  <a href="https://codecov.io/gh/yeukfei02/lunchPickerReactNative"><img src="https://codecov.io/gh/yeukfei02/lunchPickerReactNative/branch/master/graph/badge.svg" alt=""></a>
+  <a href="https://discord.gg/ZSwskB2"><img src="https://img.shields.io/discord/709280499503202364" alt=""></a>
+</p>
 
 If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch?
 
