@@ -122,7 +122,9 @@ function Settings() {
 
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={subscribeStatus} onValueChange={toggleSwitch} />
-          <Text style={{ marginTop: 4, marginLeft: 10 }}>{t('subscribeMessage')}</Text>
+          <View style={{ justifyContent: 'center' }}>
+            <Text style={{ marginLeft: 10 }}>{t('subscribeMessage')}</Text>
+          </View>
         </View>
       </Card>
 
