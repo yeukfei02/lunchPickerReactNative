@@ -50,17 +50,20 @@ $ expo publish
 // make ios ipa
 $ expo build:ios
 
-// make android apk
+// make android apk / app bundle
 $ expo build:android
 
-// make android app bundle
-$ expo build:android -t app-bundle
+// get ios certificate
+$ expo fetch:ios:certs
 
 // get android keystore
 $ expo fetch:android:keystore
 
 // get current build status
 $ expo build:status
+
+// generate android + ios folder
+$ expo eject
 ```
 
 ## Contributing
