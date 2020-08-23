@@ -82,7 +82,7 @@ const style = StyleSheet.create({
   },
 });
 
-function RestaurantDetails(props: any) {
+function RestaurantDetails(props: any): JSX.Element {
   const { t } = useTranslation();
 
   const [restaurantDetails, setRestaurantDetails] = useState({});

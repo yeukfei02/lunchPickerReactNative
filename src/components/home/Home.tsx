@@ -43,7 +43,7 @@ const style = StyleSheet.create({
   },
 });
 
-function Home(props: any) {
+function Home(props: any): JSX.Element {
   const { t } = useTranslation();
 
   const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
@@ -443,7 +443,7 @@ function Home(props: any) {
     setRadioButtonValue(radioButtonValue);
   };
 
-  const handleLocationChange = (text: any) => {
+  const handleLocationChange = (text: string) => {
     setLocation(text);
   };
 

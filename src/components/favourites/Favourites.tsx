@@ -35,7 +35,7 @@ const style = StyleSheet.create({
   },
 });
 
-function Favourites(props: any) {
+function Favourites(props: any): JSX.Element {
   const { t } = useTranslation();
 
   const [favourites, setFavourites] = useState([]);

@@ -88,7 +88,7 @@ const style = StyleSheet.create({
   },
 });
 
-function CardView(props: any) {
+function CardView(props: any): JSX.Element {
   const { t } = useTranslation();
 
   const [favouritesClicked, setFavouritesClicked] = useState(false);
@@ -248,7 +248,7 @@ function CardView(props: any) {
 
         <Divder margin={10} />
 
-        {getCommonView(props)}
+        {getCommonView()}
       </Card>
     );
 
@@ -278,7 +278,7 @@ function CardView(props: any) {
 
           <Divder margin={8} />
 
-          {getCommonView(props)}
+          {getCommonView()}
         </Card>
       );
     }
@@ -286,7 +286,7 @@ function CardView(props: any) {
     return renderView;
   };
 
-  const getCommonView = (props: any) => {
+  const getCommonView = () => {
     return (
       <View>
         <TouchableHighlight onPress={handleImageClick}>
