@@ -64,7 +64,7 @@ const style = StyleSheet.create({
   },
 });
 
-function ContactUs(props: any) {
+function ContactUs(): JSX.Element {
   const { t } = useTranslation();
 
   const [radioButtonValue, setRadioButtonValue] = useState('stripe');

@@ -22,7 +22,7 @@ const theme = {
   },
 };
 
-function App() {
+function App(): JSX.Element {
   return (
     <PaperProvider theme={theme}>
       <MainView />

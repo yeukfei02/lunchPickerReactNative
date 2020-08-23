@@ -44,7 +44,7 @@ const style = StyleSheet.create({
   },
 });
 
-function Settings() {
+function Settings(): JSX.Element {
   const { t, i18n } = useTranslation();
 
   let defaultLanguage = {};

@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 
 import CardView from '../cardView/CardView';
 
-function DisplayResult(props: any) {
+function DisplayResult(props: any): JSX.Element {
   return (
     <View>
       <FlatList
