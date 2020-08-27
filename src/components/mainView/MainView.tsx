@@ -100,7 +100,7 @@ function StackView() {
   );
 }
 
-function MainView() {
+function MainView(): JSX.Element {
   return (
     <NavigationContainer independent={true}>
       <Drawer.Navigator drawerStyle={{ width: 0 }}>

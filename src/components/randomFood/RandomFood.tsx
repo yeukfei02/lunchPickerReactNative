@@ -39,7 +39,7 @@ const style = StyleSheet.create({
   },
 });
 
-function RandomFood(props: any) {
+function RandomFood(props: any): JSX.Element {
   const { t } = useTranslation();
 
   const [useRandomFoodCategory, setUseRandomFoodCategory] = useState(false);
