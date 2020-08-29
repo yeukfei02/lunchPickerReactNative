@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { Switch, Card } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
+import axios from 'axios';
+import { getRootUrl, log } from '../../common/Common';
 
 import Divder from '../divider/Divider';
+
+const ROOT_URL = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -65,6 +70,23 @@ function Settings(): JSX.Element {
   const [subscribeStatus, setSubscribeStatus] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
 
+  const [pushNotificationToken, setPushNotificationToken] = useState('');
+
+  useEffect(() => {
+    getAsyncStorageData();
+  }, []);
+
+  const getAsyncStorageData = async () => {
+    try {
+      const pushNotificationToken = await AsyncStorage.getItem('@pushNotificationToken');
+      if (pushNotificationToken) {
+        setPushNotificationToken(pushNotificationToken);
+      }
+    } catch (e) {
+      console.log('error = ', e.message);
+    }
+  };
+
   const handleDropdownChange = (value: string, index: number, data: any) => {
     if (!_.isEmpty(value)) {
       setSelectedLanguage(value);
@@ -98,8 +120,47 @@ function Settings(): JSX.Element {
   };
 
   const toggleSwitch = () => {
-    if (!subscribeStatus) setSubscribeStatus(true);
-    else setSubscribeStatus(false);
+    if (!subscribeStatus) {
+      setSubscribeStatus(true);
+      subscribeMessage(pushNotificationToken);
+    } else {
+      setSubscribeStatus(false);
+      unsubscribeMessage(pushNotificationToken);
+    }
+  };
+
+  const subscribeMessage = async (pushNotificationToken: string) => {
+    const response = await axios.post(
+      `${ROOT_URL}/expo/subscribe-message`,
+      {
+        pushNotificationTokenList: [pushNotificationToken],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+    }
+  };
+
+  const unsubscribeMessage = async (pushNotificationToken: string) => {
+    const response = await axios.post(
+      `${ROOT_URL}/expo/unsubscribe-message`,
+      {
+        pushNotificationTokenList: [pushNotificationToken],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+    }
   };
 
   const renderSelectDropdown = () => {
