@@ -1,4 +1,5 @@
 {
+  "version": "1.3.10",
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "@expo/vector-icons": "^10.0.6",
@@ -52,6 +53,7 @@
     "react-native-table-component": "^1.2.1",
     "react-native-web": "~0.11.7",
     "sentry-expo": "^2.1.2",
+    "standard-version": "^9.0.0",
     "typescript": "^3.9.5"
   },
   "devDependencies": {
@@ -66,7 +68,8 @@
     "eject": "expo eject",
     "test": "jest",
     "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
