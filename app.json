@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "1.3.9",
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/appstore-icon.png",
     "splash": {
@@ -23,7 +23,7 @@
     "sdkVersion": "37.0.0",
     "ios": {
       "bundleIdentifier": "com.donaldwu.lunchpickerlite",
-      "buildNumber": "1.3.9",
+      "buildNumber": "1.4.0",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "LunchPickerLite requires your location so that we can find related restaurant for you",
         "NSLocationAlwaysUsageDescription": "LunchPickerLite requires your location so that we can find related restaurant for you",
