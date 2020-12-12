@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.5...v1.5.6) (2020-12-12)
+
+
+### Bug Fixes
+
+* 🐛 update expo and react-native to version 40 ([3908bae](https://github.com/yeukfei02/lunchPickerReactNative/commit/3908bae563e449ca5ac2e5b701a68cc2f0ab5b05))
+
 ### [1.5.5](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.4...v1.5.5) (2020-12-12)
 
 ### [1.5.4](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.3...v1.5.4) (2020-12-12)
