@@ -96,39 +96,31 @@ function RestaurantDetails(props: any): JSX.Element {
     }
   }, [props.route.params]);
 
-  const getRestaurantsDetailsById = (id: string) => {
-    axios
-      .get(`${ROOT_URL}/restaurant/get-restaurant-details/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          setRestaurantDetails(response.data.restaurantDetails);
+  const getRestaurantsDetailsById = async (id: string) => {
+    const response = await axios.get(`${ROOT_URL}/restaurant/get-restaurant-details/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      setRestaurantDetails(response.data.restaurantDetails);
 
-          const name = response.data.restaurantDetails.name;
-          setName(name);
+      const name = response.data.restaurantDetails.name;
+      setName(name);
 
-          const photos = response.data.restaurantDetails.photos;
-          setPhotosList(photos);
+      const photos = response.data.restaurantDetails.photos;
+      setPhotosList(photos);
 
-          const location = response.data.restaurantDetails.location;
-          let locationStr = '';
-          if (!_.isEmpty(location)) {
-            if (!_.isEmpty(location.display_address)) {
-              locationStr = location.display_address.join(', ');
-            }
-          }
-          setLocationStr(locationStr);
+      const location = response.data.restaurantDetails.location;
+      let locationStr = '';
+      if (!_.isEmpty(location)) {
+        if (!_.isEmpty(location.display_address)) {
+          locationStr = location.display_address.join(', ');
         }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+      }
+      setLocationStr(locationStr);
+    }
   };
 
   const handleBackToHome = (navigation: any) => {

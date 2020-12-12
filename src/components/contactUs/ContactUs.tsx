@@ -291,32 +291,24 @@ function ContactUs(): JSX.Element {
     }
   };
 
-  const creditCardPayment = (amount: number, currency: string, token: string, card: any) => {
-    axios
-      .post(
-        `${ROOT_URL}/stripe/credit-card-payment`,
-        {
-          amount: Math.round(amount * 100),
-          currency: currency,
-          token: token,
-          card: card,
+  const creditCardPayment = async (amount: number, currency: string, token: string, card: any) => {
+    const response = await axios.post(
+      `${ROOT_URL}/stripe/credit-card-payment`,
+      {
+        amount: Math.round(amount * 100),
+        currency: currency,
+        token: token,
+        card: card,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+      },
+    );
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+    }
   };
 
   const handleDismissSnackBar = () => {
