@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
 import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
@@ -215,7 +215,11 @@ function Home(props: any): JSX.Element {
 
     const data: any = getDropdownData();
     if (!_.isEmpty(data)) {
-      selectDropdown = <Dropdown label={t('selectTheFoodYouWant')} data={data} onChangeText={handleDropdownChange} />;
+      selectDropdown = (
+        <View style={{ flex: 1 }}>
+          <Dropdown label={t('selectTheFoodYouWant')} data={data} onChangeText={handleDropdownChange} />
+        </View>
+      );
     }
 
     return selectDropdown;
