@@ -67,43 +67,35 @@ function RandomFood(props: any): JSX.Element {
       findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm as any, latitude, longitude);
   }, [useRandomFoodCategory, randomFoodList, latitude, longitude]);
 
-  const getRandomFoodList = () => {
-    axios
-      .get(`${ROOT_URL}/category/get-categories`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          if (!_.isEmpty(response.data.categories)) {
-            const randomFoodList: any = [];
-            response.data.categories.forEach((item: any, i: number) => {
-              if (!_.isEmpty(item.parent_aliases)) {
-                const parentAliases = item.parent_aliases[0];
-                if (
-                  _.isEqual(parentAliases, 'food') ||
-                  _.isEqual(parentAliases, 'restaurants') ||
-                  _.isEqual(parentAliases, 'bars') ||
-                  _.isEqual(parentAliases, 'breakfast_brunch')
-                ) {
-                  randomFoodList.push(item);
-                }
-              }
-            });
-            const formattedRandomFoodList = randomFoodList.map((item: any, i: number) => {
-              return item.title;
-            });
-            setRandomFoodList(formattedRandomFoodList);
+  const getRandomFoodList = async () => {
+    const response = await axios.get(`${ROOT_URL}/category/get-categories`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      if (!_.isEmpty(response.data.categories)) {
+        const randomFoodList: any = [];
+        response.data.categories.forEach((item: any, i: number) => {
+          if (!_.isEmpty(item.parent_aliases)) {
+            const parentAliases = item.parent_aliases[0];
+            if (
+              _.isEqual(parentAliases, 'food') ||
+              _.isEqual(parentAliases, 'restaurants') ||
+              _.isEqual(parentAliases, 'bars') ||
+              _.isEqual(parentAliases, 'breakfast_brunch')
+            ) {
+              randomFoodList.push(item);
+            }
           }
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+        });
+        const formattedRandomFoodList = randomFoodList.map((item: any, i: number) => {
+          return item.title;
+        });
+        setRandomFoodList(formattedRandomFoodList);
+      }
+    }
   };
 
   const getUserCurrentLatLong = () => {
@@ -115,36 +107,27 @@ function RandomFood(props: any): JSX.Element {
     });
   };
 
-  const findRestaurantsByLatLong = (
+  const findRestaurantsByLatLong = async (
     useRandomFoodCategory: boolean,
     selectedTerm: string,
     latitude: number,
     longitude: number,
   ) => {
-    axios
-      .get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
-        params: {
-          term: useRandomFoodCategory === true ? selectedTerm : '',
-          latitude: latitude,
-          longitude: longitude,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          setResultList(response.data.restaurants.businesses);
-          setRefreshButtonClicked(false);
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-          setRefreshButtonClicked(false);
-        }
-      });
+    const response = await axios.get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
+      params: {
+        term: useRandomFoodCategory === true ? selectedTerm : '',
+        latitude: latitude,
+        longitude: longitude,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      setResultList(response.data.restaurants.businesses);
+      setRefreshButtonClicked(false);
+    }
   };
 
   const handleRefresh = () => {

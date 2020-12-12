@@ -58,49 +58,32 @@ function Favourites(props: any): JSX.Element {
     });
   };
 
-  const getFavourites = () => {
-    axios
-      .get(`${ROOT_URL}/favourites/get-favourites`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          const favourites = response.data.favourites;
-          setFavourites(favourites);
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+  const getFavourites = async () => {
+    const response = await axios.get(`${ROOT_URL}/favourites/get-favourites`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      const favourites = response.data.favourites;
+      setFavourites(favourites);
+    }
   };
 
-  const handleDeleteAllFavourites = () => {
+  const handleDeleteAllFavourites = async () => {
     setDeleteAllFavouritesButtonClicked(true);
 
-    axios
-      .delete(`${ROOT_URL}/favourites/delete-all-favourites`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          setDeleteAllFavouritesButtonClicked(false);
-          getFavourites();
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-          setDeleteAllFavouritesButtonClicked(false);
-        }
-      });
+    const response = await axios.delete(`${ROOT_URL}/favourites/delete-all-favourites`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      setDeleteAllFavouritesButtonClicked(false);
+      getFavourites();
+    }
   };
 
   const renderDeleteAllFavouritesButton = () => {

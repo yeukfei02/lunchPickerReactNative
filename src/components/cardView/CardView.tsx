@@ -157,31 +157,23 @@ function CardView(props: any): JSX.Element {
     Linking.openURL(url);
   };
 
-  const handleFavouritesIconClick = () => {
+  const handleFavouritesIconClick = async () => {
     setFavouritesClicked(true);
 
-    axios
-      .post(
-        `${ROOT_URL}/favourites/add-to-favourites`,
-        {
-          item: props.item,
+    const response = await axios.post(
+      `${ROOT_URL}/favourites/add-to-favourites`,
+      {
+        item: props.item,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+      },
+    );
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+    }
   };
 
   const renderFavouritesIcon = () => {
@@ -204,26 +196,18 @@ function CardView(props: any): JSX.Element {
     return favouritesIcon;
   };
 
-  const handleDeleteFavouritesById = () => {
-    axios
-      .delete(`${ROOT_URL}/favourites/delete-favourites/${_id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        if (!_.isEmpty(response)) {
-          log('response = ', response);
-          setTimeout(() => {
-            props.getFavourites();
-          }, 500);
-        }
-      })
-      .catch((error) => {
-        if (!_.isEmpty(error)) {
-          log('error = ', error);
-        }
-      });
+  const handleDeleteFavouritesById = async () => {
+    const response = await axios.delete(`${ROOT_URL}/favourites/delete-favourites/${_id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!_.isEmpty(response)) {
+      log('response = ', response);
+      setTimeout(() => {
+        props.getFavourites();
+      }, 500);
+    }
   };
 
   const renderView = (props: any) => {
