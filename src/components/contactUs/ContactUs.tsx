@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
 import { RadioButton, Button, TextInput, Card, Snackbar } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { LiteCreditCardInput } from 'react-native-credit-card-input';
 import Stripe from 'react-native-stripe-api';
@@ -207,10 +207,15 @@ function ContactUs(): JSX.Element {
             onChangeText={(number) => handleAmountChange(parseFloat(number))}
           />
           <Divder margin={5} />
+
           {renderSelectDropdown()}
+
           <Divder margin={5} />
+
           <LiteCreditCardInput onChange={handleCreditCardInputChange} />
+
           <Divder margin={5} />
+
           {renderPaynowButton()}
         </View>
       );
@@ -368,6 +373,7 @@ function ContactUs(): JSX.Element {
         </View>
 
         <Divder margin={8} />
+
         {renderResultDiv()}
       </Card>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { Switch, Card } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
@@ -168,7 +168,11 @@ function Settings(): JSX.Element {
 
     const data = getDropdownData();
     if (!_.isEmpty(data)) {
-      selectDropdown = <Dropdown label={t('selectLanguage')} data={data} onChangeText={handleDropdownChange} />;
+      selectDropdown = (
+        <View style={{ flex: 1 }}>
+          <Dropdown label={t('selectLanguage')} data={data} onChangeText={handleDropdownChange} />
+        </View>
+      );
     }
 
     return selectDropdown;
