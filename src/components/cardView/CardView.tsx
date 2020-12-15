@@ -9,7 +9,7 @@ import { getRootUrl, log } from '../../common/Common';
 
 const ROOT_URL = getRootUrl();
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 
 const style = StyleSheet.create({
   container: {
@@ -213,7 +213,7 @@ function CardView(props: any): JSX.Element {
   const renderView = (props: any) => {
     let renderView = (
       <Card style={style.container}>
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.rowContainer}>
           <View style={style.circle}>
@@ -225,12 +225,12 @@ function CardView(props: any): JSX.Element {
             <Text style={style.name} onPress={() => handleTitleClick(props.navigation)}>
               {name}
             </Text>
-            <Divder margin={3} />
+            <Divider margin={3} />
             <Text style={style.subHeader}>{subHeader}</Text>
           </View>
         </View>
 
-        <Divder margin={10} />
+        <Divider margin={10} />
 
         {getCommonView()}
       </Card>
@@ -243,7 +243,7 @@ function CardView(props: any): JSX.Element {
             <Entypo name="cross" size={35} color={'black'} onPress={handleDeleteFavouritesById} />
           </View>
 
-          <Divder margin={5} />
+          <Divider margin={5} />
 
           <View style={style.rowContainer}>
             <View style={style.circle}>
@@ -255,12 +255,12 @@ function CardView(props: any): JSX.Element {
               <Text style={style.name} onPress={() => handleTitleClick(props.navigation)}>
                 {name}
               </Text>
-              <Divder margin={3} />
+              <Divider margin={3} />
               <Text style={style.subHeader}>{subHeader}</Text>
             </View>
           </View>
 
-          <Divder margin={8} />
+          <Divider margin={8} />
 
           {getCommonView()}
         </Card>
@@ -283,7 +283,7 @@ function CardView(props: any): JSX.Element {
           />
         </TouchableHighlight>
 
-        <Divder margin={10} />
+        <Divider margin={10} />
 
         <Text style={style.location}>
           {t('location')}{' '}
@@ -292,7 +292,7 @@ function CardView(props: any): JSX.Element {
           </Text>
         </Text>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         {!_.isEmpty(displayPhone) ? (
           <Text style={style.phone}>
@@ -300,13 +300,13 @@ function CardView(props: any): JSX.Element {
           </Text>
         ) : null}
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <Text style={style.rating}>
           {t('rating')} {rating}
         </Text>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.rowContainer}>
           {renderFavouritesIcon()}

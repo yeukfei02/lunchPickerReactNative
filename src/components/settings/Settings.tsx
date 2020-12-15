@@ -8,7 +8,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 
 const ROOT_URL = getRootUrl();
 
@@ -183,7 +183,7 @@ function Settings(): JSX.Element {
       <Card style={style.container}>
         <Text style={style.titleStyle}>{t('settings')}</Text>
 
-        <Divder margin={10} />
+        <Divider margin={10} />
 
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={subscribeStatus} onValueChange={toggleSwitch} />

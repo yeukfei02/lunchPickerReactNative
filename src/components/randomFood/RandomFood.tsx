@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, ScrollView, View, Text, RefreshControl } from 'react-native';
-import { Button, Switch } from 'react-native-paper';
+import { Button, Switch, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
 const ROOT_URL = getRootUrl();
@@ -37,9 +37,17 @@ const style = StyleSheet.create({
   colorPrimary: {
     color: '#ed1f30',
   },
+  fab: {
+    backgroundColor: '#ed1f30',
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });
 
 function RandomFood(props: any): JSX.Element {
+  const scrollRef = useRef<ScrollView>();
   const { t } = useTranslation();
 
   const [useRandomFoodCategory, setUseRandomFoodCategory] = useState(false);
@@ -187,6 +195,7 @@ function RandomFood(props: any): JSX.Element {
       displayResult = (
         <View>
           <DisplayResult navigation={props.navigation} resultList={resultList} isFavourites={false} />
+          <FAB style={style.fab} icon="chevron-up" onPress={() => handleFABButtonClick()} />
         </View>
       );
     }
@@ -203,8 +212,15 @@ function RandomFood(props: any): JSX.Element {
     }, 1000);
   };
 
+  const handleFABButtonClick = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+    });
+  };
+
   return (
     <ScrollView
+      ref={scrollRef}
       style={style.scrollViewContainer}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
@@ -213,19 +229,19 @@ function RandomFood(props: any): JSX.Element {
       <View style={style.container}>
         {renderCurrentFoodCategory()}
 
-        <Divder margin={8} />
+        <Divider margin={8} />
 
         <View style={style.rowContainer}>
           <Switch color={style.colorPrimary.color} value={useRandomFoodCategory} onValueChange={toggleSwitch} />
           <Text style={{ marginLeft: 5, fontSize: 18, alignSelf: 'center' }}>{t('useRandomFoodCategory')}</Text>
         </View>
 
-        <Divder margin={8} />
+        <Divider margin={8} />
 
         {renderRefreshButton()}
       </View>
 
-      <Divder margin={5} />
+      <Divider margin={5} />
 
       {renderDisplayResult()}
     </ScrollView>

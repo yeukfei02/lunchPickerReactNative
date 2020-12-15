@@ -10,7 +10,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log, getStripeApiKey } from '../../common/Common';
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 
 const ROOT_URL = getRootUrl();
 
@@ -206,15 +206,15 @@ function ContactUs(): JSX.Element {
             placeholder={t('enterAmount')}
             onChangeText={(number) => handleAmountChange(parseFloat(number))}
           />
-          <Divder margin={5} />
+          <Divider margin={5} />
 
           {renderSelectDropdown()}
 
-          <Divder margin={5} />
+          <Divider margin={5} />
 
           <LiteCreditCardInput onChange={handleCreditCardInputChange} />
 
-          <Divder margin={5} />
+          <Divider margin={5} />
 
           {renderPaynowButton()}
         </View>
@@ -325,7 +325,7 @@ function ContactUs(): JSX.Element {
       <Card style={style.container}>
         <Text style={style.titleStyle}>{t('contactTitle')}</Text>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.iconContainer}>
           <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
@@ -336,7 +336,7 @@ function ContactUs(): JSX.Element {
       <Card style={style.donateCardViewContainer}>
         <Text style={style.titleStyle}>{t('donateTitle')}</Text>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.rowContainer}>
           <RadioButton
@@ -348,7 +348,7 @@ function ContactUs(): JSX.Element {
           <Text style={{ marginTop: 8, marginLeft: 8 }}>Donorbox</Text>
         </View>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.rowContainer}>
           <RadioButton
@@ -360,7 +360,7 @@ function ContactUs(): JSX.Element {
           <Text style={{ marginTop: 8, marginLeft: 8 }}>Buy Me A Coffee</Text>
         </View>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         <View style={style.rowContainer}>
           <RadioButton
@@ -372,7 +372,7 @@ function ContactUs(): JSX.Element {
           <Text style={{ marginTop: 8, marginLeft: 8 }}>Stripe</Text>
         </View>
 
-        <Divder margin={8} />
+        <Divider margin={8} />
 
         {renderResultDiv()}
       </Card>
