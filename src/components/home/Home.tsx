@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
-import { RadioButton, Button, Card, TextInput } from 'react-native-paper';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, ScrollView, View, Image, Text, RefreshControl } from 'react-native';
+import { RadioButton, Button, Card, TextInput, FAB } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
 const ROOT_URL = getRootUrl();
@@ -41,9 +41,17 @@ const style = StyleSheet.create({
   colorAccent: {
     color: '#2b76f0',
   },
+  fab: {
+    backgroundColor: '#ed1f30',
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });
 
 function Home(props: any): JSX.Element {
+  const scrollRef = useRef<ScrollView>();
   const { t } = useTranslation();
 
   const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
@@ -57,6 +65,8 @@ function Home(props: any): JSX.Element {
   const [resultList, setResultList] = useState([]);
 
   const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getSelectedTermList();
@@ -238,7 +248,7 @@ function Home(props: any): JSX.Element {
             />
             <Text style={{ marginTop: 8, marginLeft: 5 }}>{t('places')}</Text>
           </View>
-          <Divder margin={5} />
+          <Divider margin={5} />
           {latitude !== 0 && longitude !== 0 ? (
             <View style={style.rowContainer}>
               <RadioButton
@@ -279,9 +289,9 @@ function Home(props: any): JSX.Element {
             placeholder="address, city, place, street name, zip code, country, state, building name, etc..."
             onChangeText={(text) => handleLocationChange(text)}
           />
-          <Divder margin={8} />
+          <Divider margin={8} />
           {renderSubmitButton()}
-          <Divder margin={8} />
+          <Divider margin={8} />
           {renderClearButton()}
         </View>
       );
@@ -296,9 +306,9 @@ function Home(props: any): JSX.Element {
     if (_.isEqual(radioButtonValue, 'currentLocation')) {
       buttons = (
         <View>
-          <Divder margin={8} />
+          <Divider margin={8} />
           {renderSubmitButton()}
-          <Divder margin={8} />
+          <Divider margin={8} />
           {renderClearButton()}
         </View>
       );
@@ -386,6 +396,7 @@ function Home(props: any): JSX.Element {
       displayResult = (
         <View>
           <DisplayResult navigation={props.navigation} resultList={resultList} isFavourites={false} />
+          <FAB style={style.fab} icon="chevron-up" onPress={() => handleFABButtonClick()} />
         </View>
       );
     }
@@ -442,25 +453,46 @@ function Home(props: any): JSX.Element {
     setResultList([]);
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    handleClear();
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
+  const handleFABButtonClick = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+    });
+  };
+
   return (
-    <ScrollView style={style.scrollViewContainer}>
+    <ScrollView
+      ref={scrollRef}
+      style={style.scrollViewContainer}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
+      }
+    >
       <Card style={style.container}>
         <Image style={style.logo} source={require('../../images/logo2.png')} resizeMode={'contain'} />
 
         {renderSelectDropdown()}
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         {renderRadioButton()}
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         {renderLocationInput()}
 
         {renderButtons()}
       </Card>
 
-      <Divder margin={5} />
+      <Divider margin={5} />
 
       {renderDisplayResult()}
     </ScrollView>

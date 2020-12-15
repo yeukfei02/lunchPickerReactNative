@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, ScrollView, View, Text, RefreshControl } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import { getRootUrl, log } from '../../common/Common';
 
 const ROOT_URL = getRootUrl();
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
 const style = StyleSheet.create({
@@ -33,9 +33,17 @@ const style = StyleSheet.create({
   colorPrimary: {
     color: '#ed1f30',
   },
+  fab: {
+    backgroundColor: '#ed1f30',
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });
 
 function Favourites(props: any): JSX.Element {
+  const scrollRef = useRef<ScrollView>();
   const { t } = useTranslation();
 
   const [favourites, setFavourites] = useState([]);
@@ -116,6 +124,7 @@ function Favourites(props: any): JSX.Element {
             isFavourites={true}
             getFavourites={() => getFavourites()}
           />
+          <FAB style={style.fab} icon="chevron-up" onPress={() => handleFABButtonClick()} />
         </View>
       );
     }
@@ -132,8 +141,15 @@ function Favourites(props: any): JSX.Element {
     }, 1000);
   };
 
+  const handleFABButtonClick = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+    });
+  };
+
   return (
     <ScrollView
+      ref={scrollRef}
       style={style.scrollViewContainer}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
@@ -145,7 +161,7 @@ function Favourites(props: any): JSX.Element {
           <Text style={style.favouritesLengthText}>{favourites ? favourites.length : 0}</Text>
         </Text>
 
-        <Divder margin={5} />
+        <Divider margin={5} />
 
         {renderDeleteAllFavouritesButton()}
       </View>

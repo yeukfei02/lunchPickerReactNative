@@ -9,7 +9,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl, log } from '../../common/Common';
 
-import Divder from '../divider/Divider';
+import Divider from '../divider/Divider';
 
 const ROOT_URL = getRootUrl();
 
@@ -209,21 +209,21 @@ function RestaurantDetails(props: any): JSX.Element {
             <Rows data={tableData} textStyle={style.tableRowText} />
           </Table>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Text style={style.titleStyle}>
             {t('hoursType')}{' '}
             <Text style={{ fontWeight: 'normal', color: style.colorPrimary.color }}>{hoursType.toLowerCase()}</Text>
           </Text>
 
-          <Divder margin={8} />
+          <Divider margin={8} />
 
           <View style={style.rowContainer}>
             <Checkbox status={isOpenNow ? 'checked' : 'unchecked'} disabled={true} />
             <Text style={{ fontSize: 16, marginTop: 8, marginLeft: 5 }}>{t('isOpenNow')}</Text>
           </View>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Button
             style={{ alignSelf: 'stretch' }}
@@ -258,24 +258,24 @@ function RestaurantDetails(props: any): JSX.Element {
           />
         </View>
 
-        <Divder margin={8} />
+        <Divider margin={8} />
 
         <Card style={style.cardViewContainer}>
           <Text style={style.titleStyle}>{t('restaurantDetails')}</Text>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Text style={style.restaurantDetailsTitleText}>
             {t('name')} <Text style={style.restaurantDetailsValueText}>{name}</Text>
           </Text>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Text style={style.restaurantDetailsTitleText}>
             {t('phone')} <Text style={style.restaurantDetailsValueText}>{(restaurantDetails as any).phone}</Text>
           </Text>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Text style={style.restaurantDetailsTitleText}>
             {t('url')}{' '}
@@ -284,7 +284,7 @@ function RestaurantDetails(props: any): JSX.Element {
             </Text>
           </Text>
 
-          <Divder margin={10} />
+          <Divider margin={10} />
 
           <Text style={style.restaurantDetailsTitleText}>
             {t('location')}{' '}
