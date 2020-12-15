@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.8](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.7...v1.5.8) (2020-12-15)
+
+
+### Bug Fixes
+
+* 🐛 fix spelling and add fab button ([351a236](https://github.com/yeukfei02/lunchPickerReactNative/commit/351a236b9bb8db774d8109cc97a91998a29136e6))
+
 ### [1.5.7](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.6...v1.5.7) (2020-12-12)
 
 ### [1.5.6](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.5...v1.5.6) (2020-12-12)
