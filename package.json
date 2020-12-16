@@ -1,5 +1,5 @@
 {
-  "version": "1.5.8",
+  "version": "1.5.9",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
