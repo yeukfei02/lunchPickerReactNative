@@ -179,7 +179,7 @@ function Settings(): JSX.Element {
   };
 
   return (
-    <ScrollView style={style.scrollViewContainer}>
+    <ScrollView style={style.scrollViewContainer} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="always">
       <Card style={style.container}>
         <Text style={style.titleStyle}>{t('settings')}</Text>
 

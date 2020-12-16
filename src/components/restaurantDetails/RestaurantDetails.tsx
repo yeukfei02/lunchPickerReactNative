@@ -241,7 +241,7 @@ function RestaurantDetails(props: any): JSX.Element {
   };
 
   return (
-    <ScrollView style={style.scrollViewContainer}>
+    <ScrollView style={style.scrollViewContainer} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="always">
       <View>
         <TouchableOpacity onPress={() => handleBackToHome(props.navigation)}>
           <View style={style.backArrowImage}>

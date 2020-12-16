@@ -154,6 +154,8 @@ function Favourites(props: any): JSX.Element {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
       }
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="always"
     >
       <View style={style.container}>
         <Text style={style.yourTotalFavouritesText}>
