@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, ScrollView, View, Image, Text, RefreshControl } from 'react-native';
+import { StyleSheet, View, Image, Text, RefreshControl } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RadioButton, Button, Card, TextInput, FAB } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
@@ -51,7 +52,7 @@ const style = StyleSheet.create({
 });
 
 function Home(props: any): JSX.Element {
-  const scrollRef = useRef<ScrollView>();
+  const scrollRef = useRef<KeyboardAwareScrollView>();
   const { t } = useTranslation();
 
   const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
@@ -469,7 +470,7 @@ function Home(props: any): JSX.Element {
   };
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
       ref={scrollRef}
       style={style.scrollViewContainer}
       refreshControl={
@@ -477,6 +478,7 @@ function Home(props: any): JSX.Element {
       }
       keyboardDismissMode="on-drag"
       keyboardShouldPersistTaps="always"
+      resetScrollToCoords={{ x: 0, y: 0 }}
     >
       <Card style={style.container}>
         <Image style={style.logo} source={require('../../images/logo2.png')} resizeMode={'contain'} />
@@ -497,7 +499,7 @@ function Home(props: any): JSX.Element {
       <Divider margin={5} />
 
       {renderDisplayResult()}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
