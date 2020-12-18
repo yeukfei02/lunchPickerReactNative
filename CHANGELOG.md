@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.10](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.9...v1.5.10) (2020-12-18)
+
+
+### Bug Fixes
+
+* 🐛 add KeyboardAwareScrollView to avoid keyboard cover ([667dff3](https://github.com/yeukfei02/lunchPickerReactNative/commit/667dff32498114f41dc772c109b29777bde41d01))
+
 ### [1.5.9](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.8...v1.5.9) (2020-12-16)
 
 
