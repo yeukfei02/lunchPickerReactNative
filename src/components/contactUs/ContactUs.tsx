@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, Linking } from 'react-native';
+import { StyleSheet, View, Text, Linking } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RadioButton, Button, TextInput, Card, Snackbar } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
@@ -321,7 +322,12 @@ function ContactUs(): JSX.Element {
   };
 
   return (
-    <ScrollView style={style.scrollViewContainer} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="always">
+    <KeyboardAwareScrollView
+      style={style.scrollViewContainer}
+      keyboardDismissMode="on-drag"
+      keyboardShouldPersistTaps="always"
+      resetScrollToCoords={{ x: 0, y: 0 }}
+    >
       <Card style={style.container}>
         <Text style={style.titleStyle}>{t('contactTitle')}</Text>
 
@@ -389,7 +395,7 @@ function ContactUs(): JSX.Element {
       >
         {snackBarMessage}
       </Snackbar>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
