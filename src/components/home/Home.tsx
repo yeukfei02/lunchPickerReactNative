@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, RefreshControl } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RadioButton, Button, Card, TextInput, FAB } from 'react-native-paper';
@@ -52,7 +52,6 @@ const style = StyleSheet.create({
 });
 
 function Home(props: any): JSX.Element {
-  const scrollRef = useRef<KeyboardAwareScrollView>();
   const { t } = useTranslation();
 
   const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
@@ -397,7 +396,7 @@ function Home(props: any): JSX.Element {
       displayResult = (
         <View>
           <DisplayResult navigation={props.navigation} resultList={resultList} isFavourites={false} />
-          <FAB style={style.fab} icon="chevron-up" onPress={() => handleFABButtonClick()} />
+          {/* <FAB style={style.fab} icon="chevron-up" onPress={() => handleFABButtonClick()} /> */}
         </View>
       );
     }
@@ -463,15 +462,14 @@ function Home(props: any): JSX.Element {
     }, 1000);
   };
 
-  const handleFABButtonClick = () => {
-    scrollRef.current?.scrollTo({
-      y: 0,
-    });
-  };
+  // const handleFABButtonClick = () => {
+  //   scrollRef.current?.scrollTo({
+  //     y: 0,
+  //   });
+  // };
 
   return (
     <KeyboardAwareScrollView
-      ref={scrollRef}
       style={style.scrollViewContainer}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#ed1f30', '#ed1f30', '#2b76f0']} />
