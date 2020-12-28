@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.2](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.1...v1.6.2) (2020-12-28)
+
+
+### Bug Fixes
+
+* 🐛 hide fab button in home component ([799cacd](https://github.com/yeukfei02/lunchPickerReactNative/commit/799cacdde89ab31e3dd9c36a1b8439db7ad08908))
+
 ### [1.6.1](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.10...v1.6.1) (2020-12-18)
 
 ### [1.5.10](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.5.9...v1.5.10) (2020-12-18)
