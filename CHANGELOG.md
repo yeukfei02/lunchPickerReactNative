@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.3](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.2...v1.6.3) (2021-01-28)
+
+
+### Bug Fixes
+
+* 🐛 fix package.json ([96edd78](https://github.com/yeukfei02/lunchPickerReactNative/commit/96edd7812ebc748c59c4ac41f0cc78cc40224f69))
+
 ### [1.6.2](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.1...v1.6.2) (2020-12-28)
 
 
