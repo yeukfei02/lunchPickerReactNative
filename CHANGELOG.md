@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.3...v1.6.4) (2021-03-15)
+
+
+### Bug Fixes
+
+* 🐛 remove sentry-expo hook ([8d7b187](https://github.com/yeukfei02/lunchPickerReactNative/commit/8d7b1874ba05e914d95ea3186249084180cc43ee))
+* 🐛 update version in app.json ([b040de2](https://github.com/yeukfei02/lunchPickerReactNative/commit/b040de253d7a1d7c312239b289ae95f680967533))
+
 ### [1.6.3](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.2...v1.6.3) (2021-01-28)
 
 
