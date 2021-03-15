@@ -32,18 +32,6 @@
     },
     "description": "If you’re a working software engineer, you’ve probably encountered with one of the toughest questions, where should I have lunch? Lunch picker is the tool you’ll turn to to answer this question.",
     "privacy": "public",
-    "githubUrl": "https://github.com/yeukfei02/lunchPickerReactNative",
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "lunchpicker",
-            "project": "lunchpickerreactnative",
-            "authToken": "9e6e886126054197b6dc2a1da6c15b1f86c7f6304576470888cfe97d4a672ca0"
-          }
-        }
-      ]
-    }
+    "githubUrl": "https://github.com/yeukfei02/lunchPickerReactNative"
   }
 }
