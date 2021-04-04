@@ -18,13 +18,15 @@ Lunch picker is the tool you’ll turn to to answer this question.
   <a href="https://play.google.com/store/apps/details?id=com.donaldwu.lunchpickerlite"><img src="https://github.com/yeukfei02/lunchPickerReactNative/blob/master/google-play-badge.png" width="30%" height="30%" alt=""></a>
 </p>
 
-## Requirement:
- - install expo-cli
- - install yarn
- - install node (v12+)
+## Requirement
 
-## Testing and run:
-```
+- install expo-cli
+- install yarn
+- install node (v12+)
+
+## Testing and run
+
+```zsh
 $ yarn
 
 // expo start
@@ -43,7 +45,7 @@ $ yarn run test
 $ yarn run lint
 ```
 
-```
+```zsh
 // publish project to expo
 $ expo publish
 
