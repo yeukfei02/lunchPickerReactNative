@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { REACT_NATIVE_SENTRY_DSN } from 'react-native-dotenv';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log, registerForPushNotificationsAsync } from './src/common/Common';
+import { getRootUrl, registerForPushNotificationsAsync } from './src/common/Common';
 
 import MainView from './src/components/mainView/MainView';
 
@@ -61,7 +61,7 @@ function App(): JSX.Element {
       },
     );
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
     }
   };
 

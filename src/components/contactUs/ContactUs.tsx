@@ -9,7 +9,7 @@ import Stripe from 'react-native-stripe-api';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log, getStripeApiKey } from '../../common/Common';
+import { getRootUrl, getStripeApiKey } from '../../common/Common';
 
 import Divider from '../divider/Divider';
 
@@ -313,7 +313,7 @@ function ContactUs(): JSX.Element {
       },
     );
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
     }
   };
 

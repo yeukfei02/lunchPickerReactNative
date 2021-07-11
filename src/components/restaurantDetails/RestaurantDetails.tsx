@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 import Divider from '../divider/Divider';
 
@@ -103,7 +103,7 @@ function RestaurantDetails(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setRestaurantDetails(response.data.restaurantDetails);
 
       const name = response.data.restaurantDetails.name;

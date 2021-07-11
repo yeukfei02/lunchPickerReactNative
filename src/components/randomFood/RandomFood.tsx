@@ -4,7 +4,7 @@ import { Button, Switch, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
@@ -82,7 +82,7 @@ function RandomFood(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       if (!_.isEmpty(response.data.categories)) {
         const randomFoodList: any = [];
         response.data.categories.forEach((item: any, i: number) => {
@@ -132,7 +132,7 @@ function RandomFood(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setResultList(response.data.restaurants.businesses);
       setRefreshButtonClicked(false);
     }
