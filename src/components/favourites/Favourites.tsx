@@ -4,7 +4,7 @@ import { Button, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 const ROOT_URL = getRootUrl();
 
@@ -73,7 +73,7 @@ function Favourites(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       const favourites = response.data.favourites;
       setFavourites(favourites);
     }
@@ -88,7 +88,7 @@ function Favourites(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setDeleteAllFavouritesButtonClicked(false);
       getFavourites();
     }

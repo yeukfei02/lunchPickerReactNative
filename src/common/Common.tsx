@@ -58,7 +58,3 @@ export const getStripeApiKey = (): string => {
 
   return result;
 };
-
-export const log = (message: string, item: any): void => {
-  console.log(message, item);
-};

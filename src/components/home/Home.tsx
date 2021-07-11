@@ -6,7 +6,7 @@ import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
@@ -84,7 +84,7 @@ function Home(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       if (!_.isEmpty(response.data.categories)) {
         let foodList: any[] = [];
         let restaurantsList: any[] = [];
@@ -158,8 +158,8 @@ function Home(props: any): JSX.Element {
     navigator.geolocation.getCurrentPosition((location: any) => {
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
-      log('latitude = ', latitude);
-      log('longitude = ', longitude);
+      console.log('latitude = ', latitude);
+      console.log('longitude = ', longitude);
       setLatitude(latitude);
       setLongitude(longitude);
     });
@@ -176,7 +176,7 @@ function Home(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setLocation(response.data.location.display_name);
     }
   };
@@ -192,7 +192,7 @@ function Home(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setResultList(response.data.restaurants.businesses);
       setSubmitButtonClicked(false);
     }
@@ -210,7 +210,7 @@ function Home(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setResultList(response.data.restaurants.businesses);
       setSubmitButtonClicked(false);
     }

@@ -5,7 +5,7 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 const ROOT_URL = getRootUrl();
 
@@ -172,7 +172,7 @@ function CardView(props: any): JSX.Element {
       },
     );
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
     }
   };
 
@@ -203,7 +203,7 @@ function CardView(props: any): JSX.Element {
       },
     });
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
       setTimeout(() => {
         props.getFavourites();
       }, 500);

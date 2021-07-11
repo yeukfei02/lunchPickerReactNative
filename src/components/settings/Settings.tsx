@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, log } from '../../common/Common';
+import { getRootUrl } from '../../common/Common';
 
 import Divider from '../divider/Divider';
 
@@ -142,7 +142,7 @@ function Settings(): JSX.Element {
       },
     );
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
     }
   };
 
@@ -159,7 +159,7 @@ function Settings(): JSX.Element {
       },
     );
     if (!_.isEmpty(response)) {
-      log('response = ', response);
+      console.log('response = ', response);
     }
   };
 
