@@ -4,12 +4,12 @@ import { Button, Switch, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
 import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -76,7 +76,7 @@ function RandomFood(props: any): JSX.Element {
   }, [useRandomFoodCategory, randomFoodList, latitude, longitude]);
 
   const getRandomFoodList = async () => {
-    const response = await axios.get(`${ROOT_URL}/category/get-categories`, {
+    const response = await axios.get(`${rootUrl}/category/get-categories`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -121,7 +121,7 @@ function RandomFood(props: any): JSX.Element {
     latitude: number,
     longitude: number,
   ) => {
-    const response = await axios.get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
+    const response = await axios.get(`${rootUrl}/restaurant/find-restaurants-by-lat-long`, {
       params: {
         term: useRandomFoodCategory === true ? selectedTerm : '',
         latitude: latitude,

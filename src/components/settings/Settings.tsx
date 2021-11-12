@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
 import Divider from '../divider/Divider';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -131,7 +131,7 @@ function Settings(): JSX.Element {
 
   const subscribeMessage = async (pushNotificationToken: string) => {
     const response = await axios.post(
-      `${ROOT_URL}/expo/subscribe-message`,
+      `${rootUrl}/expo/subscribe-message`,
       {
         pushNotificationTokenList: [pushNotificationToken],
       },
@@ -148,7 +148,7 @@ function Settings(): JSX.Element {
 
   const unsubscribeMessage = async (pushNotificationToken: string) => {
     const response = await axios.post(
-      `${ROOT_URL}/expo/unsubscribe-message`,
+      `${rootUrl}/expo/unsubscribe-message`,
       {
         pushNotificationTokenList: [pushNotificationToken],
       },

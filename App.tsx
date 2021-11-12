@@ -5,13 +5,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { REACT_NATIVE_SENTRY_DSN } from 'react-native-dotenv';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, registerForPushNotificationsAsync } from './src/common/Common';
+import { getRootUrl, registerForPushNotificationsAsync } from './src/helpers/helpers';
 
 import MainView from './src/components/mainView/MainView';
 
 import './i18n';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 Sentry.init({
   dsn: REACT_NATIVE_SENTRY_DSN,
@@ -50,7 +50,7 @@ function App(): JSX.Element {
 
   const addPushNotificationTokenToServer = async (pushNotificationToken: string) => {
     const response = await axios.post(
-      `${ROOT_URL}/expo/add-push-notification-token-to-server`,
+      `${rootUrl}/expo/add-push-notification-token-to-server`,
       {
         pushNotificationToken: pushNotificationToken,
       },

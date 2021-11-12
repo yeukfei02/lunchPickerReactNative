@@ -4,9 +4,9 @@ import { Button, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
@@ -67,7 +67,7 @@ function Favourites(props: any): JSX.Element {
   };
 
   const getFavourites = async () => {
-    const response = await axios.get(`${ROOT_URL}/favourites/get-favourites`, {
+    const response = await axios.get(`${rootUrl}/favourites/get-favourites`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -82,7 +82,7 @@ function Favourites(props: any): JSX.Element {
   const handleDeleteAllFavourites = async () => {
     setDeleteAllFavouritesButtonClicked(true);
 
-    const response = await axios.delete(`${ROOT_URL}/favourites/delete-all-favourites`, {
+    const response = await axios.delete(`${rootUrl}/favourites/delete-all-favourites`, {
       headers: {
         'Content-Type': 'application/json',
       },

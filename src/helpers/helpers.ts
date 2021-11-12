@@ -6,14 +6,15 @@ import { Platform } from 'react-native';
 import { REACT_NATIVE_STRIPE_TEST_API_KEY, REACT_NATIVE_STRIPE_API_KEY } from 'react-native-dotenv';
 
 export const getRootUrl = (): string => {
-  let ROOT_URL = '';
+  let rootUrl = '';
+
   if (process.env.NODE_ENV === 'development') {
-    ROOT_URL = 'http://192.168.1.119:3000/api';
+    rootUrl = 'http://192.168.1.119:3000/api';
   } else {
-    ROOT_URL = 'https://www.lunch-picker-api.com/api';
+    rootUrl = 'https://www.lunch-picker-api.com/api';
   }
 
-  return ROOT_URL;
+  return rootUrl;
 };
 
 export const registerForPushNotificationsAsync = async (): Promise<string> => {
