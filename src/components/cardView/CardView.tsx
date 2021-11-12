@@ -5,9 +5,9 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 import Divider from '../divider/Divider';
 
@@ -161,7 +161,7 @@ function CardView(props: any): JSX.Element {
     setFavouritesClicked(true);
 
     const response = await axios.post(
-      `${ROOT_URL}/favourites/add-to-favourites`,
+      `${rootUrl}/favourites/add-to-favourites`,
       {
         item: props.item,
       },
@@ -197,7 +197,7 @@ function CardView(props: any): JSX.Element {
   };
 
   const handleDeleteFavouritesById = async () => {
-    const response = await axios.delete(`${ROOT_URL}/favourites/delete-favourites/${_id}`, {
+    const response = await axios.delete(`${rootUrl}/favourites/delete-favourites/${_id}`, {
       headers: {
         'Content-Type': 'application/json',
       },

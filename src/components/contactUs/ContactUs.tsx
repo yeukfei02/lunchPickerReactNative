@@ -9,11 +9,11 @@ import Stripe from 'react-native-stripe-api';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl, getStripeApiKey } from '../../common/Common';
+import { getRootUrl, getStripeApiKey } from '../../helpers/helpers';
 
 import Divider from '../divider/Divider';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -299,7 +299,7 @@ function ContactUs(): JSX.Element {
 
   const creditCardPayment = async (amount: number, currency: string, token: string, card: any) => {
     const response = await axios.post(
-      `${ROOT_URL}/stripe/credit-card-payment`,
+      `${rootUrl}/stripe/credit-card-payment`,
       {
         amount: Math.round(amount * 100),
         currency: currency,

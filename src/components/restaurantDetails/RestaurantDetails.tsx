@@ -7,11 +7,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
 import Divider from '../divider/Divider';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -97,7 +97,7 @@ function RestaurantDetails(props: any): JSX.Element {
   }, [props.route.params]);
 
   const getRestaurantsDetailsById = async (id: string) => {
-    const response = await axios.get(`${ROOT_URL}/restaurant/get-restaurant-details/${id}`, {
+    const response = await axios.get(`${rootUrl}/restaurant/get-restaurant-details/${id}`, {
       headers: {
         'Content-Type': 'application/json',
       },

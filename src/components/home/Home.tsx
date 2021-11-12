@@ -6,12 +6,12 @@ import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import axios from 'axios';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helpers/helpers';
 
 import Divider from '../divider/Divider';
 import DisplayResult from '../displayResult/DisplayResult';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const style = StyleSheet.create({
   scrollViewContainer: {
@@ -78,7 +78,7 @@ function Home(props: any): JSX.Element {
   }, [latitude, longitude]);
 
   const getSelectedTermList = async () => {
-    const response = await axios.get(`${ROOT_URL}/category/get-categories`, {
+    const response = await axios.get(`${rootUrl}/category/get-categories`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -166,7 +166,7 @@ function Home(props: any): JSX.Element {
   };
 
   const findLocationTextByLatLong = async (latitude: number, longitude: number) => {
-    const response = await axios.get(`${ROOT_URL}/restaurant/find-location-text-by-lat-long`, {
+    const response = await axios.get(`${rootUrl}/restaurant/find-location-text-by-lat-long`, {
       params: {
         latitude: latitude,
         longitude: longitude,
@@ -182,7 +182,7 @@ function Home(props: any): JSX.Element {
   };
 
   const findRestaurantsByLocation = async (selectedTerm: string, location: any) => {
-    const response = await axios.get(`${ROOT_URL}/restaurant/find-restaurants-by-location`, {
+    const response = await axios.get(`${rootUrl}/restaurant/find-restaurants-by-location`, {
       params: {
         term: selectedTerm,
         location: location,
@@ -199,7 +199,7 @@ function Home(props: any): JSX.Element {
   };
 
   const findRestaurantsByLatLong = async (selectedTerm: string, latitude: number, longitude: number) => {
-    const response = await axios.get(`${ROOT_URL}/restaurant/find-restaurants-by-lat-long`, {
+    const response = await axios.get(`${rootUrl}/restaurant/find-restaurants-by-lat-long`, {
       params: {
         term: selectedTerm,
         latitude: latitude,

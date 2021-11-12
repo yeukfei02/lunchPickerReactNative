@@ -22,7 +22,7 @@ Lunch picker is the tool you’ll turn to to answer this question.
 
 - install expo-cli
 - install yarn
-- install node (v12+)
+- install node (v14+)
 
 ## Testing and run
 
