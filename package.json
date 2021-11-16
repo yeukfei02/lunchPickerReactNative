@@ -12,8 +12,11 @@
     "@react-navigation/stack": "^5.7.0",
     "axios": "^0.19.2",
     "expo": "^40.0.0",
-    "expo-constants": "~9.3.3",
+    "expo-application": "2.4.1",
+    "expo-constants": "9.3.3",
+    "expo-device": "2.4.0",
     "expo-permissions": "~10.0.0",
+    "expo-updates": "0.4.1",
     "i18next": "^19.4.3",
     "lodash": "^4.17.15",
     "metro-react-native-babel-preset": "^0.59.0",
@@ -36,7 +39,7 @@
     "react-native-stripe-api": "^0.1.0",
     "react-native-table-component": "^1.2.1",
     "react-native-web": "~0.13.12",
-    "sentry-expo": "^2.1.2"
+    "sentry-expo": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
