@@ -21,6 +21,7 @@ Lunch picker is the tool you’ll turn to to answer this question.
 ## Requirement
 
 - install expo-cli
+- install eas-cli
 - install yarn
 - install node (v14+)
 
@@ -66,6 +67,9 @@ $ expo build:status
 
 // generate android + ios folder
 $ expo eject
+
+// eas build ios/android
+$ eas build
 ```
 
 ## Contributing
