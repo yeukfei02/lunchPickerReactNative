@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.7](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.6...v1.6.7) (2021-11-16)
+
+
+### Bug Fixes
+
+* 🐛 update to latest sentry ([26e85e0](https://github.com/yeukfei02/lunchPickerReactNative/commit/26e85e0951efb1e152b04d3b18449d7ee333e363))
+
+### [1.6.6](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.5...v1.6.6) (2021-11-12)
+
+
+### Bug Fixes
+
+* 🐛 remove log func in common ([5f1dcba](https://github.com/yeukfei02/lunchPickerReactNative/commit/5f1dcba21b7659d948fc48c177c23f720267a547))
+* 🐛 rename to helpers ([e5af121](https://github.com/yeukfei02/lunchPickerReactNative/commit/e5af1213f07171ffb893539f966f8cb14b5baafd))
+* 🐛 update app.json ([0511333](https://github.com/yeukfei02/lunchPickerReactNative/commit/05113334492b31de2d132e10d3bfe3fb5d63a6a0))
+* 🐛 update react-native-screens lib ([bb0313e](https://github.com/yeukfei02/lunchPickerReactNative/commit/bb0313e14be2c5ed6ba559f22b14ae3bd9c7ddca))
+
 ### [1.6.5](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.4...v1.6.5) (2021-03-15)
 
 ### [1.6.4](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.3...v1.6.4) (2021-03-15)
