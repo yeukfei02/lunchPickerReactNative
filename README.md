@@ -4,7 +4,6 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.com/yeukfei02/lunchPickerReactNative"><img src="https://travis-ci.com/yeukfei02/lunchPickerReactNative.svg?branch=master" alt=""></a>
   <a href="https://codecov.io/gh/yeukfei02/lunchPickerReactNative"><img src="https://codecov.io/gh/yeukfei02/lunchPickerReactNative/branch/master/graph/badge.svg" alt=""></a>
   <a href="https://discord.gg/ZSwskB2"><img src="https://img.shields.io/discord/709280499503202364" alt=""></a>
 </p>
