@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.7...v1.7.0) (2022-06-17)
+
+
+### Features
+
+* 🎸 add .env.sample ([557c3d6](https://github.com/yeukfei02/lunchPickerReactNative/commit/557c3d6d6801fcf965db73d0dad03a56617e0dd3))
+* 🎸 add format command and update husky ([99203f3](https://github.com/yeukfei02/lunchPickerReactNative/commit/99203f3e51f54d9b03ab1075997b19d7cb8df0ef))
+* 🎸 add semgrep.yml ([cdcdc63](https://github.com/yeukfei02/lunchPickerReactNative/commit/cdcdc635288c0e0cdb08ae4f9e632ca0a5e04c57))
+
+
+### Bug Fixes
+
+* 🐛 add engine ([f6d0a1f](https://github.com/yeukfei02/lunchPickerReactNative/commit/f6d0a1f4f2aed6d4a8b6a6397c4b13025d29a3a1))
+* 🐛 remove not used travis ([0a40e5a](https://github.com/yeukfei02/lunchPickerReactNative/commit/0a40e5ad0b81b0981d1e00fb8f7cf919d341f9bb))
+* 🐛 update expo version, other lib, logic ([51835b0](https://github.com/yeukfei02/lunchPickerReactNative/commit/51835b0de8149391d7f048bf6cc72fe5b490a7be))
+
 ### [1.6.7](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.6...v1.6.7) (2021-11-16)
 
 
