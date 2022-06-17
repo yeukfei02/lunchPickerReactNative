@@ -10,13 +10,7 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {
-      "env": {
-        "REACT_NATIVE_SENTRY_DSN": "",
-        "REACT_NATIVE_STRIPE_TEST_API_KEY": "",
-        "REACT_NATIVE_STRIPE_API_KEY": ""
-      }
-    }
+    "production": {}
   },
   "submit": {
     "production": {}
