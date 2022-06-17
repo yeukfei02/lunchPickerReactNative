@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.7.0...v1.8.0) (2022-06-17)
+
+
+### Features
+
+* 🎸 add eas.json ([511c90a](https://github.com/yeukfei02/lunchPickerReactNative/commit/511c90a3d9949f1e6918fd2e54f637c39b0ddcff))
+
+
+### Bug Fixes
+
+* 🐛 remove not used engine ([4604010](https://github.com/yeukfei02/lunchPickerReactNative/commit/4604010cea4f2a8344dbdd96e7f41db015e61be7))
+* 🐛 update version ([b709838](https://github.com/yeukfei02/lunchPickerReactNative/commit/b7098382c1b41cfeaca9d7e243146eb199df02e7))
+
 ## [1.7.0](https://github.com/yeukfei02/lunchPickerReactNative/compare/v1.6.7...v1.7.0) (2022-06-17)
 
 
