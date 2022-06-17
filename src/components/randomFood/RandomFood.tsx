@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, ScrollView, View, Text, RefreshControl } from 'react-native';
 import { Button, Switch, FAB } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
+import * as Location from 'expo-location';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl } from '../../helpers/helpers';
@@ -106,13 +107,22 @@ function RandomFood(props: any): JSX.Element {
     }
   };
 
-  const getUserCurrentLatLong = () => {
-    navigator.geolocation.getCurrentPosition((location) => {
+  const getUserCurrentLatLong = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log('status = ', status);
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+    } else {
+      const location = await Location.getCurrentPositionAsync({});
+      console.log('location = ', location);
+
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
+      console.log('latitude = ', latitude);
+      console.log('longitude = ', longitude);
       setLatitude(latitude);
       setLongitude(longitude);
-    });
+    }
   };
 
   const findRestaurantsByLatLong = async (
