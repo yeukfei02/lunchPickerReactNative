@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, mount } from 'enzyme';
-import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 
 import MainView from '../components/mainView/MainView';
 
@@ -27,7 +27,7 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 describe('main.test', () => {
   describe('render test', () => {

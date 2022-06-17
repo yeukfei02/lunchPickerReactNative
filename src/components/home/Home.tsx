@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { RadioButton, Button, Card, TextInput, FAB } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
+import * as Location from 'expo-location';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl } from '../../helpers/helpers';
@@ -154,15 +155,22 @@ function Home(props: any): JSX.Element {
     }
   };
 
-  const getUserCurrentLatLong = () => {
-    navigator.geolocation.getCurrentPosition((location: any) => {
+  const getUserCurrentLatLong = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log('status = ', status);
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+    } else {
+      const location = await Location.getCurrentPositionAsync({});
+      console.log('location = ', location);
+
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
       console.log('latitude = ', latitude);
       console.log('longitude = ', longitude);
       setLatitude(latitude);
       setLongitude(longitude);
-    });
+    }
   };
 
   const findLocationTextByLatLong = async (latitude: number, longitude: number) => {

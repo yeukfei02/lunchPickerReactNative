@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import * as Sentry from 'sentry-expo';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { REACT_NATIVE_SENTRY_DSN } from 'react-native-dotenv';
 import _ from 'lodash';
 import axios from 'axios';

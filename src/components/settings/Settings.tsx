@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import { Switch, Card } from 'react-native-paper';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { useTranslation } from 'react-i18next';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import _ from 'lodash';
 import axios from 'axios';
 import { getRootUrl } from '../../helpers/helpers';
