@@ -52,9 +52,13 @@ export const getStripeApiKey = (): string => {
   let result = '';
 
   if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-    result = REACT_NATIVE_STRIPE_TEST_API_KEY;
+    result =
+      REACT_NATIVE_STRIPE_TEST_API_KEY ||
+      (process.env.REACT_NATIVE_STRIPE_TEST_API_KEY ? process.env.REACT_NATIVE_STRIPE_TEST_API_KEY : '');
   } else {
-    result = REACT_NATIVE_STRIPE_API_KEY;
+    result =
+      REACT_NATIVE_STRIPE_API_KEY ||
+      (process.env.REACT_NATIVE_STRIPE_API_KEY ? process.env.REACT_NATIVE_STRIPE_API_KEY : '');
   }
 
   return result;
