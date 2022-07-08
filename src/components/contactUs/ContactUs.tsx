@@ -40,13 +40,22 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  lunchPickerWebViewContainer: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    marginTop: 30,
+    marginHorizontal: 30,
+  },
   donateCardViewContainer: {
     flex: 1,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    marginVertical: 35,
+    marginVertical: 30,
     marginHorizontal: 30,
   },
   rowContainer: {
@@ -116,6 +125,10 @@ function ContactUs(): JSX.Element {
 
   const handleEmailClick = () => {
     Linking.openURL(`mailto:yeukfei02@gmail.com`);
+  };
+
+  const handleWebClick = () => {
+    Linking.openURL(`https://lunchpicker.me`);
   };
 
   const handleDonorboxClick = () => {
@@ -336,6 +349,16 @@ function ContactUs(): JSX.Element {
         <View style={style.iconContainer}>
           <MaterialIcons name="email" size={40} color="black" onPress={handleEmailClick} />
           <AntDesign style={{ marginLeft: 15 }} name="github" size={40} color="black" onPress={handleGithubClick} />
+        </View>
+      </Card>
+
+      <Card style={style.lunchPickerWebViewContainer}>
+        <Text style={style.titleStyle}>{t('lunchPickerWeb')}</Text>
+
+        <Divider margin={5} />
+
+        <View style={style.iconContainer}>
+          <MaterialIcons name="web" size={40} color="black" onPress={handleWebClick} />
         </View>
       </Card>
 
