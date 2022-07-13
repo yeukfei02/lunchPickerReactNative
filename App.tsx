@@ -38,7 +38,7 @@ function App(): JSX.Element {
     const pushNotificationToken = await registerForPushNotificationsAsync();
     console.log('pushNotificationToken = ', pushNotificationToken);
     storeAsyncStorageData('@pushNotificationToken', pushNotificationToken);
-    addPushNotificationTokenToServer(pushNotificationToken);
+    await addPushNotificationTokenToServer(pushNotificationToken);
   };
 
   const storeAsyncStorageData = async (key: string, value: any) => {

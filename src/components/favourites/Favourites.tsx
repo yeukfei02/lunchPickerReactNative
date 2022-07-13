@@ -61,8 +61,8 @@ function Favourites(props: any): JSX.Element {
   }, [props.navigation]);
 
   const detectChangeTab = (navigation: any) => {
-    navigation.addListener('focus', () => {
-      getFavourites();
+    navigation.addListener('focus', async () => {
+      await getFavourites();
     });
   };
 
@@ -90,7 +90,7 @@ function Favourites(props: any): JSX.Element {
     if (!_.isEmpty(response)) {
       console.log('response = ', response);
       setDeleteAllFavouritesButtonClicked(false);
-      getFavourites();
+      await getFavourites();
     }
   };
 
@@ -132,9 +132,9 @@ function Favourites(props: any): JSX.Element {
     return displayResult;
   };
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    getFavourites();
+    await getFavourites();
 
     setTimeout(() => {
       setRefreshing(false);

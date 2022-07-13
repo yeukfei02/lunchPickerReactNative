@@ -148,14 +148,14 @@ function RandomFood(props: any): JSX.Element {
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setResultList([]);
     setRefreshButtonClicked(true);
 
     const selectedTerm = _.sample(randomFoodList) as any;
     setSelectedTerm(selectedTerm);
     if (latitude !== 0 && longitude !== 0) {
-      findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm, latitude, longitude);
+      await findRestaurantsByLatLong(useRandomFoodCategory, selectedTerm, latitude, longitude);
     }
   };
 
@@ -213,9 +213,9 @@ function RandomFood(props: any): JSX.Element {
     return displayResult;
   };
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    getRandomFoodList();
+    await getRandomFoodList();
 
     setTimeout(() => {
       setRefreshing(false);
