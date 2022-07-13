@@ -9,6 +9,7 @@
       "contactUs": "Contact us",
 
       "selectTheFoodYouWant": "Select the food you want...",
+      "enterFoodHere": "Enter food here...",
       "places": "Places",
       "currentLocation": "Current Location",
       "currentLocationWaitForBrowserDetection": "Current Location (wait for browser detection)",
@@ -69,6 +70,7 @@
       "contactUs": "聯繫我們",
 
       "selectTheFoodYouWant": "選擇你想要的食物...",
+      "enterFoodHere": "輸入食物...",
       "places": "地點",
       "currentLocation": "當前位置",
       "currentLocationWaitForBrowserDetection": "當前位置 (等待瀏覽器偵查)",

@@ -119,13 +119,13 @@ function Settings(): JSX.Element {
     return languageList;
   };
 
-  const toggleSwitch = () => {
+  const toggleSwitch = async () => {
     if (!subscribeStatus) {
       setSubscribeStatus(true);
-      subscribeMessage(pushNotificationToken);
+      await subscribeMessage(pushNotificationToken);
     } else {
       setSubscribeStatus(false);
-      unsubscribeMessage(pushNotificationToken);
+      await unsubscribeMessage(pushNotificationToken);
     }
   };
 

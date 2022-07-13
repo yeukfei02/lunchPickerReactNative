@@ -57,6 +57,7 @@ function Home(props: any): JSX.Element {
 
   const [selectedTermList, setSelectedTermList] = useState<any[]>([]);
   const [selectedTerm, setSelectedTerm] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [radioButtonValue, setRadioButtonValue] = useState('places');
 
   const [location, setLocation] = useState<string>(t('enterLocation'));
@@ -189,10 +190,10 @@ function Home(props: any): JSX.Element {
     }
   };
 
-  const findRestaurantsByLocation = async (selectedTerm: string, location: any) => {
+  const findRestaurantsByLocation = async (searchText: string, location: any) => {
     const response = await axios.get(`${rootUrl}/restaurant/find-restaurants-by-location`, {
       params: {
-        term: selectedTerm,
+        term: searchText,
         location: location,
       },
       headers: {
@@ -206,10 +207,10 @@ function Home(props: any): JSX.Element {
     }
   };
 
-  const findRestaurantsByLatLong = async (selectedTerm: string, latitude: number, longitude: number) => {
+  const findRestaurantsByLatLong = async (searchText: string, latitude: number, longitude: number) => {
     const response = await axios.get(`${rootUrl}/restaurant/find-restaurants-by-lat-long`, {
       params: {
-        term: selectedTerm,
+        term: searchText,
         latitude: latitude,
         longitude: longitude,
       },
@@ -225,7 +226,15 @@ function Home(props: any): JSX.Element {
   };
 
   const handleDropdownChange = (value: string, index: number, data: any) => {
-    if (!_.isEmpty(value)) setSelectedTerm(value);
+    if (!_.isEmpty(value)) {
+      setSelectedTerm(value);
+      setInputValue('');
+    }
+  };
+
+  const handleInputChange = (text: string) => {
+    setSelectedTerm('');
+    setInputValue(text);
   };
 
   const renderSelectDropdown = () => {
@@ -241,6 +250,21 @@ function Home(props: any): JSX.Element {
     }
 
     return selectDropdown;
+  };
+
+  const renderInput = () => {
+    const input = (
+      <View style={{ flex: 1 }}>
+        <TextInput
+          mode="outlined"
+          label={t('enterFoodHere')}
+          value={inputValue}
+          placeholder="Food Name"
+          onChangeText={(text) => handleInputChange(text)}
+        />
+      </View>
+    );
+    return input;
   };
 
   const renderRadioButton = () => {
@@ -435,27 +459,42 @@ function Home(props: any): JSX.Element {
     setLocation(text);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setResultList([]);
     setSubmitButtonClicked(true);
 
     if (_.isEqual(radioButtonValue, 'places')) {
       if (!_.isEmpty(location)) {
-        const term = !_.isEmpty(selectedTerm) ? selectedTerm : '';
-        findRestaurantsByLocation(term, location);
+        let searchText = '';
+        if (!_.isEmpty(selectedTerm)) {
+          searchText = selectedTerm;
+        }
+        if (!_.isEmpty(inputValue)) {
+          searchText = inputValue;
+        }
+
+        await findRestaurantsByLocation(searchText, location);
       }
     }
 
     if (_.isEqual(radioButtonValue, 'currentLocation')) {
       if (latitude !== 0 && longitude !== 0) {
-        const term = !_.isEmpty(selectedTerm) ? selectedTerm : '';
-        findRestaurantsByLatLong(term, latitude, longitude);
+        let searchText = '';
+        if (!_.isEmpty(selectedTerm)) {
+          searchText = selectedTerm;
+        }
+        if (!_.isEmpty(inputValue)) {
+          searchText = inputValue;
+        }
+
+        await findRestaurantsByLatLong(searchText, latitude, longitude);
       }
     }
   };
 
   const handleClear = () => {
     setSelectedTerm('');
+    setInputValue('');
     setRadioButtonValue('');
 
     setResultList([]);
@@ -490,6 +529,10 @@ function Home(props: any): JSX.Element {
         <Image style={style.logo} source={require('../../images/logo2.png')} resizeMode={'contain'} />
 
         {renderSelectDropdown()}
+
+        <Divider margin={5} />
+
+        {renderInput()}
 
         <Divider margin={5} />
 
