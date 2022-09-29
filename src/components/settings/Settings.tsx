@@ -92,10 +92,12 @@ function Settings(): JSX.Element {
       setSelectedLanguage(value);
 
       switch (value) {
-        case 'English' || '英文':
+        case 'English':
+        case '英文':
           i18n.changeLanguage('eng');
           break;
-        case 'Chinese' || '中文':
+        case 'Chinese':
+        case '中文':
           i18n.changeLanguage('chi');
           break;
         default:
