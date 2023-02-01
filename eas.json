@@ -1,7 +1,4 @@
 {
-  "cli": {
-    "version": ">= 0.53.1"
-  },
   "build": {
     "development": {
       "developmentClient": true,
@@ -10,9 +7,10 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    }
   }
 }
